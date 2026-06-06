@@ -275,7 +275,46 @@ function saveCurrent(title, content){ if(!content.trim()){alert('Primer cal gene
 function historial(){ const h=JSON.parse(localStorage.getItem(LS)||'[]'); app.innerHTML=`<section class="card"><h2>Historial</h2><div class="btnrow no-print"><button class="secondary" onclick="localStorage.removeItem(LS);historial()">Esborrar tot</button></div>${h.length? h.map((x,i)=>`<article class="card"><h3>${esc(x.title)}</h3><p class="small">${esc(x.date)}</p><pre style="white-space:pre-wrap;font-family:inherit">${esc(x.content)}</pre><div class="btnrow no-print"><button class="secondary" onclick="navigator.clipboard.writeText(${JSON.stringify(x.content)})">Copiar</button><button class="secondary" onclick="deleteHist(${i})">Esborrar</button></div></article>`).join(''):'<p>No hi ha exercicis guardats.</p>'}</section>`; }
 function deleteHist(i){ const h=JSON.parse(localStorage.getItem(LS)||'[]'); h.splice(i,1); localStorage.setItem(LS, JSON.stringify(h)); historial(); }
 
-function calculadores(){ exercicisView(); $('section.card h2').textContent='Calculadores tècniques'; }
+const calculatorInfo = [
+  {key:'ohm', title:'Llei d’Ohm i potència', bloc:'Electricitat', desc:'Calcula intensitat i potència a partir de tensió i resistència.'},
+  {key:'ca', title:'Valor eficaç i valor màxim', bloc:'Corrent altern', desc:'Passa de valors eficaços a valors màxims sinusoidals.'},
+  {key:'rl', title:'Circuit RL sèrie', bloc:'Corrent altern', desc:'Calcula reactància inductiva, impedància i intensitat.'},
+  {key:'trifasica', title:'Trifàsica bàsica', bloc:'Sistemes trifàsics', desc:'Calcula potència aparent, activa i reactiva.'},
+  {key:'motor', title:'Motor: parell i rendiment', bloc:'Màquines elèctriques', desc:'Calcula velocitat angular, parell i rendiment.'},
+  {key:'elevador', title:'Elevador i transmissió', bloc:'Mecanismes', desc:'Calcula potències, voltes de cargol i relació de transmissió.'},
+  {key:'calor', title:'Calor i combustible', bloc:'Energia tèrmica', desc:'Calcula calor útil, massa de gas, temps i autonomia.'},
+  {key:'pneumatica', title:'Cilindre pneumàtic', bloc:'Pneumàtica', desc:'Calcula força, velocitat i temps de recorregut.'},
+  {key:'logica', title:'Taula de veritat i portes', bloc:'Lògica digital', desc:'Genera funció lògica, taula de veritat i diagrama.'}
+];
+
+function calculadores(){
+  app.innerHTML = `<section class="card"><h2>Calculadores tècniques</h2><p class="small">Aquest apartat és independent dels exercicis PAU. Serveix per fer càlculs ràpids, però manté explicació de fórmula, unitats i errors habituals.</p><div class="field"><label>Cercar calculadora</label><input id="calcSearch" placeholder="Ex.: ohm, motor, trifàsica, pneumàtica..." oninput="renderCalculatorCards(this.value)"></div><div id="calculatorCards" class="grid"></div><div id="calculatorPanel"></div></section>`;
+  renderCalculatorCards();
+}
+
+function renderCalculatorCards(filter=''){
+  const el = document.getElementById('calculatorCards');
+  if(!el) return;
+  const q = String(filter || '').trim().toLowerCase();
+  const cards = calculatorInfo.filter(c => !q || `${c.title} ${c.bloc} ${c.desc}`.toLowerCase().includes(q));
+  el.innerHTML = cards.map(c => `<article class="card exercise-card"><p class="pill">${esc(c.bloc)}</p><h3>${esc(c.title)}</h3><p>${esc(c.desc)}</p><button class="primary" onclick="renderCalculator('${c.key}')">Obrir calculadora</button></article>`).join('') || '<div class="notice">No s’ha trobat cap calculadora amb aquest filtre.</div>';
+}
+
+function renderCalculator(key){
+  const ex = exercises[key];
+  const panel = document.getElementById('calculatorPanel');
+  if(!ex || !panel) return;
+  panel.innerHTML = `<section class="card" id="calculatorForm"><h2>${esc(ex.title)}</h2><p class="small"><b>Mode calculadora:</b> pots modificar les dades i obtenir el càlcul amb procediment. No cal triar cap exercici PAU.</p>${ex.fields.length ? ex.fields.map(f=>`<div class="field"><label>${f[1]} <span class="muted">(${f[2]})</span></label><input id="${f[0]}" inputmode="decimal" value="${f[3]}"></div>`).join('') : '<p>Aquesta calculadora no necessita dades inicials: genera directament la taula de veritat i el diagrama.</p>'}<div class="btnrow no-print"><button class="primary" onclick="solveCalculator('${key}')">Calcular amb explicació</button><button class="secondary" onclick="document.getElementById('calcResult').innerHTML=''">Netejar resultat</button><button class="secondary" onclick="window.print()">Imprimir</button></div><div id="calcResult"></div></section>`;
+  panel.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function solveCalculator(key){
+  const ex = exercises[key];
+  if(!ex) return;
+  const html = ex.solve();
+  const r = document.getElementById('calcResult');
+  if(r) r.innerHTML = html + `<div class="btnrow no-print"><button class="secondary" onclick="navigator.clipboard.writeText(document.getElementById('calcResult').innerText)">Copiar càlcul</button><button class="secondary" onclick="saveCurrent('${esc(ex.title)}', document.getElementById('calcResult').innerText)">Guardar a l’historial</button></div>`;
+}
 function practica(){
   app.innerHTML=`<section class="card"><h2>Pràctica autocorregible</h2><div class="grid"><div class="field"><label>Bloc</label><select id="pracBloc"><option value="calor">Energia tèrmica</option><option value="ohm">Electricitat</option><option value="motor">Motors</option></select></div><div class="field"><label>Nivell</label><select id="pracNiv"><option>N1 · identificar</option><option>N2 · calcular</option><option>N3 · interpretar</option><option>N4 · justificar</option></select></div></div><button class="primary" onclick="generatePractice()">Generar exercici</button><div id="practiceArea"></div></section>`;
 }
@@ -300,6 +339,6 @@ setView('inici');
 // Exposa funcions per als botons generats dinamicament i evita problemes amb handlers inline en alguns navegadors.
 Object.assign(window, {
   setView, openExercise, renderExerciseCards, renderExerciseForm, solveSelected,
-  renderTest, checkTest, copyResult, saveCurrent, saveCurrentFromResult,
+  renderTest, checkTest, copyResult, saveCurrent, saveCurrentFromResult, renderCalculatorCards, renderCalculator, solveCalculator,
   historial, deleteHist, generatePractice, checkPractice
 });

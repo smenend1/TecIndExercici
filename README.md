@@ -24,3 +24,9 @@ Aquesta versió afegeix resolucions més extenses amb lectura de l’enunciat, d
 
 ## v4
 Correccio dels botons de targeta: el mapa de vistes ara apunta correctament a la pestanya Exercicis i les funcions s'exposen a window per als botons generats dinamicament.
+
+
+## v5
+- Restaurada la pestanya Calculadores com a apartat propi, separat d'Exercicis.
+- Afegides targetes de calculadora, panell de càlcul, resultat amb explicació, copiar, imprimir i guardar a l'historial.
+- Service Worker actualitzat a v5.
