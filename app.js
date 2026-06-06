@@ -85,7 +85,7 @@ function renderExerciseCards(containerId='exerciseCards', filter=''){
 
 function setView(view){
   $$('.tab').forEach(b => b.classList.toggle('active', b.dataset.view === view));
-  const views = {inici, pau, exercicisView, calculadores, practica, formulari, historial};
+  const views = {inici, pau, exercicis: exercicisView, calculadores, practica, formulari, historial};
   views[view]?.();
 }
 
@@ -295,3 +295,11 @@ function formulari(){
 
 if('serviceWorker' in navigator){ window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{})); }
 setView('inici');
+
+
+// Exposa funcions per als botons generats dinamicament i evita problemes amb handlers inline en alguns navegadors.
+Object.assign(window, {
+  setView, openExercise, renderExerciseCards, renderExerciseForm, solveSelected,
+  renderTest, checkTest, copyResult, saveCurrent, saveCurrentFromResult,
+  historial, deleteHist, generatePractice, checkPractice
+});

@@ -20,3 +20,7 @@ Puja tots els fitxers a GitHub Pages. Si el navegador mostra una versió anterio
 ## v3 - Explicació ampliada
 
 Aquesta versió afegeix resolucions més extenses amb lectura de l’enunciat, dades, conversions, estratègia, fórmules, càlcul pas a pas, interpretació tècnica, errors habituals i exercici similar.
+
+
+## v4
+Correccio dels botons de targeta: el mapa de vistes ara apunta correctament a la pestanya Exercicis i les funcions s'exposen a window per als botons generats dinamicament.
