@@ -1,19 +1,28 @@
-# Tecnologia Industrial Exercicis Plus v9
+# Tecnologia Industrial Exercicis Plus v7
 
-PWA educativa en català per treballar exercicis tipus PAU de Tecnologia Industrial, Tecnologia i Enginyeria i Electrotècnia.
+PWA educativa en català per preparar exercicis de Tecnologia Industrial, Tecnologia i Enginyeria i PAU.
 
-## Novetats v9
+## Novetats v7
 
-- Banc PAU multiany ampliat amb fitxes de 2021, 2022, 2023, 2024 i 2025.
-- Selectors per matèria, any, sèrie, bloc/paraula clau i mode de treball.
-- Incorporació dels PDF nous com a fitxes estructurades: enunciat de treball, dades, apartats, fórmules, pistes, errors habituals i orientació docent.
-- Manté mode alumne i mode docent.
-- Manté calculadores, exercicis resolubles, formulari, pràctica i historial.
+- Mode aula dins el Banc PAU.
+- Selector Alumne / Docent.
+- Resolució per passos amb pistes, comprovació i solució gradual.
+- Fitxa imprimible per a l'alumne amb espais de resposta.
+- Fitxa imprimible del docent amb solucions orientatives.
+- Criteris orientatius de correcció per a cada fitxa PAU.
+- Es manté la v6: banc PAU ampliat, exercicis guiats, calculadores, pràctica, formulari i historial.
 
-## Limitació honesta
+## Desplegament
 
-Els exercicis amb figures complexes, circuits o esquemes estan incorporats com a fitxes guiades. Per convertir-los en resolutors automàtics complets caldria codificar cada esquema o figura de manera específica.
+Puja tots els fitxers a GitHub Pages. Si al mòbil apareix una versió anterior, esborra les dades del lloc o força l'actualització perquè el Service Worker pot mantenir fitxers antics.
 
-## Publicació
 
-Pujar tots els fitxers a GitHub Pages. Si el navegador conserva una versió antiga, esborra les dades del lloc o força l'actualització del Service Worker.
+## v8
+- Enunciats de treball visibles en totes les fitxes PAU.
+- Mode alumne i docent amb l’enunciat abans dels passos.
+- Fitxes imprimibles amb enunciat, apartats, dades, pistes i solucions orientatives.
+
+
+## v9.1
+- Correccio de la impressio de fitxes PAU: ara s'imprimeix nomes la fitxa seleccionada, no la resta de targetes visibles a la pagina.
+- Service Worker actualitzat a v9.1.

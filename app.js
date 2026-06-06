@@ -1788,7 +1788,11 @@ function printClassSheet(id, withSolutions=false){
   const x = pauBank.find(p => p.id === id); if(!x) return;
   const steps = makePauSteps(x);
   const blanks = `<div class="blank-lines"></div>`;
-  document.getElementById('pauArea').innerHTML = `<section class="card print-sheet"><h2>Fitxa de treball PAU</h2>${renderPauHeader(x)}<p><b>Temps recomanat:</b> 20-35 min segons dificultat.</p>${steps.map((st,i)=>`<article class="sheet-step"><h3>${esc(st.title)}</h3><p>${esc(st.prompt)}</p>${withSolutions?`<div class="ok"><b>Solució orientativa:</b><pre>${esc(st.solution)}</pre></div>`:blanks}</article>`).join('')}<div class="no-print btnrow"><button class="secondary" onclick="openPauItem('${id}')">Tornar a l’activitat</button><button class="primary" onclick="window.print()">Imprimir ara</button></div></section>`;
+  const sheet = `<section class="card print-sheet"><h2>${withSolutions ? 'Fitxa PAU amb solucions' : 'Fitxa de treball PAU'}</h2>${renderPauHeader(x)}<p><b>Temps recomanat:</b> 20-35 min segons dificultat.</p>${steps.map((st,i)=>`<article class="sheet-step"><h3>${esc(st.title)}</h3><p>${esc(st.prompt)}</p>${withSolutions?`<div class="ok"><b>Solució orientativa:</b><pre>${esc(st.solution)}</pre></div>`:blanks}</article>`).join('')}<div class="no-print btnrow"><button class="secondary" onclick="openPauItem('${id}')">Tornar a l’activitat</button><button class="primary" onclick="window.print()">Imprimir ara</button></div></section>`;
+  // Important: substituim temporalment tota la vista pel full d'impressio.
+  // Aixi no s'imprimeixen les altres targetes del banc que comparteixen la pagina.
+  app.innerHTML = sheet;
+  window.scrollTo(0, 0);
 }
 
 function renderTest(){
