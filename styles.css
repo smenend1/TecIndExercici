@@ -4,3 +4,8 @@
 
 /* v7: mode aula i correccio per passos */
 .mode-banner{background:#e6f1ec;border:1px solid #cde3d9;border-radius:16px;padding:12px 14px;margin:10px 0 16px;color:#163e34}.mode-banner.teacher{background:#eef2ff;border-color:#c7d2fe;color:#1e3a8a}.progressbar{height:10px;background:#edf2ef;border-radius:999px;overflow:hidden;margin:12px 0 18px}.progressbar>div{height:100%;background:#1f6f5b;transition:width .25s ease}.step-card{border:1px solid var(--line);background:#fff;border-radius:18px;padding:16px;margin:14px 0;box-shadow:var(--shadow)}.step-card textarea{min-height:96px}.step-feedback{margin-top:10px}.step-feedback pre,.ok pre{white-space:pre-wrap;font-family:inherit;margin:.5rem 0 0}.print-sheet .sheet-step{border:1px solid var(--line);border-radius:14px;padding:14px;margin:12px 0;background:#fff}.blank-lines{min-height:110px;background:repeating-linear-gradient(to bottom,#fff 0,#fff 28px,#d7e0db 29px);border:1px solid var(--line);border-radius:10px;margin-top:10px}@media print{.mode-banner,.progressbar,.step-feedback,.no-print{display:none!important}.print-sheet .sheet-step,.blank-lines{break-inside:avoid}.blank-lines{min-height:130px}}
+
+.enunciat-box{border:1px solid var(--line);background:#f7fbf9;border-radius:18px;padding:14px 16px;margin:16px 0;}
+.enunciat-box summary{font-weight:800;cursor:pointer;color:#12342d;}
+.enunciat-box p{white-space:pre-wrap;line-height:1.55;margin:10px 0 0;}
+@media print{.enunciat-box{border:1px solid #999;background:white;break-inside:avoid;}}

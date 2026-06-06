@@ -15,3 +15,9 @@ PWA educativa en català per preparar exercicis de Tecnologia Industrial, Tecnol
 ## Desplegament
 
 Puja tots els fitxers a GitHub Pages. Si al mòbil apareix una versió anterior, esborra les dades del lloc o força l'actualització perquè el Service Worker pot mantenir fitxers antics.
+
+
+## v8
+- Enunciats de treball visibles en totes les fitxes PAU.
+- Mode alumne i docent amb l’enunciat abans dels passos.
+- Fitxes imprimibles amb enunciat, apartats, dades, pistes i solucions orientatives.
