@@ -3,7 +3,9 @@
 const $ = (s, el=document) => el.querySelector(s);
 const $$ = (s, el=document) => [...el.querySelectorAll(s)];
 const app = $('#app');
-const LS = 'ti_exercicis_plus_historial_v6';
+const LS = 'ti_exercicis_plus_historial_v7';
+let currentPauId = null;
+let pauRole = 'alumne';
 const fmt = (n, d=3) => Number.isFinite(n) ? Number(n).toLocaleString('ca-ES', {maximumFractionDigits:d}) : '—';
 const val = id => parseFloat(document.getElementById(id)?.value?.replace(',', '.'));
 const text = id => document.getElementById(id)?.value || '';
@@ -118,7 +120,7 @@ function inici(){
 }
 
 function pau(){
-  app.innerHTML = `<section class="card"><h2>Banc PAU ampliat</h2><p>Opció B: tots els exercicis identificats dels PDF pujats s’han convertit en fitxes didàctiques. Alguns tenen calculadora automàtica; altres són fitxes per treballar per parts amb l’esquema del PDF.</p><div class="grid"><div class="field"><label>Matèria</label><select id="bankMateria" onchange="renderPauBank()"><option value="">Totes</option><option>Tecnologia i enginyeria</option><option>Electrotècnia</option></select></div><div class="field"><label>Bloc o paraula clau</label><input id="bankSearch" placeholder="Ex.: motor, trifàsica, rectificador..." oninput="renderPauBank()"></div><div class="field"><label>Mode</label><select id="bankMode" onchange="renderPauBank()"><option value="">Tots</option><option value="test">Test</option><option value="calculadora">Amb calculadora</option><option value="fitxa">Fitxa per parts</option></select></div></div><div class="btnrow no-print"><button class="secondary" onclick="renderTest()">Obrir test autocorregible</button><button class="secondary" onclick="setView('exercicis')">Exercicis resolubles</button><button class="secondary" onclick="setView('calculadores')">Calculadores</button></div><div id="pauArea"></div></section><section class="card"><h2>Fitxes del banc</h2><div id="pauBankStats" class="small"></div><div id="pauBankCards" class="grid"></div></section>`;
+  app.innerHTML = `<section class="card"><h2>Banc PAU ampliat · mode aula</h2><p>La v7 converteix les fitxes PAU en activitats per treballar a classe. Pots usar <b>Mode alumne</b> amb pistes i comprovació per passos, o <b>Mode docent</b> amb solucions, criteris i fitxa imprimible.</p><div class="btnrow no-print"><button id="roleAlumne" class="${pauRole==='alumne'?'primary':'secondary'}" onclick="setPauRole('alumne')">Mode alumne</button><button id="roleDocent" class="${pauRole==='docent'?'primary':'secondary'}" onclick="setPauRole('docent')">Mode docent</button></div><div class="grid"><div class="field"><label>Matèria</label><select id="bankMateria" onchange="renderPauBank()"><option value="">Totes</option><option>Tecnologia i enginyeria</option><option>Electrotècnia</option></select></div><div class="field"><label>Bloc o paraula clau</label><input id="bankSearch" placeholder="Ex.: motor, trifàsica, rectificador..." oninput="renderPauBank()"></div><div class="field"><label>Mode</label><select id="bankMode" onchange="renderPauBank()"><option value="">Tots</option><option value="test">Test</option><option value="calculadora">Amb calculadora</option><option value="fitxa">Fitxa per parts</option></select></div></div><div class="btnrow no-print"><button class="secondary" onclick="renderTest()">Obrir test autocorregible</button><button class="secondary" onclick="setView('exercicis')">Exercicis resolubles</button><button class="secondary" onclick="setView('calculadores')">Calculadores</button></div><div id="pauArea"></div></section><section class="card"><h2>Fitxes del banc</h2><div id="pauBankStats" class="small"></div><div id="pauBankCards" class="grid"></div></section>`;
   renderPauBank();
 }
 
@@ -144,14 +146,97 @@ function renderPauBank(){
 function openPauItem(id){
   const x = pauBank.find(p => p.id === id);
   if(!x) return;
+  currentPauId = id;
   const html = renderPauDetail(x);
   const area = document.getElementById('pauArea');
   if(area){ area.innerHTML = html; area.scrollIntoView({behavior:'smooth', block:'start'}); }
 }
 
+function setPauRole(role){
+  pauRole = role;
+  document.getElementById('roleAlumne')?.classList.toggle('primary', role==='alumne');
+  document.getElementById('roleAlumne')?.classList.toggle('secondary', role!=='alumne');
+  document.getElementById('roleDocent')?.classList.toggle('primary', role==='docent');
+  document.getElementById('roleDocent')?.classList.toggle('secondary', role!=='docent');
+  if(currentPauId) openPauItem(currentPauId);
+}
+
+function makePauSteps(x){
+  const clean = arr => (arr||[]).filter(Boolean);
+  return [
+    {title:'1. Entendre què demana', prompt:'Escriu amb les teves paraules què et demana aquest exercici.', hint:'Busca verbs com calcula, determina, descriu, identifica o justifica. Separa cada apartat.', solution:`Cal treballar: ${clean(x.apartats).join(' · ') || x.resum}`, keywords:['calcula','determina','descriu','identifica','apartat','exercici']},
+    {title:'2. Identificar dades', prompt:'Anota les dades numèriques i conceptuals importants, amb unitats.', hint:'No copiïs tot l’enunciat. Tria només magnituds, unitats, condicions i casos.', solution:clean(x.dades).join('\n') || 'No hi ha dades numèriques explícites; cal interpretar la situació o l’esquema.', keywords:clean(x.dades).join(' ').toLowerCase().split(/[^a-zà-ú0-9]+/).filter(w=>w.length>2).slice(0,10)},
+    {title:'3. Preparar unitats i esquema', prompt:'Indica quines conversions o esquemes previs cal fer abans de calcular.', hint:'Revisa mm↔m, g↔kg, kJ↔MJ, min⁻¹↔rad/s, tensió de fase/composta i valor eficaç/màxim.', solution:'Conversions típiques: passar totes les magnituds a unitats coherents; redibuixar circuits equivalents; separar fase/línia en trifàsica; distingir valor eficaç i màxim en corrent altern.', keywords:['unitats','conversió','m','kg','s','fase','eficaç','equivalent']},
+    {title:'4. Escollir fórmules o idees clau', prompt:'Escriu la fórmula o el principi que faries servir en cada apartat.', hint:'Relaciona cada apartat amb una família: energia, potència, lògica, circuits, motors, pneumàtica o trifàsica.', solution:clean(x.formules).join('\n') || 'Cal justificar amb vocabulari tècnic i relació causa-efecte.', keywords:clean(x.formules).join(' ').toLowerCase().split(/[^a-zà-ú0-9ηωφ√]+/).filter(w=>w.length>1).slice(0,12)},
+    {title:'5. Desenvolupar el càlcul o la resposta', prompt:'Fes la substitució numèrica o escriu la resposta tècnica de l’apartat.', hint:'Escriu primer la fórmula, després substitueix, després calcula. Si és teòric, fes frases curtes amb vocabulari tècnic.', solution:x.enllac ? `Aquest exercici té resolutor associat. Pots obrir-lo per veure la substitució numèrica i el càlcul: ${exercises[x.enllac]?.title || x.enllac}.` : x.resolucio, keywords:['substitució','resultat','fórmula','per tant','unitat','càlcul']},
+    {title:'6. Interpretar i revisar errors', prompt:'Explica si el resultat és coherent i quin error habitual cal evitar.', hint:'Pregunta’t si la unitat final té sentit, si l’ordre de magnitud és raonable i si has aplicat totes les condicions.', solution:`Errors habituals:\n${clean(x.errors).join('\n') || 'No justificar la resposta o no indicar unitats.'}`, keywords:clean(x.errors).join(' ').toLowerCase().split(/[^a-zà-ú0-9]+/).filter(w=>w.length>3).slice(0,10)}
+  ];
+}
+
 function renderPauDetail(x){
+  return pauRole === 'docent' ? renderPauDocent(x) : renderPauAlumne(x);
+}
+
+function renderPauHeader(x){
+  return `<h2>${esc(x.exercici)} · ${esc(x.titol)}</h2><p><span class="pill">${esc(x.any)}</span> <span class="pill">${esc(x.materia)}</span> <span class="pill">${esc(x.serie)}</span> <span class="pill">${esc(x.bloc)}</span> <span class="pill">${esc(x.nivell)}</span></p><p>${esc(x.resum)}</p>`;
+}
+
+function renderPauAlumne(x){
+  const steps = makePauSteps(x);
+  return `<section class="card pau-work"><div class="mode-banner"><b>Mode alumne:</b> treball per passos. La solució no surt tota de cop; pots demanar pistes o comprovar cada pas.</div>${renderPauHeader(x)}<div class="progressbar"><div id="pauProgress" style="width:0%"></div></div>${steps.map((st,i)=>`<article class="step-card" id="stepCard${i}"><h3>${esc(st.title)}</h3><p>${esc(st.prompt)}</p><textarea id="pauAnswer${i}" placeholder="Escriu aquí la teva resposta del pas ${i+1}..."></textarea><div class="btnrow no-print"><button class="secondary" onclick="showPauHint(${i})">Pista</button><button class="secondary" onclick="checkPauStep(${i})">Comprovar aquest pas</button><button class="secondary" onclick="showPauSolution(${i})">Mostra solució del pas</button></div><div id="pauFeedback${i}" class="step-feedback"></div></article>`).join('')}<div class="btnrow no-print"><button class="primary" onclick="finishPauActivity()">Finalitzar i veure resum</button>${x.enllac?`<button class="secondary" onclick="openExercise('${x.enllac}')">Obrir resolutor associat</button>`:''}<button class="secondary" onclick="printClassSheet('${x.id}', false)">Fitxa imprimible alumne</button><button class="secondary" onclick="saveCurrent('${esc(x.exercici+' · '+x.titol)}', document.getElementById('pauArea').innerText)">Guardar</button></div><div id="pauSummary"></div></section>`;
+}
+
+function renderPauDocent(x){
   const list = arr => `<ul>${(arr||[]).map(v=>`<li>${esc(v)}</li>`).join('')}</ul>`;
-  return `<section class="card"><h2>${esc(x.exercici)} · ${esc(x.titol)}</h2><p><span class="pill">${esc(x.any)}</span> <span class="pill">${esc(x.materia)}</span> <span class="pill">${esc(x.serie)}</span> <span class="pill">${esc(x.bloc)}</span></p><p>${esc(x.resum)}</p><details class="explain" open><summary>1. Lectura de l’exercici</summary><p>Aquesta fitxa no copia el PDF: el transforma en un guió didàctic per treballar a classe. L’objectiu és entendre què demana, separar dades, triar fórmules i resoldre per apartats.</p></details><details class="explain" open><summary>2. Apartats que cal resoldre</summary>${list(x.apartats)}</details><details class="explain"><summary>3. Dades principals</summary>${list(x.dades)}</details><details class="explain"><summary>4. Fórmules i idees clau</summary>${list(x.formules)}</details><details class="explain"><summary>5. Pistes graduades</summary>${list(x.pistes)}</details><details class="explain"><summary>6. Resolució orientativa</summary><p>${esc(x.resolucio)}</p>${x.enllac?`<p><button class="primary" onclick="openExercise('${x.enllac}')">Obrir resolutor amb dades modificables</button></p>`:'<p class="notice">Aquesta fitxa depèn molt de l’esquema o de la figura del PDF. Per això queda com a guió per parts, no com a calculadora automàtica completa.</p>'}</details><details class="explain"><summary>7. Errors habituals</summary>${list(x.errors)}</details><div class="btnrow no-print"><button class="secondary" onclick="navigator.clipboard.writeText(document.getElementById('pauArea').innerText)">Copiar fitxa</button><button class="secondary" onclick="saveCurrent('${esc(x.exercici+' · '+x.titol)}', document.getElementById('pauArea').innerText)">Guardar a l’historial</button><button class="secondary" onclick="window.print()">Imprimir</button></div></section>`;
+  return `<section class="card pau-work"><div class="mode-banner teacher"><b>Mode docent:</b> mostra solucions orientatives, criteris de correcció i fitxes imprimibles.</div>${renderPauHeader(x)}<details class="explain" open><summary>1. Apartats que cal resoldre</summary>${list(x.apartats)}</details><details class="explain" open><summary>2. Dades principals</summary>${list(x.dades)}</details><details class="explain" open><summary>3. Fórmules i idees clau</summary>${list(x.formules)}</details><details class="explain" open><summary>4. Pistes graduades</summary>${list(x.pistes)}</details><details class="explain" open><summary>5. Resolució orientativa</summary><p>${esc(x.resolucio)}</p>${x.enllac?`<p><button class="primary" onclick="openExercise('${x.enllac}')">Obrir resolutor amb dades modificables</button></p>`:'<p class="notice">Aquesta fitxa depèn de figura o esquema. És millor treballar-la com a lectura guiada i correcció per criteris.</p>'}</details><details class="explain" open><summary>6. Errors habituals</summary>${list(x.errors)}</details><details class="explain" open><summary>7. Criteris orientatius de correcció</summary>${teacherCriteria(x)}</details><div class="btnrow no-print"><button class="secondary" onclick="printClassSheet('${x.id}', false)">Imprimir fitxa alumne</button><button class="secondary" onclick="printClassSheet('${x.id}', true)">Imprimir amb solucions</button><button class="secondary" onclick="navigator.clipboard.writeText(document.getElementById('pauArea').innerText)">Copiar fitxa</button><button class="secondary" onclick="saveCurrent('${esc(x.exercici+' · '+x.titol)}', document.getElementById('pauArea').innerText)">Guardar a l’historial</button></div></section>`;
+}
+
+function teacherCriteria(x){
+  return `<ul><li><b>Comprensió de l’enunciat:</b> identifica correctament què demana cada apartat.</li><li><b>Dades i unitats:</b> selecciona dades rellevants i fa conversions adequades.</li><li><b>Modelització:</b> tria fórmules o principis coherents amb el bloc ${esc(x.bloc)}.</li><li><b>Procediment:</b> substitueix ordenadament i manté unitats.</li><li><b>Resultat:</b> dona magnitud, unitat i interpretació tècnica.</li><li><b>Revisió:</b> evita errors habituals: ${(x.errors||[]).slice(0,2).map(esc).join('; ')}.</li></ul>`;
+}
+
+function showPauHint(i){
+  const x = pauBank.find(p => p.id === currentPauId); if(!x) return;
+  const st = makePauSteps(x)[i];
+  document.getElementById(`pauFeedback${i}`).innerHTML = `<div class="notice"><b>Pista:</b> ${esc(st.hint)}</div>`;
+}
+
+function showPauSolution(i){
+  const x = pauBank.find(p => p.id === currentPauId); if(!x) return;
+  const st = makePauSteps(x)[i];
+  document.getElementById(`pauFeedback${i}`).innerHTML = `<div class="ok"><b>Solució orientativa del pas:</b><pre>${esc(st.solution)}</pre></div>`;
+}
+
+function checkPauStep(i){
+  const x = pauBank.find(p => p.id === currentPauId); if(!x) return;
+  const st = makePauSteps(x)[i];
+  const ans = (document.getElementById(`pauAnswer${i}`)?.value || '').toLowerCase();
+  const words = (st.keywords||[]).filter(w => String(w).length>1);
+  const hits = words.filter(w => ans.includes(String(w).toLowerCase())).length;
+  const min = Math.min(3, Math.max(1, Math.ceil(words.length/4)));
+  const ok = ans.trim().length > 15 && (words.length===0 || hits >= min);
+  document.getElementById(`pauFeedback${i}`).innerHTML = `<div class="${ok?'ok':'notice'}"><b>${ok?'Bon camí.':'Resposta parcial.'}</b> ${ok?'Has inclòs idees clau del pas.':'Revisa la pista o amplia la resposta amb dades, fórmula, unitats o justificació.'}<br><span class="small">Paraules clau detectades: ${hits}/${words.length || '—'}.</span></div>`;
+  updatePauProgress();
+}
+
+function updatePauProgress(){
+  const boxes = $$('[id^="pauFeedback"]');
+  const done = boxes.filter(b => b.textContent.trim().length>0).length;
+  const pct = boxes.length ? Math.round(done/boxes.length*100) : 0;
+  const bar = document.getElementById('pauProgress'); if(bar) bar.style.width = pct + '%';
+}
+
+function finishPauActivity(){
+  updatePauProgress();
+  const answers = $$('[id^="pauAnswer"]').map((t,i)=>`Pas ${i+1}: ${t.value.trim() || '(sense resposta)'}`).join('\n\n');
+  document.getElementById('pauSummary').innerHTML = `<div class="result"><h3>Resum de l’activitat</h3><p>Has completat una resolució per passos. Revisa especialment unitats, justificació i coherència del resultat.</p><pre>${esc(answers)}</pre><div class="btnrow no-print"><button class="secondary" onclick="navigator.clipboard.writeText(document.getElementById('pauSummary').innerText)">Copiar resum</button><button class="secondary" onclick="saveCurrent('Activitat PAU per passos', document.getElementById('pauArea').innerText)">Guardar a l’historial</button></div></div>`;
+}
+
+function printClassSheet(id, withSolutions=false){
+  const x = pauBank.find(p => p.id === id); if(!x) return;
+  const steps = makePauSteps(x);
+  const blanks = `<div class="blank-lines"></div>`;
+  document.getElementById('pauArea').innerHTML = `<section class="card print-sheet"><h2>Fitxa de treball PAU</h2>${renderPauHeader(x)}<p><b>Temps recomanat:</b> 20-35 min segons dificultat.</p>${steps.map((st,i)=>`<article class="sheet-step"><h3>${esc(st.title)}</h3><p>${esc(st.prompt)}</p>${withSolutions?`<div class="ok"><b>Solució orientativa:</b><pre>${esc(st.solution)}</pre></div>`:blanks}</article>`).join('')}<div class="no-print btnrow"><button class="secondary" onclick="openPauItem('${id}')">Tornar a l’activitat</button><button class="primary" onclick="window.print()">Imprimir ara</button></div></section>`;
 }
 
 function renderTest(){
@@ -391,6 +476,6 @@ setView('inici');
 // Exposa funcions per als botons generats dinamicament i evita problemes amb handlers inline en alguns navegadors.
 Object.assign(window, {
   setView, openExercise, renderExerciseCards, renderExerciseForm, solveSelected,
-  renderPauBank, openPauItem, renderPauDetail, renderTest, checkTest, copyResult, saveCurrent, saveCurrentFromResult, renderCalculatorCards, renderCalculator, solveCalculator,
+  renderPauBank, openPauItem, renderPauDetail, setPauRole, showPauHint, showPauSolution, checkPauStep, finishPauActivity, printClassSheet, renderTest, checkTest, copyResult, saveCurrent, saveCurrentFromResult, renderCalculatorCards, renderCalculator, solveCalculator,
   historial, deleteHist, generatePractice, checkPractice
 });

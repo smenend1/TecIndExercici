@@ -1,16 +1,17 @@
-# Tecnologia Industrial Exercicis Plus v6 · Banc PAU ampliat
+# Tecnologia Industrial Exercicis Plus v7
 
-PWA educativa en català per treballar exercicis de Tecnologia Industrial / Tecnologia i Enginyeria i Electrotècnia.
+PWA educativa en català per preparar exercicis de Tecnologia Industrial, Tecnologia i Enginyeria i PAU.
 
-## Novetats v6
+## Novetats v7
 
-- Banc PAU ampliat amb fitxes didàctiques extretes dels PDF pujats.
-- Classificació per any, matèria, sèrie, exercici, bloc i tipus.
-- Mode 'Treballar per parts': lectura, apartats, dades, fórmules, pistes, resolució orientativa i errors habituals.
-- Enllaç directe als resolutors quan l'exercici és automatitzable.
-- Manté les calculadores restaurades de la v5.
-- Service Worker actualitzat a v6.
+- Mode aula dins el Banc PAU.
+- Selector Alumne / Docent.
+- Resolució per passos amb pistes, comprovació i solució gradual.
+- Fitxa imprimible per a l'alumne amb espais de resposta.
+- Fitxa imprimible del docent amb solucions orientatives.
+- Criteris orientatius de correcció per a cada fitxa PAU.
+- Es manté la v6: banc PAU ampliat, exercicis guiats, calculadores, pràctica, formulari i historial.
 
-## Limitació honesta
+## Desplegament
 
-Els exercicis amb figures complexes, esquemes elèctrics o lectures d'oscil·loscopi s'han incorporat com a fitxes guiades, no com a resolutors automàtics complets. Per automatitzar-los caldria codificar cada circuit o figura específicament.
+Puja tots els fitxers a GitHub Pages. Si al mòbil apareix una versió anterior, esborra les dades del lloc o força l'actualització perquè el Service Worker pot mantenir fitxers antics.
