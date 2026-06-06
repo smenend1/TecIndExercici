@@ -1,32 +1,16 @@
-# Tecnologia Industrial Exercicis Plus v2
+# Tecnologia Industrial Exercicis Plus v6 · Banc PAU ampliat
 
-PWA educativa en català per practicar exercicis tipus PAU de Tecnologia Industrial, Tecnologia i Enginyeria i blocs d'Electrotècnia.
+PWA educativa en català per treballar exercicis de Tecnologia Industrial / Tecnologia i Enginyeria i Electrotècnia.
 
-## Novetats v2
+## Novetats v6
 
-- Targetes d'exercicis clicables des de l'inici.
-- Apartat Exercicis amb desplegable i targetes filtrables.
-- Apartat PAU amb accés directe a problemes guiats.
-- Resolució pas a pas amb dades modificables.
-- Historial amb localStorage.
-- CSS reforçat dins index.html i styles.css.
-- Service Worker actualitzat per evitar memòria cau antiga.
+- Banc PAU ampliat amb fitxes didàctiques extretes dels PDF pujats.
+- Classificació per any, matèria, sèrie, exercici, bloc i tipus.
+- Mode 'Treballar per parts': lectura, apartats, dades, fórmules, pistes, resolució orientativa i errors habituals.
+- Enllaç directe als resolutors quan l'exercici és automatitzable.
+- Manté les calculadores restaurades de la v5.
+- Service Worker actualitzat a v6.
 
-## Desplegament
+## Limitació honesta
 
-Puja tots els fitxers a GitHub Pages. Si el navegador mostra una versió anterior, esborra les dades del lloc o força l'actualització perquè pot quedar un Service Worker antic.
-
-
-## v3 - Explicació ampliada
-
-Aquesta versió afegeix resolucions més extenses amb lectura de l’enunciat, dades, conversions, estratègia, fórmules, càlcul pas a pas, interpretació tècnica, errors habituals i exercici similar.
-
-
-## v4
-Correccio dels botons de targeta: el mapa de vistes ara apunta correctament a la pestanya Exercicis i les funcions s'exposen a window per als botons generats dinamicament.
-
-
-## v5
-- Restaurada la pestanya Calculadores com a apartat propi, separat d'Exercicis.
-- Afegides targetes de calculadora, panell de càlcul, resultat amb explicació, copiar, imprimir i guardar a l'historial.
-- Service Worker actualitzat a v5.
+Els exercicis amb figures complexes, esquemes elèctrics o lectures d'oscil·loscopi s'han incorporat com a fitxes guiades, no com a resolutors automàtics complets. Per automatitzar-los caldria codificar cada circuit o figura específicament.
