@@ -3,7 +3,7 @@
 const $ = (s, el=document) => el.querySelector(s);
 const $$ = (s, el=document) => [...el.querySelectorAll(s)];
 const app = $('#app');
-const LS = 'ti_exercicis_plus_historial_v8';
+const LS = 'ti_exercicis_plus_historial_v9';
 let currentPauId = null;
 let pauRole = 'alumne';
 const fmt = (n, d=3) => Number.isFinite(n) ? Number(n).toLocaleString('ca-ES', {maximumFractionDigits:d}) : '—';
@@ -107,6 +107,1532 @@ pauBank.forEach(x => {
   x.enunciat = pauEnunciats[x.id] || x.resum || '';
 });
 
+
+
+// Banc PAU multiany afegit a la v9 a partir dels PDF 2021, 2022 i 2024 pujats pel docent.
+const pauBankV9 = [
+  {
+    "id": "tec2024-s1-e1",
+    "any": 2024,
+    "materia": "Tecnologia i enginyeria",
+    "serie": "Sèrie 1",
+    "exercici": "Exercici 1",
+    "bloc": "Test PAU",
+    "tipus": "test",
+    "nivell": "N1-N2",
+    "titol": "Qüestions curtes 2024 S1",
+    "resum": "Test sobre motor de benzina, tracció, calor, fotovoltaica i relació de compressió.",
+    "enunciat": "Bloc de cinc qüestions tipus test: consum de combustible en un cicle, interpretació de corbes tensió-deformació, escalfament d’aigua, energia produïda per plaques solars i volum de cambra de combustió d’un motor.",
+    "apartats": [
+      "Respondre les qüestions tipus test.",
+      "Justificar la fórmula o principi de cada resposta."
+    ],
+    "dades": [
+      "Consum 10,2 L/h; n = 4 000 min⁻¹; ρ = 0,8 kg/L.",
+      "Q = 3 000 J; V aigua = 50 mL; T inicial = 5 °C.",
+      "A = 4,4 m²; irradiació = 13 kWh/m² dia; η = 0,3.",
+      "Cursa 50,6 mm; diàmetre 56 mm; relació de compressió 7,3."
+    ],
+    "formules": [
+      "massa = volum·densitat",
+      "Q = m·ce·ΔT",
+      "E = irradiació·A·η·dies",
+      "Vcil = πd²cursa/4",
+      "r = (Vcil + Vc)/Vc"
+    ],
+    "pistes": [
+      "Classifica primer el problema per tema.",
+      "No comencis a calcular sense escriure dades i unitats.",
+      "Comprova l’ordre de magnitud del resultat."
+    ],
+    "errors": [
+      "No indicar unitats.",
+      "Barrejar unitats incompatibles.",
+      "No justificar el procediment."
+    ],
+    "resolucio": "Fitxa PAU multiany: resolució guiada per passos. Alguns exercicis amb figures queden com a fitxa orientativa i no com a resolutor automàtic complet.",
+    "enllac": "calor"
+  },
+  {
+    "id": "tec2024-s1-e2",
+    "any": 2024,
+    "materia": "Tecnologia i enginyeria",
+    "serie": "Sèrie 1",
+    "exercici": "Exercici 2",
+    "bloc": "Lògica digital",
+    "tipus": "fitxa per parts",
+    "nivell": "N2-N3",
+    "titol": "Accés a edifici amb tres sistemes",
+    "resum": "Sistema d’accés amb clau, targeta, empremta i horari laboral/no laboral.",
+    "enunciat": "L’accés a un edifici d’oficines està regulat per clau numèrica, targeta magnètica i empremta dactilar. En horari laboral n’hi ha prou amb validar un dels tres sistemes. Fora de l’horari laboral cal validar almenys dos dels tres. Cal fer taula de veritat, funció lògica i diagrama de portes.",
+    "apartats": [
+      "a) Taula de veritat.",
+      "b) Funció lògica simplificada.",
+      "c) Diagrama de portes."
+    ],
+    "dades": [
+      "h = horari laboral.",
+      "c = clau vàlida.",
+      "t = targeta vàlida.",
+      "e = empremta vàlida.",
+      "a = accés permès."
+    ],
+    "formules": [
+      "a = h·(c+t+e) + ¬h·(c·t + c·e + t·e)"
+    ],
+    "pistes": [
+      "En horari laboral és una OR de tres controls.",
+      "Fora d’horari calen combinacions de dos controls.",
+      "Separa els casos h=1 i h=0."
+    ],
+    "errors": [
+      "Oblidar el cas fora d’horari.",
+      "Fer que en horari laboral calguin dos controls.",
+      "No negar h en la segona part."
+    ],
+    "resolucio": "Fitxa PAU multiany: resolució guiada per passos. Alguns exercicis amb figures queden com a fitxa orientativa i no com a resolutor automàtic complet."
+  },
+  {
+    "id": "tec2024-s1-e3",
+    "any": 2024,
+    "materia": "Tecnologia i enginyeria",
+    "serie": "Sèrie 1",
+    "exercici": "Exercici 3",
+    "bloc": "Energia i mobilitat elèctrica",
+    "tipus": "fitxa per parts",
+    "nivell": "N2-N3",
+    "titol": "Patinet elèctric en pujada",
+    "resum": "Bateria, motor, pendent, energia consumida i parell del motor.",
+    "enunciat": "Un patinet elèctric amb bateria ideal de 24 V i 250 Wh alimenta un motor de rendiment 0,85. La roda motriu té diàmetre 140 mm. El conjunt persona-patinet té massa 70 kg i recorre 2 km a 8 km/h en una pujada de 7°. Cal calcular potència elèctrica, velocitat de rotació, parell i percentatge de bateria consumida.",
+    "apartats": [
+      "a) Potència elèctrica consumida.",
+      "b) Velocitat angular i parell del motor.",
+      "c) Percentatge d’energia de la bateria consumida."
+    ],
+    "dades": [
+      "U = 24 V.",
+      "Ebat = 250 Wh.",
+      "ηmot = 0,85.",
+      "d roda = 140 mm.",
+      "m = 70 kg.",
+      "s = 2 km.",
+      "v = 8 km/h.",
+      "α = 7°"
+    ],
+    "formules": [
+      "F = m·g·sinα",
+      "Pmec = F·v",
+      "Pelèc = Pmec/η",
+      "ω = v/r",
+      "Γ = Pmec/ω",
+      "Δ = Econs/Ebat·100"
+    ],
+    "pistes": [
+      "Classifica primer el problema per tema.",
+      "No comencis a calcular sense escriure dades i unitats.",
+      "Comprova l’ordre de magnitud del resultat."
+    ],
+    "errors": [
+      "No indicar unitats.",
+      "Barrejar unitats incompatibles.",
+      "No justificar el procediment."
+    ],
+    "resolucio": "Fitxa PAU multiany: resolució guiada per passos. Alguns exercicis amb figures queden com a fitxa orientativa i no com a resolutor automàtic complet.",
+    "enllac": "motor"
+  },
+  {
+    "id": "tec2024-s1-e4",
+    "any": 2024,
+    "materia": "Tecnologia i enginyeria",
+    "serie": "Sèrie 1",
+    "exercici": "Exercici 4",
+    "bloc": "Energia i combustibles",
+    "tipus": "fitxa per parts",
+    "nivell": "N2-N3",
+    "titol": "Cotxe de combustió i emissions",
+    "resum": "Acceleració d’un vehicle, energia cinètica, consum de benzina i emissions de CO2.",
+    "enunciat": "Un cotxe de massa 1 250 kg parteix del repòs i arriba a 50 km/h en circuit horitzontal. El motor de combustió té rendiment 0,25. La benzina té poder calorífic 46 MJ/kg, densitat 0,72 g/cm³ i factor d’emissions 2,157 kg CO2/L. Es negligeixen resistències passives.",
+    "apartats": [
+      "Treball mecànic aportat.",
+      "Energia química necessària.",
+      "Volum de benzina consumit.",
+      "Emissions de CO2."
+    ],
+    "dades": [
+      "m = 1 250 kg.",
+      "v = 50 km/h.",
+      "η = 0,25.",
+      "pc = 46 MJ/kg.",
+      "ρ = 0,72 g/cm³.",
+      "FE = 2,157 kg CO2/L."
+    ],
+    "formules": [
+      "Ec = 1/2·m·v²",
+      "Ecomb = Ec/η",
+      "mcomb = Ecomb/pc",
+      "V = m/ρ",
+      "CO2 = V·FE"
+    ],
+    "pistes": [
+      "Classifica primer el problema per tema.",
+      "No comencis a calcular sense escriure dades i unitats.",
+      "Comprova l’ordre de magnitud del resultat."
+    ],
+    "errors": [
+      "No indicar unitats.",
+      "Barrejar unitats incompatibles.",
+      "No justificar el procediment."
+    ],
+    "resolucio": "Fitxa PAU multiany: resolució guiada per passos. Alguns exercicis amb figures queden com a fitxa orientativa i no com a resolutor automàtic complet.",
+    "enllac": "calor"
+  },
+  {
+    "id": "tec2024-s1-e5",
+    "any": 2024,
+    "materia": "Tecnologia i enginyeria",
+    "serie": "Sèrie 1",
+    "exercici": "Exercici 5",
+    "bloc": "Estàtica i biomecànica",
+    "tipus": "fitxa visual",
+    "nivell": "N3",
+    "titol": "Força del múscul tibial anterior",
+    "resum": "Equilibri del peu amb moments respecte de l’articulació del turmell.",
+    "enunciat": "Es vol estudiar la força necessària del múscul tibial anterior perquè la planta del peu es mantingui horitzontal quan està elevat. La figura representa el peu, el centre d’inèrcia i el punt d’inserció del múscul. Cal treballar equilibri de moments i forces.",
+    "apartats": [
+      "Diagrama de cos lliure.",
+      "Moment del pes respecte O.",
+      "Força del múscul.",
+      "Reaccions a l’articulació si escau."
+    ],
+    "dades": [
+      "m peu = 2,2 kg.",
+      "Geometria indicada a la figura del PDF."
+    ],
+    "formules": [
+      "ΣM_O = 0",
+      "ΣFx = 0",
+      "ΣFy = 0"
+    ],
+    "pistes": [
+      "Pren moments al punt O per eliminar reaccions.",
+      "El braç de palanca depèn de la figura.",
+      "Indica sentit de cada força."
+    ],
+    "errors": [
+      "No fer diagrama de cos lliure.",
+      "Fer servir distàncies que no són perpendiculars."
+    ],
+    "resolucio": "Fitxa PAU multiany: resolució guiada per passos. Alguns exercicis amb figures queden com a fitxa orientativa i no com a resolutor automàtic complet."
+  },
+  {
+    "id": "tec2024-s1-e6",
+    "any": 2024,
+    "materia": "Tecnologia i enginyeria",
+    "serie": "Sèrie 1",
+    "exercici": "Exercici 6",
+    "bloc": "Corrent altern",
+    "tipus": "fitxa per parts",
+    "nivell": "N3",
+    "titol": "Càrrega RL amb wattímetre",
+    "resum": "Circuit de CA amb resistència i inductància, potència activa i condensador de compensació.",
+    "enunciat": "Una font sinusoidal de 50 Hz alimenta una càrrega formada per R1 = 5 Ω en sèrie amb L1 = 7 mH. El wattímetre mesura W1 = 950 W. Cal calcular reactància inductiva, factor de potència i magnituds associades; l’exercici incorpora compensació amb capacitat segons la figura.",
+    "apartats": [
+      "Llegir l’enunciat i separar els apartats.",
+      "Identificar dades i magnituds.",
+      "Aplicar el model o fórmula corresponent.",
+      "Interpretar el resultat amb unitats."
+    ],
+    "dades": [
+      "f = 50 Hz.",
+      "R1 = 5 Ω.",
+      "L1 = 7 mH.",
+      "W1 = 950 W."
+    ],
+    "formules": [
+      "XL = 2πfL",
+      "Z = √(R²+XL²)",
+      "cosφ = R/Z",
+      "P = U·I·cosφ",
+      "QC = U²/XC"
+    ],
+    "pistes": [
+      "Classifica primer el problema per tema.",
+      "No comencis a calcular sense escriure dades i unitats.",
+      "Comprova l’ordre de magnitud del resultat."
+    ],
+    "errors": [
+      "No indicar unitats.",
+      "Barrejar unitats incompatibles.",
+      "No justificar el procediment."
+    ],
+    "resolucio": "Fitxa PAU multiany: resolució guiada per passos. Alguns exercicis amb figures queden com a fitxa orientativa i no com a resolutor automàtic complet.",
+    "enllac": "rl"
+  },
+  {
+    "id": "tec2024-s5-e1",
+    "any": 2024,
+    "materia": "Tecnologia i enginyeria",
+    "serie": "Sèrie 5",
+    "exercici": "Exercici 1",
+    "bloc": "Test PAU",
+    "tipus": "test",
+    "nivell": "N1-N2",
+    "titol": "Qüestions curtes 2024 S5",
+    "resum": "Test sobre electricitat domèstica, binari, energia, transmissió, resistivitat i calor.",
+    "enunciat": "Bloc de qüestions tipus test de la sèrie 5 de 2024. Inclou intensitat d’una estufa, nombres binaris, energia i calor, transmissió mecànica i resistència elèctrica.",
+    "apartats": [
+      "Respondre qüestions tipus test.",
+      "Justificar breument les opcions."
+    ],
+    "dades": [
+      "Dades numèriques i condicions indicades a l’enunciat."
+    ],
+    "formules": [
+      "Fórmules del bloc corresponent.",
+      "Conversió d’unitats quan calgui."
+    ],
+    "pistes": [
+      "Classifica primer el problema per tema.",
+      "No comencis a calcular sense escriure dades i unitats.",
+      "Comprova l’ordre de magnitud del resultat."
+    ],
+    "errors": [
+      "No indicar unitats.",
+      "Barrejar unitats incompatibles.",
+      "No justificar el procediment."
+    ],
+    "resolucio": "Fitxa PAU multiany: resolució guiada per passos. Alguns exercicis amb figures queden com a fitxa orientativa i no com a resolutor automàtic complet."
+  },
+  {
+    "id": "tec2024-s5-e2",
+    "any": 2024,
+    "materia": "Tecnologia i enginyeria",
+    "serie": "Sèrie 5",
+    "exercici": "Exercici 2",
+    "bloc": "Lògica digital",
+    "tipus": "fitxa per parts",
+    "nivell": "N2-N3",
+    "titol": "Llum encès per nombre 0 o senar",
+    "resum": "Circuit combinacional de quatre entrades que encén un llum si el nombre binari és 0 o senar.",
+    "enunciat": "Un sistema digital rep un número codificat en binari amb quatre entrades. El llum només ha d’estar encès si el nombre és 0 o un nombre senar. Cal fer taula de veritat, funció lògica simplificada i esquema de contactes equivalent.",
+    "apartats": [
+      "a) Taula de veritat.",
+      "b) Funció lògica.",
+      "c) Esquema de contactes."
+    ],
+    "dades": [
+      "Entrades a,b,c,d.",
+      "Sortida l = llum actiu."
+    ],
+    "formules": [
+      "l = ¬a·¬b·¬c·¬d + d"
+    ],
+    "pistes": [
+      "Un nombre senar en binari acaba amb 1.",
+      "El nombre 0 és 0000.",
+      "Simplifica amb el bit menys significatiu."
+    ],
+    "errors": [
+      "No indicar unitats.",
+      "Barrejar unitats incompatibles.",
+      "No justificar el procediment."
+    ],
+    "resolucio": "Fitxa PAU multiany: resolució guiada per passos. Alguns exercicis amb figures queden com a fitxa orientativa i no com a resolutor automàtic complet."
+  },
+  {
+    "id": "tec2024-s5-e3",
+    "any": 2024,
+    "materia": "Tecnologia i enginyeria",
+    "serie": "Sèrie 5",
+    "exercici": "Exercici 3",
+    "bloc": "Mobilitat i impacte ambiental",
+    "tipus": "fitxa per parts",
+    "nivell": "N2-N3",
+    "titol": "Comparativa cotxe elèctric/gasoil",
+    "resum": "Comparació econòmica i ambiental entre vehicle elèctric i gasoil en trajectes anuals.",
+    "enunciat": "Una persona fa trajectes diaris de 120 km per carretera i 10 km per ciutat durant 280 dies l’any. Es compara un cotxe elèctric i un de gasoil amb dades de compra, consum, preu de l’energia i factor d’emissions. Cal calcular emissions, costos i temps d’amortització o comparació.",
+    "apartats": [
+      "Llegir l’enunciat i separar els apartats.",
+      "Identificar dades i magnituds.",
+      "Aplicar el model o fórmula corresponent.",
+      "Interpretar el resultat amb unitats."
+    ],
+    "dades": [
+      "d extraurbà = 120 km/dia.",
+      "d urbà = 10 km/dia.",
+      "280 dies/any.",
+      "Vehicle elèctric: preu, consum kWh/100 km, FE elèctric.",
+      "Vehicle gasoil: preu, consums i FE."
+    ],
+    "formules": [
+      "Consum anual = consum específic·distància/100",
+      "Cost = energia·preu",
+      "Emissions = consum·factor",
+      "Sobrecost / estalvi anual"
+    ],
+    "pistes": [
+      "Classifica primer el problema per tema.",
+      "No comencis a calcular sense escriure dades i unitats.",
+      "Comprova l’ordre de magnitud del resultat."
+    ],
+    "errors": [
+      "No indicar unitats.",
+      "Barrejar unitats incompatibles.",
+      "No justificar el procediment."
+    ],
+    "resolucio": "Fitxa PAU multiany: resolució guiada per passos. Alguns exercicis amb figures queden com a fitxa orientativa i no com a resolutor automàtic complet.",
+    "enllac": "calor"
+  },
+  {
+    "id": "tec2024-s5-e4",
+    "any": 2024,
+    "materia": "Tecnologia i enginyeria",
+    "serie": "Sèrie 5",
+    "exercici": "Exercici 4",
+    "bloc": "Energia tèrmica",
+    "tipus": "fitxa per parts",
+    "nivell": "N2-N3",
+    "titol": "Escalfador d’aigua i vitroceràmica",
+    "resum": "Comparació entre escalfador submergible i vitroceràmica per escalfar aigua.",
+    "enunciat": "Es vol escalfar 350 mL d’aigua de 20 °C a 95 °C. Es comparen un escalfador de 1 200 W que triga 125 s i una vitroceràmica que consumeix 0,11 kWh. La calor específica de l’aigua és 4,18 J/(g°C). Cal calcular energia teòrica, resistència, energia consumida i rendiments.",
+    "apartats": [
+      "Llegir l’enunciat i separar els apartats.",
+      "Identificar dades i magnituds.",
+      "Aplicar el model o fórmula corresponent.",
+      "Interpretar el resultat amb unitats."
+    ],
+    "dades": [
+      "V = 350 mL.",
+      "T1 = 20 °C.",
+      "T2 = 95 °C.",
+      "Pescalf = 1 200 W.",
+      "tescalf = 125 s.",
+      "Evitro = 0,11 kWh.",
+      "U = 230 V.",
+      "ce = 4,18 J/(g°C)."
+    ],
+    "formules": [
+      "Q = m·ce·ΔT",
+      "R = U²/P",
+      "E = P·t",
+      "η = Q/Econs"
+    ],
+    "pistes": [
+      "Classifica primer el problema per tema.",
+      "No comencis a calcular sense escriure dades i unitats.",
+      "Comprova l’ordre de magnitud del resultat."
+    ],
+    "errors": [
+      "No indicar unitats.",
+      "Barrejar unitats incompatibles.",
+      "No justificar el procediment."
+    ],
+    "resolucio": "Fitxa PAU multiany: resolució guiada per passos. Alguns exercicis amb figures queden com a fitxa orientativa i no com a resolutor automàtic complet.",
+    "enllac": "calor"
+  },
+  {
+    "id": "tec2024-s5-e5",
+    "any": 2024,
+    "materia": "Tecnologia i enginyeria",
+    "serie": "Sèrie 5",
+    "exercici": "Exercici 5",
+    "bloc": "Estàtica",
+    "tipus": "fitxa visual",
+    "nivell": "N3",
+    "titol": "Porta d’armari amb barres articulades",
+    "resum": "Mecanisme per elevar una porta amb dues barres articulades i una força vertical.",
+    "enunciat": "Un mecanisme eleva la porta d’un armari amb dues barres de longitud 2L i una força vertical aplicada al punt P. La porta és homogènia, de massa 3 kg, longitud 8L i gruix 2s. Cal fer diagrama de cos lliure, calcular la força aplicada i les forces a les barres quan φ = 30°.",
+    "apartats": [
+      "Llegir l’enunciat i separar els apartats.",
+      "Identificar dades i magnituds.",
+      "Aplicar el model o fórmula corresponent.",
+      "Interpretar el resultat amb unitats."
+    ],
+    "dades": [
+      "m = 3 kg.",
+      "L = 50 mm.",
+      "s = 30 mm.",
+      "LAO = LBQ = 2L.",
+      "φ = 30°."
+    ],
+    "formules": [
+      "ΣM = 0",
+      "ΣFx = 0",
+      "ΣFy = 0"
+    ],
+    "pistes": [
+      "Dibuixa totes les forces sobre la porta.",
+      "Les barres de massa negligible transmeten força axial.",
+      "Usa la geometria per obtenir braços de palanca."
+    ],
+    "errors": [
+      "No indicar unitats.",
+      "Barrejar unitats incompatibles.",
+      "No justificar el procediment."
+    ],
+    "resolucio": "Fitxa PAU multiany: resolució guiada per passos. Alguns exercicis amb figures queden com a fitxa orientativa i no com a resolutor automàtic complet."
+  },
+  {
+    "id": "tec2024-s5-e6",
+    "any": 2024,
+    "materia": "Tecnologia i enginyeria",
+    "serie": "Sèrie 5",
+    "exercici": "Exercici 6",
+    "bloc": "Màquines elèctriques i mobilitat",
+    "tipus": "fitxa per parts",
+    "nivell": "N2-N3",
+    "titol": "Motocicleta elèctrica amb motor a la roda",
+    "resum": "Motor integrat a la roda, potència, parell, velocitat, autonomia i energia de bateria.",
+    "enunciat": "Un prototip de motocicleta elèctrica integra el motor directament a la roda del darrere. A velocitat constant el motor subministra 15 kW i 150 N·m, amb autonomia de 200 km i pneumàtics de 630 mm de diàmetre. El rendiment del motor és 0,9. Cal calcular velocitat angular, velocitat d’avanç, temps màxim i energia de bateria.",
+    "apartats": [
+      "Llegir l’enunciat i separar els apartats.",
+      "Identificar dades i magnituds.",
+      "Aplicar el model o fórmula corresponent.",
+      "Interpretar el resultat amb unitats."
+    ],
+    "dades": [
+      "Pmot = 15 kW.",
+      "Γ = 150 N·m.",
+      "smàx = 200 km.",
+      "d = 630 mm.",
+      "ηmot = 0,9."
+    ],
+    "formules": [
+      "ω = P/Γ",
+      "v = ω·r",
+      "t = s/v",
+      "Esubm = P·t",
+      "Ebat = Esubm/η"
+    ],
+    "pistes": [
+      "Classifica primer el problema per tema.",
+      "No comencis a calcular sense escriure dades i unitats.",
+      "Comprova l’ordre de magnitud del resultat."
+    ],
+    "errors": [
+      "No indicar unitats.",
+      "Barrejar unitats incompatibles.",
+      "No justificar el procediment."
+    ],
+    "resolucio": "Fitxa PAU multiany: resolució guiada per passos. Alguns exercicis amb figures queden com a fitxa orientativa i no com a resolutor automàtic complet.",
+    "enllac": "motor"
+  },
+  {
+    "id": "tec2022-s2-e1",
+    "any": 2022,
+    "materia": "Tecnologia industrial",
+    "serie": "Sèrie 2",
+    "exercici": "Exercici 1",
+    "bloc": "Test PAU",
+    "tipus": "test",
+    "nivell": "N1-N2",
+    "titol": "Qüestions curtes 2022 S2",
+    "resum": "Test sobre Charpy, toleràncies, emissions, unitats de potència i engranatges.",
+    "enunciat": "Bloc de cinc qüestions tipus test: energia absorbida en assaig de Charpy, tolerància d’una resistència normalitzada, petjada de carboni d’un automòbil, unitats de potència i relació de transmissió d’un tren d’engranatges.",
+    "apartats": [
+      "Llegir l’enunciat i separar els apartats.",
+      "Identificar dades i magnituds.",
+      "Aplicar el model o fórmula corresponent.",
+      "Interpretar el resultat amb unitats."
+    ],
+    "dades": [
+      "Pèndol de Charpy: L = 1 m, m = 22 kg, elevació 250 mm.",
+      "Resistència 390 Ω entre 382,2 Ω i 397,8 Ω.",
+      "Emissions 157,8 g CO2/km.",
+      "Tren d’engranatges z1=14, z2=48, z3=16, z4=25."
+    ],
+    "formules": [
+      "Eabs = mg(h1−h2)",
+      "tolerància = ΔR/R",
+      "distància = volum/consum",
+      "i = producte dents conductores/conduïdes"
+    ],
+    "pistes": [
+      "Classifica primer el problema per tema.",
+      "No comencis a calcular sense escriure dades i unitats.",
+      "Comprova l’ordre de magnitud del resultat."
+    ],
+    "errors": [
+      "No indicar unitats.",
+      "Barrejar unitats incompatibles.",
+      "No justificar el procediment."
+    ],
+    "resolucio": "Fitxa PAU multiany: resolució guiada per passos. Alguns exercicis amb figures queden com a fitxa orientativa i no com a resolutor automàtic complet.",
+    "enllac": "motor"
+  },
+  {
+    "id": "tec2022-s2-e2",
+    "any": 2022,
+    "materia": "Tecnologia industrial",
+    "serie": "Sèrie 2",
+    "exercici": "Exercici 2",
+    "bloc": "Lògica digital",
+    "tipus": "fitxa per parts",
+    "nivell": "N2-N3",
+    "titol": "Control de sentit d’un ascensor",
+    "resum": "Circuit digital per decidir si l’ascensor ha de pujar segons planta actual i planta seleccionada.",
+    "enunciat": "El controlador d’un motor d’ascensor ha de generar z = 1 si l’ascensor ha de pujar. Les entrades a,b codifiquen la planta actual i c,d la planta seleccionada, totes en binari de 0 a 3. Cal elaborar taula de veritat, funció lògica i diagrama de portes.",
+    "apartats": [
+      "Llegir l’enunciat i separar els apartats.",
+      "Identificar dades i magnituds.",
+      "Aplicar el model o fórmula corresponent.",
+      "Interpretar el resultat amb unitats."
+    ],
+    "dades": [
+      "a,b = planta actual en binari.",
+      "c,d = planta seleccionada.",
+      "z = 1 si planta seleccionada > planta actual."
+    ],
+    "formules": [
+      "z = 1 quan valor(c,d) > valor(a,b)"
+    ],
+    "pistes": [
+      "Tradueix cada parell binari a decimal.",
+      "Compara planta destí amb planta actual.",
+      "La sortida val 0 si és igual o inferior."
+    ],
+    "errors": [
+      "No indicar unitats.",
+      "Barrejar unitats incompatibles.",
+      "No justificar el procediment."
+    ],
+    "resolucio": "Fitxa PAU multiany: resolució guiada per passos. Alguns exercicis amb figures queden com a fitxa orientativa i no com a resolutor automàtic complet."
+  },
+  {
+    "id": "tec2022-s2-e3",
+    "any": 2022,
+    "materia": "Tecnologia industrial",
+    "serie": "Sèrie 2",
+    "exercici": "Exercici 3",
+    "bloc": "Energia i cost",
+    "tipus": "fitxa per parts",
+    "nivell": "N2",
+    "titol": "Rentadora i discriminació horària",
+    "resum": "Consum d’energia d’una rentadora i cost segons hores punta/vall.",
+    "enunciat": "Un programa estàndard de rentadora dura 1,5 h. Els primers 30 min consumeix 2 000 W i la resta 250 W. Es fan 10 cicles al mes i hi ha tarifa amb hores vall, plana i punta. Cal calcular energia per cicle, percentatge en rentada, cost en punta/vall i estalvi anual.",
+    "apartats": [
+      "Llegir l’enunciat i separar els apartats.",
+      "Identificar dades i magnituds.",
+      "Aplicar el model o fórmula corresponent.",
+      "Interpretar el resultat amb unitats."
+    ],
+    "dades": [
+      "t total = 1,5 h.",
+      "P1 = 2 000 W durant 30 min.",
+      "P2 = 250 W la resta.",
+      "U = 230 V.",
+      "n = 10 cicles/mes.",
+      "Preus punta/vall de la taula."
+    ],
+    "formules": [
+      "E = P·t",
+      "percentatge = Epart/Etotal·100",
+      "cost = E·preu",
+      "estalvi anual = diferència·n·12"
+    ],
+    "pistes": [
+      "Classifica primer el problema per tema.",
+      "No comencis a calcular sense escriure dades i unitats.",
+      "Comprova l’ordre de magnitud del resultat."
+    ],
+    "errors": [
+      "No indicar unitats.",
+      "Barrejar unitats incompatibles.",
+      "No justificar el procediment."
+    ],
+    "resolucio": "Fitxa PAU multiany: resolució guiada per passos. Alguns exercicis amb figures queden com a fitxa orientativa i no com a resolutor automàtic complet.",
+    "enllac": "calor"
+  },
+  {
+    "id": "tec2022-s2-e4",
+    "any": 2022,
+    "materia": "Tecnologia industrial",
+    "serie": "Sèrie 2",
+    "exercici": "Exercici 4",
+    "bloc": "Dinàmica rotacional",
+    "tipus": "fitxa per parts",
+    "nivell": "N3",
+    "titol": "Volant d’inèrcia que s’atura",
+    "resum": "Acceleració angular, voltes i energia dissipada en un volant d’inèrcia.",
+    "enunciat": "Un volant amb moment d’inèrcia 0,9 kg·m² gira a 5 000 min⁻¹. Es desconnecta el motor i triga 1 min a aturar-se per un parell de fricció constant. Cal calcular acceleració angular, nombre de voltes i energia mecànica dissipada.",
+    "apartats": [
+      "Llegir l’enunciat i separar els apartats.",
+      "Identificar dades i magnituds.",
+      "Aplicar el model o fórmula corresponent.",
+      "Interpretar el resultat amb unitats."
+    ],
+    "dades": [
+      "I = 0,9 kg·m².",
+      "n0 = 5 000 min⁻¹.",
+      "t = 1 min.",
+      "ωfinal = 0."
+    ],
+    "formules": [
+      "ω = 2πn/60",
+      "α = (ωf−ω0)/t",
+      "θ = (ω0+ωf)t/2",
+      "N = θ/(2π)",
+      "E = 1/2·I·ω²"
+    ],
+    "pistes": [
+      "Classifica primer el problema per tema.",
+      "No comencis a calcular sense escriure dades i unitats.",
+      "Comprova l’ordre de magnitud del resultat."
+    ],
+    "errors": [
+      "No indicar unitats.",
+      "Barrejar unitats incompatibles.",
+      "No justificar el procediment."
+    ],
+    "resolucio": "Fitxa PAU multiany: resolució guiada per passos. Alguns exercicis amb figures queden com a fitxa orientativa i no com a resolutor automàtic complet.",
+    "enllac": "motor"
+  },
+  {
+    "id": "tec2022-s2-e5",
+    "any": 2022,
+    "materia": "Tecnologia industrial",
+    "serie": "Sèrie 2",
+    "exercici": "Exercici 5",
+    "bloc": "Estàtica i moments",
+    "tipus": "fitxa visual",
+    "nivell": "N3",
+    "titol": "Barra manipulada amb tambor i cable",
+    "resum": "Equilibri d’una barra homogènia accionada per motor i tambor.",
+    "enunciat": "El sistema manipula una barra homogènia de longitud 2L i massa 50 kg mitjançant un cable enrotllat en un tambor de 450 mm. La barra està articulada a O i el sistema està en equilibri amb α = φ = 30°. Cal fer el diagrama de cos lliure, calcular tensió del cable, forces a O i parell del motor.",
+    "apartats": [
+      "Llegir l’enunciat i separar els apartats.",
+      "Identificar dades i magnituds.",
+      "Aplicar el model o fórmula corresponent.",
+      "Interpretar el resultat amb unitats."
+    ],
+    "dades": [
+      "m = 50 kg.",
+      "L = 1 m.",
+      "d tambor = 450 mm.",
+      "α = φ = 30°."
+    ],
+    "formules": [
+      "ΣM_O = 0",
+      "ΣFx = 0",
+      "ΣFy = 0",
+      "Γ = T·r"
+    ],
+    "pistes": [
+      "Pren moments respecte O.",
+      "La tensió del cable genera el parell del tambor.",
+      "Descompon forces segons geometria."
+    ],
+    "errors": [
+      "No indicar unitats.",
+      "Barrejar unitats incompatibles.",
+      "No justificar el procediment."
+    ],
+    "resolucio": "Fitxa PAU multiany: resolució guiada per passos. Alguns exercicis amb figures queden com a fitxa orientativa i no com a resolutor automàtic complet."
+  },
+  {
+    "id": "tec2022-s2-e6",
+    "any": 2022,
+    "materia": "Tecnologia industrial",
+    "serie": "Sèrie 2",
+    "exercici": "Exercici 6",
+    "bloc": "Electricitat bàsica",
+    "tipus": "fitxa per parts",
+    "nivell": "N2",
+    "titol": "Associació de resistències",
+    "resum": "Circuit amb tres resistències en sèrie en paral·lel amb una quarta.",
+    "enunciat": "Un circuit té R1=R2=R3=20 Ω en sèrie i R4=100 Ω en paral·lel amb el conjunt. S’alimenta amb tensió sinusoidal de 230 V. Cal dibuixar l’esquema, calcular resistència equivalent, intensitat i potència consumida.",
+    "apartats": [
+      "Llegir l’enunciat i separar els apartats.",
+      "Identificar dades i magnituds.",
+      "Aplicar el model o fórmula corresponent.",
+      "Interpretar el resultat amb unitats."
+    ],
+    "dades": [
+      "R1=R2=R3=20 Ω.",
+      "R4=100 Ω.",
+      "U = 230 V."
+    ],
+    "formules": [
+      "Rs = R1+R2+R3",
+      "1/Req = 1/Rs + 1/R4",
+      "I = U/Req",
+      "P = U·I = U²/Req"
+    ],
+    "pistes": [
+      "Classifica primer el problema per tema.",
+      "No comencis a calcular sense escriure dades i unitats.",
+      "Comprova l’ordre de magnitud del resultat."
+    ],
+    "errors": [
+      "No indicar unitats.",
+      "Barrejar unitats incompatibles.",
+      "No justificar el procediment."
+    ],
+    "resolucio": "Fitxa PAU multiany: resolució guiada per passos. Alguns exercicis amb figures queden com a fitxa orientativa i no com a resolutor automàtic complet.",
+    "enllac": "ohm"
+  },
+  {
+    "id": "tec2022-s5-e1",
+    "any": 2022,
+    "materia": "Tecnologia industrial",
+    "serie": "Sèrie 5",
+    "exercici": "Exercici 1",
+    "bloc": "Test PAU",
+    "tipus": "test",
+    "nivell": "N1-N2",
+    "titol": "Qüestions curtes 2022 S5",
+    "resum": "Test sobre resistència a tracció, circuits, energia i unitats.",
+    "enunciat": "Bloc de qüestions curtes de Tecnologia industrial 2022 sèrie 5, amb materials, circuits elèctrics, energia, emissions i mecanismes.",
+    "apartats": [
+      "Respondre qüestions tipus test.",
+      "Justificar fórmules o unitats."
+    ],
+    "dades": [
+      "Dades numèriques i condicions indicades a l’enunciat."
+    ],
+    "formules": [
+      "Fórmules del bloc corresponent.",
+      "Conversió d’unitats quan calgui."
+    ],
+    "pistes": [
+      "Classifica primer el problema per tema.",
+      "No comencis a calcular sense escriure dades i unitats.",
+      "Comprova l’ordre de magnitud del resultat."
+    ],
+    "errors": [
+      "No indicar unitats.",
+      "Barrejar unitats incompatibles.",
+      "No justificar el procediment."
+    ],
+    "resolucio": "Fitxa PAU multiany: resolució guiada per passos. Alguns exercicis amb figures queden com a fitxa orientativa i no com a resolutor automàtic complet."
+  },
+  {
+    "id": "tec2022-s5-e2",
+    "any": 2022,
+    "materia": "Tecnologia industrial",
+    "serie": "Sèrie 5",
+    "exercici": "Exercici 2",
+    "bloc": "Lògica digital",
+    "tipus": "fitxa per parts",
+    "nivell": "N2-N3",
+    "titol": "LED encès si número 0 o múltiple de 4",
+    "resum": "Circuit combinacional de quatre entrades que activa un LED segons el número binari.",
+    "enunciat": "Un circuit combinacional rep números del 0 al 15 en binari. La sortida encén un LED quan el número és 0 o un múltiple de 4. Cal fer taula de veritat, funció lògica i esquema de contactes.",
+    "apartats": [
+      "Llegir l’enunciat i separar els apartats.",
+      "Identificar dades i magnituds.",
+      "Aplicar el model o fórmula corresponent.",
+      "Interpretar el resultat amb unitats."
+    ],
+    "dades": [
+      "Entrades a,b,c,d.",
+      "Sortida l = LED actiu."
+    ],
+    "formules": [
+      "múltiple de 4: els dos bits menys significatius són 0",
+      "També inclou 0."
+    ],
+    "pistes": [
+      "En binari, múltiples de 4 acaben en 00.",
+      "El 0 també acaba en 00, per tant queda inclòs."
+    ],
+    "errors": [
+      "No indicar unitats.",
+      "Barrejar unitats incompatibles.",
+      "No justificar el procediment."
+    ],
+    "resolucio": "Fitxa PAU multiany: resolució guiada per passos. Alguns exercicis amb figures queden com a fitxa orientativa i no com a resolutor automàtic complet."
+  },
+  {
+    "id": "tec2022-s5-e3",
+    "any": 2022,
+    "materia": "Tecnologia industrial",
+    "serie": "Sèrie 5",
+    "exercici": "Exercici 3",
+    "bloc": "Mobilitat i sostenibilitat",
+    "tipus": "fitxa per parts",
+    "nivell": "N2-N3",
+    "titol": "Comparació vehicle elèctric i gasoil",
+    "resum": "Trajectes anuals, emissions, cost energètic i comparació econòmica.",
+    "enunciat": "Una persona fa 120 km extraurbans i 10 km urbans cada dia durant 280 dies l’any i compara vehicle elèctric i vehicle de gasoil amb dades de compra, consum, preus i factors d’emissió. Cal calcular emissions diàries/anuals, cost d’ús i comparació global.",
+    "apartats": [
+      "Llegir l’enunciat i separar els apartats.",
+      "Identificar dades i magnituds.",
+      "Aplicar el model o fórmula corresponent.",
+      "Interpretar el resultat amb unitats."
+    ],
+    "dades": [
+      "Dades numèriques i condicions indicades a l’enunciat."
+    ],
+    "formules": [
+      "Fórmules del bloc corresponent.",
+      "Conversió d’unitats quan calgui."
+    ],
+    "pistes": [
+      "Classifica primer el problema per tema.",
+      "No comencis a calcular sense escriure dades i unitats.",
+      "Comprova l’ordre de magnitud del resultat."
+    ],
+    "errors": [
+      "No indicar unitats.",
+      "Barrejar unitats incompatibles.",
+      "No justificar el procediment."
+    ],
+    "resolucio": "Fitxa PAU multiany: resolució guiada per passos. Alguns exercicis amb figures queden com a fitxa orientativa i no com a resolutor automàtic complet.",
+    "enllac": "calor"
+  },
+  {
+    "id": "tec2022-s5-e4",
+    "any": 2022,
+    "materia": "Tecnologia industrial",
+    "serie": "Sèrie 5",
+    "exercici": "Exercici 4",
+    "bloc": "Energia tèrmica",
+    "tipus": "fitxa per parts",
+    "nivell": "N2",
+    "titol": "Escalfar aigua amb dues alternatives",
+    "resum": "Comparació entre escalfador submergible i vitroceràmica.",
+    "enunciat": "Cal escalfar 350 mL d’aigua de 20 °C a 95 °C amb un escalfador de 1 200 W durant 125 s o amb una vitroceràmica que consumeix 0,11 kWh. Es demana energia teòrica, resistència de l’escalfador, energia consumida i rendiment de cada alternativa.",
+    "apartats": [
+      "Llegir l’enunciat i separar els apartats.",
+      "Identificar dades i magnituds.",
+      "Aplicar el model o fórmula corresponent.",
+      "Interpretar el resultat amb unitats."
+    ],
+    "dades": [
+      "V=350 mL.",
+      "T1=20 °C, T2=95 °C.",
+      "P=1 200 W, t=125 s.",
+      "Evitro=0,11 kWh.",
+      "U=230 V.",
+      "ce=4,18 J/(g°C)."
+    ],
+    "formules": [
+      "Q=m·ce·ΔT",
+      "R=U²/P",
+      "E=P·t",
+      "η=Q/E"
+    ],
+    "pistes": [
+      "Classifica primer el problema per tema.",
+      "No comencis a calcular sense escriure dades i unitats.",
+      "Comprova l’ordre de magnitud del resultat."
+    ],
+    "errors": [
+      "No indicar unitats.",
+      "Barrejar unitats incompatibles.",
+      "No justificar el procediment."
+    ],
+    "resolucio": "Fitxa PAU multiany: resolució guiada per passos. Alguns exercicis amb figures queden com a fitxa orientativa i no com a resolutor automàtic complet.",
+    "enllac": "calor"
+  },
+  {
+    "id": "tec2022-s5-e5",
+    "any": 2022,
+    "materia": "Tecnologia industrial",
+    "serie": "Sèrie 5",
+    "exercici": "Exercici 5",
+    "bloc": "Estàtica",
+    "tipus": "fitxa visual",
+    "nivell": "N3",
+    "titol": "Porta elevada amb barres",
+    "resum": "Diagrama de cos lliure i forces en barres d’un mecanisme de porta.",
+    "enunciat": "Mecanisme de porta d’armari amb dues barres articulades, massa de porta, dimensions i angle de funcionament. Es demana diagrama de cos lliure, força aplicada i forces a les barres quan φ = 30°.",
+    "apartats": [
+      "Llegir l’enunciat i separar els apartats.",
+      "Identificar dades i magnituds.",
+      "Aplicar el model o fórmula corresponent.",
+      "Interpretar el resultat amb unitats."
+    ],
+    "dades": [
+      "m=3 kg.",
+      "LAO=LBQ=2L.",
+      "L=50 mm.",
+      "s=30 mm.",
+      "φ=30°."
+    ],
+    "formules": [
+      "ΣM=0",
+      "ΣFx=0",
+      "ΣFy=0"
+    ],
+    "pistes": [
+      "Classifica primer el problema per tema.",
+      "No comencis a calcular sense escriure dades i unitats.",
+      "Comprova l’ordre de magnitud del resultat."
+    ],
+    "errors": [
+      "No indicar unitats.",
+      "Barrejar unitats incompatibles.",
+      "No justificar el procediment."
+    ],
+    "resolucio": "Fitxa PAU multiany: resolució guiada per passos. Alguns exercicis amb figures queden com a fitxa orientativa i no com a resolutor automàtic complet."
+  },
+  {
+    "id": "tec2022-s5-e6",
+    "any": 2022,
+    "materia": "Tecnologia industrial",
+    "serie": "Sèrie 5",
+    "exercici": "Exercici 6",
+    "bloc": "Motors i mobilitat elèctrica",
+    "tipus": "fitxa per parts",
+    "nivell": "N2-N3",
+    "titol": "Motocicleta elèctrica amb motor a la roda",
+    "resum": "Motor integrat a la roda, velocitat angular, autonomia i energia de bateries.",
+    "enunciat": "Un prototip de motocicleta elèctrica integra el motor a la roda del darrere. A velocitat constant el motor subministra 15 kW i 150 N·m, autonomia de 200 km, diàmetre de pneumàtic 630 mm i rendiment 0,9. Cal calcular velocitat angular, velocitat d’avanç, temps màxim, energia subministrada i energia de bateria.",
+    "apartats": [
+      "Llegir l’enunciat i separar els apartats.",
+      "Identificar dades i magnituds.",
+      "Aplicar el model o fórmula corresponent.",
+      "Interpretar el resultat amb unitats."
+    ],
+    "dades": [
+      "Pmot=15 kW.",
+      "Γ=150 N·m.",
+      "smàx=200 km.",
+      "d=630 mm.",
+      "η=0,9."
+    ],
+    "formules": [
+      "ω=P/Γ",
+      "v=ωr",
+      "t=s/v",
+      "E=P·t",
+      "Ebat=E/η"
+    ],
+    "pistes": [
+      "Classifica primer el problema per tema.",
+      "No comencis a calcular sense escriure dades i unitats.",
+      "Comprova l’ordre de magnitud del resultat."
+    ],
+    "errors": [
+      "No indicar unitats.",
+      "Barrejar unitats incompatibles.",
+      "No justificar el procediment."
+    ],
+    "resolucio": "Fitxa PAU multiany: resolució guiada per passos. Alguns exercicis amb figures queden com a fitxa orientativa i no com a resolutor automàtic complet.",
+    "enllac": "motor"
+  },
+  {
+    "id": "tec2021-s2-e1",
+    "any": 2021,
+    "materia": "Tecnologia industrial",
+    "serie": "Sèrie 2",
+    "exercici": "Exercici 1",
+    "bloc": "Test PAU",
+    "tipus": "test",
+    "nivell": "N1-N2",
+    "titol": "Qüestions curtes 2021 S2",
+    "resum": "Test sobre dilatació, cargol, emissions, politges i gas ideal.",
+    "enunciat": "Bloc de qüestions tipus test: dilatació lineal d’una barra d’acer, velocitat de rotació d’un cargol, petjada de carboni d’un autobús, força en un sistema de politges i pressió d’una bombona de butà escalfada.",
+    "apartats": [
+      "Llegir l’enunciat i separar els apartats.",
+      "Identificar dades i magnituds.",
+      "Aplicar el model o fórmula corresponent.",
+      "Interpretar el resultat amb unitats."
+    ],
+    "dades": [
+      "L=800 mm; α=13·10⁻⁶ °C⁻¹; ΔT=400 °C.",
+      "pas=2 mm; avanç=15 mm/s.",
+      "FE=1155,52 g CO2/km.",
+      "m=3 kg en politja.",
+      "p1=303 kPa; T1=20 °C; T2=600 °C."
+    ],
+    "formules": [
+      "Lf = L0(1+αΔT)",
+      "n = v/p",
+      "emissions = distància·FE",
+      "F = mg/avantatge mecànic",
+      "p1/T1 = p2/T2"
+    ],
+    "pistes": [
+      "Classifica primer el problema per tema.",
+      "No comencis a calcular sense escriure dades i unitats.",
+      "Comprova l’ordre de magnitud del resultat."
+    ],
+    "errors": [
+      "No indicar unitats.",
+      "Barrejar unitats incompatibles.",
+      "No justificar el procediment."
+    ],
+    "resolucio": "Fitxa PAU multiany: resolució guiada per passos. Alguns exercicis amb figures queden com a fitxa orientativa i no com a resolutor automàtic complet."
+  },
+  {
+    "id": "tec2021-s2-e2",
+    "any": 2021,
+    "materia": "Tecnologia industrial",
+    "serie": "Sèrie 2",
+    "exercici": "Exercici 2",
+    "bloc": "Lògica digital",
+    "tipus": "fitxa per parts",
+    "nivell": "N2-N3",
+    "titol": "Seguretat en una estació de tall",
+    "resum": "Sistema amb polsadors de mà i de peu per activar tallat.",
+    "enunciat": "En una línia de producció, per fer una operació de tallat cal prémer alhora almenys un polsador de mà i un polsador de peu. Les variables són m1, m2, p1, p2 i la sortida t. Cal fer taula de veritat, funció simplificada i portes lògiques.",
+    "apartats": [
+      "Llegir l’enunciat i separar els apartats.",
+      "Identificar dades i magnituds.",
+      "Aplicar el model o fórmula corresponent.",
+      "Interpretar el resultat amb unitats."
+    ],
+    "dades": [
+      "m1,m2 = polsadors de mà.",
+      "p1,p2 = polsadors de peu.",
+      "t = operació en marxa."
+    ],
+    "formules": [
+      "t = (m1 + m2)·(p1 + p2)"
+    ],
+    "pistes": [
+      "Cal una mà i un peu.",
+      "“Almenys un” implica OR.",
+      "“A la vegada” implica AND."
+    ],
+    "errors": [
+      "No indicar unitats.",
+      "Barrejar unitats incompatibles.",
+      "No justificar el procediment."
+    ],
+    "resolucio": "Fitxa PAU multiany: resolució guiada per passos. Alguns exercicis amb figures queden com a fitxa orientativa i no com a resolutor automàtic complet."
+  },
+  {
+    "id": "tec2021-s2-e3",
+    "any": 2021,
+    "materia": "Tecnologia industrial",
+    "serie": "Sèrie 2",
+    "exercici": "Exercici 3",
+    "bloc": "Mecanismes i transmissió",
+    "tipus": "fitxa per parts",
+    "nivell": "N2-N3",
+    "titol": "Bombo de maceració amb corretja",
+    "resum": "Motor reductor, politges, velocitats i parells.",
+    "enunciat": "Un bombo de maceració gira amb una corretja accionada per motor reductor. El motor dona 0,55 kW a 1 415 min⁻¹. El reductor té rendiment 0,96 i relació τ = 68,9·10⁻³. Una politja de 63 mm arrossega una altra de 500 mm. Cal calcular parells i velocitats.",
+    "apartats": [
+      "a) Parell al motor.",
+      "b) Parell a la sortida del reductor.",
+      "c) Velocitat de la politja petita.",
+      "d) Velocitat del bombo.",
+      "e) Parell al bombo."
+    ],
+    "dades": [
+      "Pmot=0,55 kW.",
+      "nmot=1 415 min⁻¹.",
+      "ηred=0,96.",
+      "τ=ωred/ωmot=68,9·10⁻³.",
+      "d=63 mm.",
+      "D=500 mm."
+    ],
+    "formules": [
+      "ω=2πn/60",
+      "Γ=P/ω",
+      "Psortida=η·Pentrada",
+      "nD = nd·d/D",
+      "Γ = P/ω"
+    ],
+    "pistes": [
+      "Classifica primer el problema per tema.",
+      "No comencis a calcular sense escriure dades i unitats.",
+      "Comprova l’ordre de magnitud del resultat."
+    ],
+    "errors": [
+      "No indicar unitats.",
+      "Barrejar unitats incompatibles.",
+      "No justificar el procediment."
+    ],
+    "resolucio": "Fitxa PAU multiany: resolució guiada per passos. Alguns exercicis amb figures queden com a fitxa orientativa i no com a resolutor automàtic complet.",
+    "enllac": "motor"
+  },
+  {
+    "id": "tec2021-s2-e4",
+    "any": 2021,
+    "materia": "Tecnologia industrial",
+    "serie": "Sèrie 2",
+    "exercici": "Exercici 4",
+    "bloc": "Fotovoltaica i emissions",
+    "tipus": "fitxa per parts",
+    "nivell": "N2-N3",
+    "titol": "Pla municipal de plaques solars",
+    "resum": "Càlcul d’energia anual, potència fotovoltaica, rendiment i emissions evitades.",
+    "enunciat": "Un edifici municipal vol cobrir el 15% de la demanda elèctrica amb plaques fotovoltaiques. La potència instal·lada és 30 kW, consum mitjà 75% durant 12 h/dia, factor d’emissió 241 g CO2/kWh i placa de 1,45 m² que dona 194 W amb irradiació de 1000 W/m². Cal calcular energia consumida, potència fotovoltaica, rendiment i emissions evitades.",
+    "apartats": [
+      "Llegir l’enunciat i separar els apartats.",
+      "Identificar dades i magnituds.",
+      "Aplicar el model o fórmula corresponent.",
+      "Interpretar el resultat amb unitats."
+    ],
+    "dades": [
+      "r=15%.",
+      "Pinst=30 kW.",
+      "c=75%.",
+      "t=12 h/dia.",
+      "FE=241 g CO2/kWh.",
+      "A=1,45 m².",
+      "Pplaca=194 W."
+    ],
+    "formules": [
+      "E=P·c·t·365",
+      "Pfoto=r·Pdemanda",
+      "η=Pplaca/(Irad·A)",
+      "CO2=E·FE"
+    ],
+    "pistes": [
+      "Classifica primer el problema per tema.",
+      "No comencis a calcular sense escriure dades i unitats.",
+      "Comprova l’ordre de magnitud del resultat."
+    ],
+    "errors": [
+      "No indicar unitats.",
+      "Barrejar unitats incompatibles.",
+      "No justificar el procediment."
+    ],
+    "resolucio": "Fitxa PAU multiany: resolució guiada per passos. Alguns exercicis amb figures queden com a fitxa orientativa i no com a resolutor automàtic complet.",
+    "enllac": "calor"
+  },
+  {
+    "id": "tec2021-s2-e5",
+    "any": 2021,
+    "materia": "Tecnologia industrial",
+    "serie": "Sèrie 2",
+    "exercici": "Exercici 5",
+    "bloc": "Estàtica",
+    "tipus": "fitxa visual",
+    "nivell": "N3",
+    "titol": "Estructura de barres per gimnàstica",
+    "resum": "Equilibri d’una estructura amb persona penjada.",
+    "enunciat": "Una persona de 80 kg utilitza una estructura de barres articulada a la paret. La barra QS està unida a OP i la persona es penja del punt P. Cal dibuixar el diagrama de cos lliure, calcular força a la barra QS i reaccions horitzontal i vertical a O.",
+    "apartats": [
+      "Llegir l’enunciat i separar els apartats.",
+      "Identificar dades i magnituds.",
+      "Aplicar el model o fórmula corresponent.",
+      "Interpretar el resultat amb unitats."
+    ],
+    "dades": [
+      "m=80 kg.",
+      "Geometria segons figura del PDF."
+    ],
+    "formules": [
+      "ΣM=0",
+      "ΣFx=0",
+      "ΣFy=0"
+    ],
+    "pistes": [
+      "Treballa primer la barra OP.",
+      "La barra QS és un element de dues forces.",
+      "Indica si està a tracció o compressió."
+    ],
+    "errors": [
+      "No indicar unitats.",
+      "Barrejar unitats incompatibles.",
+      "No justificar el procediment."
+    ],
+    "resolucio": "Fitxa PAU multiany: resolució guiada per passos. Alguns exercicis amb figures queden com a fitxa orientativa i no com a resolutor automàtic complet."
+  },
+  {
+    "id": "tec2021-s2-e6",
+    "any": 2021,
+    "materia": "Tecnologia industrial",
+    "serie": "Sèrie 2",
+    "exercici": "Exercici 6",
+    "bloc": "Energia i generadors",
+    "tipus": "fitxa per parts",
+    "nivell": "N2-N3",
+    "titol": "Generador dièsel i alternador",
+    "resum": "Rendiment d’alternador, consum de gasoil, rendiment del motor i potència dissipada.",
+    "enunciat": "Un petit generador dièsel subministra electricitat amb motor a 3 000 min⁻¹ i alternador monofàsic. El gasoil té pc=44,8 MJ/kg i densitat 0,85 kg/L. El motor dona 7,457 kW i l’alternador 5,5 kW. Dipòsit de 14 L amb autonomia de 13 h. Cal calcular rendiments, consum i potència dissipada.",
+    "apartats": [
+      "Llegir l’enunciat i separar els apartats.",
+      "Identificar dades i magnituds.",
+      "Aplicar el model o fórmula corresponent.",
+      "Interpretar el resultat amb unitats."
+    ],
+    "dades": [
+      "n=3 000 min⁻¹.",
+      "pc=44,8 MJ/kg.",
+      "ρ=0,85 kg/L.",
+      "Pmot=7,457 kW.",
+      "Pelèctr=5,5 kW.",
+      "V=14 L.",
+      "t=13 h."
+    ],
+    "formules": [
+      "ηalt=Pelèctr/Pmot",
+      "consum=ρV/t",
+      "Pcomb=ṁ·pc",
+      "ηmot=Pmot/Pcomb",
+      "Pdiss=Pcomb−Pelèctr"
+    ],
+    "pistes": [
+      "Classifica primer el problema per tema.",
+      "No comencis a calcular sense escriure dades i unitats.",
+      "Comprova l’ordre de magnitud del resultat."
+    ],
+    "errors": [
+      "No indicar unitats.",
+      "Barrejar unitats incompatibles.",
+      "No justificar el procediment."
+    ],
+    "resolucio": "Fitxa PAU multiany: resolució guiada per passos. Alguns exercicis amb figures queden com a fitxa orientativa i no com a resolutor automàtic complet.",
+    "enllac": "calor"
+  },
+  {
+    "id": "tec2021-s5-e1",
+    "any": 2021,
+    "materia": "Tecnologia industrial",
+    "serie": "Sèrie 5",
+    "exercici": "Exercici 1",
+    "bloc": "Test PAU",
+    "tipus": "test",
+    "nivell": "N1-N2",
+    "titol": "Qüestions curtes 2021 S5",
+    "resum": "Test sobre assaig de tracció, circuits, energia i màquines.",
+    "enunciat": "Bloc de qüestions tipus test de la sèrie 5 de 2021: materials, circuits elèctrics, energia i mecanismes. Inclou una proveta de níquel amb secció circular i dades de mòdul elàstic, límit elàstic i resistència al trencament.",
+    "apartats": [
+      "Respondre qüestions tipus test.",
+      "Justificar la resposta amb càlcul o concepte."
+    ],
+    "dades": [
+      "Dades numèriques i condicions indicades a l’enunciat."
+    ],
+    "formules": [
+      "Fórmules del bloc corresponent.",
+      "Conversió d’unitats quan calgui."
+    ],
+    "pistes": [
+      "Classifica primer el problema per tema.",
+      "No comencis a calcular sense escriure dades i unitats.",
+      "Comprova l’ordre de magnitud del resultat."
+    ],
+    "errors": [
+      "No indicar unitats.",
+      "Barrejar unitats incompatibles.",
+      "No justificar el procediment."
+    ],
+    "resolucio": "Fitxa PAU multiany: resolució guiada per passos. Alguns exercicis amb figures queden com a fitxa orientativa i no com a resolutor automàtic complet."
+  },
+  {
+    "id": "tec2021-s5-e2",
+    "any": 2021,
+    "materia": "Tecnologia industrial",
+    "serie": "Sèrie 5",
+    "exercici": "Exercici 2",
+    "bloc": "Lògica digital",
+    "tipus": "fitxa per parts",
+    "nivell": "N2-N3",
+    "titol": "Portes d’emergència automàtiques",
+    "resum": "Sistema amb fum, temperatura i tensió de xarxa.",
+    "enunciat": "El sistema d’obertura de portes d’emergència té detectors de fum, temperatura i tensió. La porta s’obre si hi ha fum i augment brusc de temperatura, o si la tensió d’alimentació és nul·la. Cal taula de veritat, funció i simplificació.",
+    "apartats": [
+      "Llegir l’enunciat i separar els apartats.",
+      "Identificar dades i magnituds.",
+      "Aplicar el model o fórmula corresponent.",
+      "Interpretar el resultat amb unitats."
+    ],
+    "dades": [
+      "f = fum.",
+      "t = augment brusc de temperatura.",
+      "v = tensió no nul·la.",
+      "p = porta oberta."
+    ],
+    "formules": [
+      "p = f·t + ¬v"
+    ],
+    "pistes": [
+      "Tensió nul·la és ¬v.",
+      "La condició de fum i temperatura és un AND.",
+      "Les dues condicions alternatives s’uneixen amb OR."
+    ],
+    "errors": [
+      "No indicar unitats.",
+      "Barrejar unitats incompatibles.",
+      "No justificar el procediment."
+    ],
+    "resolucio": "Fitxa PAU multiany: resolució guiada per passos. Alguns exercicis amb figures queden com a fitxa orientativa i no com a resolutor automàtic complet."
+  },
+  {
+    "id": "tec2021-s5-e3",
+    "any": 2021,
+    "materia": "Tecnologia industrial",
+    "serie": "Sèrie 5",
+    "exercici": "Exercici 3",
+    "bloc": "Energia i combustibles",
+    "tipus": "fitxa per parts",
+    "nivell": "N2-N3",
+    "titol": "Central de carbó i comparació amb querosè",
+    "resum": "Energia diària, massa de combustible i rendiment de central tèrmica.",
+    "enunciat": "Una central de carbó té 3 turbines de 362 MW i utilitza lignit de poder calorífic 28 400 kJ/kg i densitat 1 050 kg/m³. Funciona 24 h/dia i té rendiment 0,236. Es compara amb querosè de poder calorífic 43 400 kJ/kg i massa diària coneguda. Cal calcular energia, massa i nou rendiment.",
+    "apartats": [
+      "Llegir l’enunciat i separar els apartats.",
+      "Identificar dades i magnituds.",
+      "Aplicar el model o fórmula corresponent.",
+      "Interpretar el resultat amb unitats."
+    ],
+    "dades": [
+      "n=3 turbines.",
+      "Pturb=362 MW.",
+      "pc carbó=28 400 kJ/kg.",
+      "ρ=1 050 kg/m³.",
+      "ηc=0,236.",
+      "pc querosè=43 400 kJ/kg."
+    ],
+    "formules": [
+      "Eútil=P·t",
+      "Eentrada=Eútil/η",
+      "m=Eentrada/pc",
+      "η=Eútil/Eentrada"
+    ],
+    "pistes": [
+      "Classifica primer el problema per tema.",
+      "No comencis a calcular sense escriure dades i unitats.",
+      "Comprova l’ordre de magnitud del resultat."
+    ],
+    "errors": [
+      "No indicar unitats.",
+      "Barrejar unitats incompatibles.",
+      "No justificar el procediment."
+    ],
+    "resolucio": "Fitxa PAU multiany: resolució guiada per passos. Alguns exercicis amb figures queden com a fitxa orientativa i no com a resolutor automàtic complet.",
+    "enllac": "calor"
+  },
+  {
+    "id": "tec2021-s5-e4",
+    "any": 2021,
+    "materia": "Tecnologia industrial",
+    "serie": "Sèrie 5",
+    "exercici": "Exercici 4",
+    "bloc": "Mobilitat elèctrica",
+    "tipus": "fitxa per parts",
+    "nivell": "N2-N3",
+    "titol": "Moto elèctrica en pendent i regeneració",
+    "resum": "Energia potencial, consum de bateria i recuperació amb fre motor.",
+    "enunciat": "Una moto elèctrica recorre 12 km en una carretera de pendent 5% a velocitat constant, amb bateria de 1,53 kWh, massa total 130 kg i rendiment global 0,9. Es negligeixen rodolament i aerodinàmica. Després baixa pel mateix tram amb regeneració. Cal calcular desnivell, energia potencial, energia consumida i recuperada.",
+    "apartats": [
+      "Llegir l’enunciat i separar els apartats.",
+      "Identificar dades i magnituds.",
+      "Aplicar el model o fórmula corresponent.",
+      "Interpretar el resultat amb unitats."
+    ],
+    "dades": [
+      "s=12 km.",
+      "pendent=5%.",
+      "Ebat=1,53 kWh.",
+      "m=130 kg.",
+      "ηglob=0,9."
+    ],
+    "formules": [
+      "Δh = pendent·s",
+      "ΔEp=m·g·Δh",
+      "Econs=ΔEp/η",
+      "Erec=ΔEp·ηreg"
+    ],
+    "pistes": [
+      "Classifica primer el problema per tema.",
+      "No comencis a calcular sense escriure dades i unitats.",
+      "Comprova l’ordre de magnitud del resultat."
+    ],
+    "errors": [
+      "No indicar unitats.",
+      "Barrejar unitats incompatibles.",
+      "No justificar el procediment."
+    ],
+    "resolucio": "Fitxa PAU multiany: resolució guiada per passos. Alguns exercicis amb figures queden com a fitxa orientativa i no com a resolutor automàtic complet.",
+    "enllac": "calor"
+  },
+  {
+    "id": "tec2021-s5-e5",
+    "any": 2021,
+    "materia": "Tecnologia industrial",
+    "serie": "Sèrie 5",
+    "exercici": "Exercici 5",
+    "bloc": "Drons i motors",
+    "tipus": "fitxa per parts",
+    "nivell": "N2-N3",
+    "titol": "Dron amb quatre motors en paral·lel",
+    "resum": "Energia de bateria, potència de motors, autonomia parcial i parell.",
+    "enunciat": "Un dron utilitza bateria de 11,1 V i capacitat 5 200 mAh. Quatre motors en paral·lel tenen rendiment 0,89 i giren a 10 000 min⁻¹; cada motor subministra 30 W. Cal calcular energia de bateria, potència consumida, energia i temps per descarregar el 5% i parell de cada motor.",
+    "apartats": [
+      "Llegir l’enunciat i separar els apartats.",
+      "Identificar dades i magnituds.",
+      "Aplicar el model o fórmula corresponent.",
+      "Interpretar el resultat amb unitats."
+    ],
+    "dades": [
+      "U=11,1 V.",
+      "c=5 200 mAh.",
+      "4 motors.",
+      "η=0,89.",
+      "n=10 000 min⁻¹.",
+      "Psubm=30 W."
+    ],
+    "formules": [
+      "Ebat=c·U",
+      "Pcons=Psubm/η",
+      "E5%=0,05·Ebat",
+      "t=E/Ptotal",
+      "Γ=P/ω",
+      "ω=2πn/60"
+    ],
+    "pistes": [
+      "Classifica primer el problema per tema.",
+      "No comencis a calcular sense escriure dades i unitats.",
+      "Comprova l’ordre de magnitud del resultat."
+    ],
+    "errors": [
+      "No indicar unitats.",
+      "Barrejar unitats incompatibles.",
+      "No justificar el procediment."
+    ],
+    "resolucio": "Fitxa PAU multiany: resolució guiada per passos. Alguns exercicis amb figures queden com a fitxa orientativa i no com a resolutor automàtic complet.",
+    "enllac": "motor"
+  },
+  {
+    "id": "tec2021-s5-e6",
+    "any": 2021,
+    "materia": "Tecnologia industrial",
+    "serie": "Sèrie 5",
+    "exercici": "Exercici 6",
+    "bloc": "Electricitat i resistivitat",
+    "tipus": "fitxa per parts",
+    "nivell": "N2",
+    "titol": "Assecador amb fil resistiu",
+    "resum": "Longitud del fil, potència, energia, corrent i canvi de tensió.",
+    "enunciat": "La resistència d’un assecador és R=30 Ω i està feta d’un fil de resistivitat 0,22 μΩ·m i diàmetre 0,4 mm. S’endolla a 230 V. Cal calcular longitud del fil, potència consumida, energia en 10 min, corrent i potència si s’alimenta a 110 V.",
+    "apartats": [
+      "Llegir l’enunciat i separar els apartats.",
+      "Identificar dades i magnituds.",
+      "Aplicar el model o fórmula corresponent.",
+      "Interpretar el resultat amb unitats."
+    ],
+    "dades": [
+      "R=30 Ω.",
+      "ρ=0,22 μΩ·m.",
+      "d=0,4 mm.",
+      "U=230 V.",
+      "t=10 min.",
+      "U’=110 V."
+    ],
+    "formules": [
+      "R=ρL/A",
+      "A=πd²/4",
+      "P=U²/R",
+      "E=P·t",
+      "I=U/R"
+    ],
+    "pistes": [
+      "Classifica primer el problema per tema.",
+      "No comencis a calcular sense escriure dades i unitats.",
+      "Comprova l’ordre de magnitud del resultat."
+    ],
+    "errors": [
+      "No indicar unitats.",
+      "Barrejar unitats incompatibles.",
+      "No justificar el procediment."
+    ],
+    "resolucio": "Fitxa PAU multiany: resolució guiada per passos. Alguns exercicis amb figures queden com a fitxa orientativa i no com a resolutor automàtic complet.",
+    "enllac": "ohm"
+  }
+];
+pauBank.push(...pauBankV9);
+
 function openExercise(key){
   setView('exercicis');
   setTimeout(() => {
@@ -144,16 +1670,18 @@ function inici(){
 }
 
 function pau(){
-  app.innerHTML = `<section class="card"><h2>Banc PAU ampliat · mode aula</h2><p>La v8 incorpora enunciats de treball a les fitxes PAU i converteix les activitats en activitats per treballar a classe. Pots usar <b>Mode alumne</b> amb pistes i comprovació per passos, o <b>Mode docent</b> amb solucions, criteris i fitxa imprimible.</p><div class="btnrow no-print"><button id="roleAlumne" class="${pauRole==='alumne'?'primary':'secondary'}" onclick="setPauRole('alumne')">Mode alumne</button><button id="roleDocent" class="${pauRole==='docent'?'primary':'secondary'}" onclick="setPauRole('docent')">Mode docent</button></div><div class="grid"><div class="field"><label>Matèria</label><select id="bankMateria" onchange="renderPauBank()"><option value="">Totes</option><option>Tecnologia i enginyeria</option><option>Electrotècnia</option></select></div><div class="field"><label>Bloc o paraula clau</label><input id="bankSearch" placeholder="Ex.: motor, trifàsica, rectificador..." oninput="renderPauBank()"></div><div class="field"><label>Mode</label><select id="bankMode" onchange="renderPauBank()"><option value="">Tots</option><option value="test">Test</option><option value="calculadora">Amb calculadora</option><option value="fitxa">Fitxa per parts</option></select></div></div><div class="btnrow no-print"><button class="secondary" onclick="renderTest()">Obrir test autocorregible</button><button class="secondary" onclick="setView('exercicis')">Exercicis resolubles</button><button class="secondary" onclick="setView('calculadores')">Calculadores</button></div><div id="pauArea"></div></section><section class="card"><h2>Fitxes del banc</h2><div id="pauBankStats" class="small"></div><div id="pauBankCards" class="grid"></div></section>`;
+  app.innerHTML = `<section class="card"><h2>Banc PAU multiany · mode aula</h2><p>La v9 amplia el banc PAU amb els PDF de 2021, 2022, 2023, 2024 i 2025, amb selectors per any, matèria, bloc i mode de treball. Pots usar <b>Mode alumne</b> amb pistes i comprovació per passos, o <b>Mode docent</b> amb solucions, criteris i fitxa imprimible.</p><div class="btnrow no-print"><button id="roleAlumne" class="${pauRole==='alumne'?'primary':'secondary'}" onclick="setPauRole('alumne')">Mode alumne</button><button id="roleDocent" class="${pauRole==='docent'?'primary':'secondary'}" onclick="setPauRole('docent')">Mode docent</button></div><div class="grid"><div class="field"><label>Matèria</label><select id="bankMateria" onchange="renderPauBank()"><option value="">Totes</option><option>Tecnologia i enginyeria</option><option>Tecnologia industrial</option><option>Electrotècnia</option></select></div><div class="field"><label>Any</label><select id="bankYear" onchange="renderPauBank()"><option value="">Tots</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option></select></div><div class="field"><label>Sèrie</label><select id="bankSerie" onchange="renderPauBank()"><option value="">Totes</option><option>Sèrie 1</option><option>Sèrie 2</option><option>Sèrie 5</option></select></div><div class="field"><label>Bloc o paraula clau</label><input id="bankSearch" placeholder="Ex.: motor, energia, lògica, estàtica..." oninput="renderPauBank()"></div><div class="field"><label>Mode</label><select id="bankMode" onchange="renderPauBank()"><option value="">Tots</option><option value="test">Test</option><option value="calculadora">Amb calculadora</option><option value="fitxa">Fitxa per parts</option></select></div></div><div class="btnrow no-print"><button class="secondary" onclick="renderTest()">Obrir test autocorregible</button><button class="secondary" onclick="setView('exercicis')">Exercicis resolubles</button><button class="secondary" onclick="setView('calculadores')">Calculadores</button></div><div id="pauArea"></div></section><section class="card"><h2>Fitxes del banc</h2><div id="pauBankStats" class="small"></div><div id="pauBankCards" class="grid"></div></section>`;
   renderPauBank();
 }
 
 
 function renderPauBank(){
   const materia = document.getElementById('bankMateria')?.value || '';
+  const year = document.getElementById('bankYear')?.value || '';
+  const serie = document.getElementById('bankSerie')?.value || '';
   const q = (document.getElementById('bankSearch')?.value || '').toLowerCase().trim();
   const mode = document.getElementById('bankMode')?.value || '';
-  let items = pauBank.filter(x => !materia || x.materia === materia);
+  let items = pauBank.filter(x => (!materia || x.materia === materia) && (!year || String(x.any) === year) && (!serie || x.serie === serie));
   if(mode){
     items = items.filter(x => mode === 'calculadora' ? !!x.enllac : (mode === 'fitxa' ? !x.enllac && x.tipus !== 'test' : x.tipus.includes(mode)));
   }
@@ -161,7 +1689,7 @@ function renderPauBank(){
     items = items.filter(x => `${x.any} ${x.materia} ${x.serie} ${x.exercici} ${x.bloc} ${x.titol} ${x.resum} ${x.tipus}`.toLowerCase().includes(q));
   }
   const stats = document.getElementById('pauBankStats');
-  if(stats) stats.innerHTML = `<p><b>${items.length}</b> fitxes mostrades de <b>${pauBank.length}</b>. Tecnologia i enginyeria: ${pauBank.filter(x=>x.materia==='Tecnologia i enginyeria').length}. Electrotècnia: ${pauBank.filter(x=>x.materia==='Electrotècnia').length}.</p>`;
+  if(stats) stats.innerHTML = `<p><b>${items.length}</b> fitxes mostrades de <b>${pauBank.length}</b>. Tecnologia i enginyeria: ${pauBank.filter(x=>x.materia==='Tecnologia i enginyeria').length}. Tecnologia industrial: ${pauBank.filter(x=>x.materia==='Tecnologia industrial').length}. Electrotècnia: ${pauBank.filter(x=>x.materia==='Electrotècnia').length}.</p>`;
   const el = document.getElementById('pauBankCards');
   if(!el) return;
   el.innerHTML = items.map(x => `<article class="card"><p><span class="pill">${esc(x.any)}</span> <span class="pill">${esc(x.materia)}</span> <span class="pill">${esc(x.serie)}</span></p><h3>${esc(x.exercici)} · ${esc(x.titol)}</h3><p><b>${esc(x.bloc)}</b> · ${esc(x.tipus)} · ${esc(x.nivell)}</p><p>${esc(x.resum)}</p><div class="btnrow"><button class="primary" onclick="openPauItem('${x.id}')">Treballar per parts</button>${x.enllac?`<button class="secondary" onclick="openExercise('${x.enllac}')">Obrir calculadora associada</button>`:''}</div></article>`).join('') || '<div class="notice">No hi ha fitxes amb aquest filtre.</div>';
