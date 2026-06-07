@@ -1,10 +1,10 @@
-# Tecnologia Industrial Exercicis Plus v11 · figures integrades
+# Tecnologia Industrial Exercicis Plus v11.1 · figures integrades en PNG
 
 PWA educativa en català per treballar exercicis tipus PAU de Tecnologia Industrial, Tecnologia i Enginyeria i Electrotècnia.
 
-## Novetat principal de la v11
+## Novetat principal de la v11.1
 
-La v11 manté el buidatge textual total de la v10.1 i afegeix una capa visual: cada fitxa PAU incorpora les **pàgines originals del PDF renderitzades com a imatge**. Això permet veure figures, esquemes, circuits, taules, gràfics i pantalles d'oscil·loscopi que no es poden reproduir bé només amb text.
+La v11.1 manté el buidatge textual total de la v10.1 i afegeix una capa visual: cada fitxa PAU incorpora les **pàgines originals del PDF renderitzades com a imatge PNG**. Això permet veure figures, esquemes, circuits, taules, gràfics i pantalles d'oscil·loscopi que no es poden reproduir bé només amb text.
 
 ## Contingut
 
@@ -33,7 +33,7 @@ pau_v10_entries.json
 assets/
   icon-192.png
   icon-512.png
-  pau_pages/*.webp
+  pau_pages/*.png
 ```
 
 ## Desplegament a GitHub Pages
@@ -58,3 +58,4 @@ Aquesta versió no redibuixa encara els circuits en SVG ni resol automàticament
 - v10: buidatge textual total dels PDF únics.
 - v10.1: sanejament de README, manifest i Service Worker.
 - v11: integració de pàgines originals del PDF amb figures.
+- v11.1: conversió de totes les figures de WEBP a PNG per compatibilitat amb GitHub Pages.
