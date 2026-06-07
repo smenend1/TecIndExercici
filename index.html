@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#1f6f5b">
-  <title>Tecnologia Industrial Exercicis Plus v15</title>
+  <title>Tecnologia Industrial Exercicis Plus v16</title>
   <link rel="manifest" href="./manifest.json">
   <link rel="stylesheet" href="./styles.css">
   <link rel="icon" href="./assets/icon-192.png">
@@ -19,16 +19,32 @@
 .figures-box{background:#f8fbff;border-color:#c7d2fe}.pdf-pages{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:12px}.pdf-page-card{margin:0;border:1px solid var(--line);border-radius:14px;background:#fff;overflow:hidden;box-shadow:var(--shadow)}.pdf-page-card img{display:block;width:100%;height:auto;background:white}.pdf-page-card figcaption{padding:8px 10px;font-size:.9rem;color:var(--muted)}@media print{.pdf-pages{grid-template-columns:1fr;gap:8px}.pdf-page-card{break-inside:avoid;box-shadow:none;border:1px solid #999}.pdf-page-card img{max-height:23cm;width:auto;max-width:100%;margin:0 auto}}
 
 .solution-rich{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.55;white-space:normal;overflow-wrap:anywhere}.solution-rich h4{margin:1rem 0 .45rem;padding:.45rem .65rem;border-left:5px solid #1f7a63;background:#eef7f3;border-radius:10px;color:#0f3f34}.solution-rich h5{margin:.75rem 0 .35rem;color:#164f43;font-weight:800}.formula-line{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:#f6f8fa;border:1px solid #d9e3df;border-radius:10px;padding:.45rem .6rem;margin:.35rem 0;display:block;overflow-x:auto;white-space:nowrap}@media print{.solution-rich{font-size:10.5pt;line-height:1.42}.solution-rich h4{background:#f2f2f2!important;border-left:4px solid #555;border-radius:0;padding:4pt 6pt}.formula-line{white-space:normal;border-radius:0}}
+
+/* v16 · mirada docent */
+.teacher-panel{border:1px solid var(--line);border-radius:20px;background:#fff;padding:16px;margin:14px 0;box-shadow:var(--shadow)}
+.teacher-panel h3{margin-top:0;color:#123d34}
+.teacher-kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:12px 0}
+.teacher-kpi div{background:#eef7f3;border:1px solid #cfe7dc;border-radius:16px;padding:12px;text-align:center}
+.teacher-kpi b{display:block;font-size:1.7rem;color:#1f6f5b}
+.teacher-plan{border-left:6px solid #1f6f5b;background:#f8fcfa;border-radius:16px;padding:16px;margin:14px 0}
+.teacher-plan h3,.teacher-plan h4{color:#123d34}
+.teacher-timeline{counter-reset:step;list-style:none;padding:0;margin:0}
+.teacher-timeline li{counter-increment:step;margin:10px 0;padding:12px 12px 12px 48px;border:1px solid var(--line);border-radius:14px;background:#fff;position:relative}
+.teacher-timeline li:before{content:counter(step);position:absolute;left:12px;top:12px;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:#1f6f5b;color:#fff;font-weight:800}
+.teacher-note{background:#eef2ff;border:1px solid #c7d2fe;color:#1e3a8a;border-radius:14px;padding:12px;margin:10px 0}
+.teacher-danger{background:#fff7ed;border:1px solid #fdba74;color:#7c2d12;border-radius:14px;padding:12px;margin:10px 0}
+@media print{.teacher-panel,.teacher-plan{box-shadow:none;border:1px solid #888;break-inside:avoid}.teacher-timeline li{break-inside:avoid}.teacher-kpi{grid-template-columns:repeat(4,1fr)}.teacher-note,.teacher-danger{border:1px solid #999;background:#fff!important;color:#000}}
 </style>
 </head>
 <body>
   <header>
     <div class="wrap">
-      <div class="brand"><div class="logo">PAU</div><div><h1>Tecnologia Industrial Exercicis Plus</h1><p class="tag">PWA educativa · PAU resolt · Mode examen · Dossiers imprimibles</p></div></div>
+      <div class="brand"><div class="logo">PAU</div><div><h1>Tecnologia Industrial Exercicis Plus</h1><p class="tag">PWA educativa · PAU resolt · Mode docent · Dossiers · Seguiment</p></div></div>
       <nav class="tabs" aria-label="Navegació principal">
         <button class="tab active" data-view="inici">Inici</button>
         <button class="tab" data-view="pau">PAU</button>
         <button class="tab" data-view="examen">Examen</button>
+        <button class="tab" data-view="docent">Docent</button>
         <button class="tab" data-view="progres">Progrés</button>
         <button class="tab" data-view="exercicis">Exercicis</button>
         <button class="tab" data-view="calculadores">Calculadores</button>

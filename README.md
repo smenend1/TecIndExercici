@@ -1,21 +1,46 @@
-# Tecnologia Industrial Exercicis Plus v15 · Correcció intel·ligent i seguiment local
+# Tecnologia Industrial Exercicis Plus v16 · Mode docent i gestió d’aula
 
 PWA educativa en català per treballar exercicis tipus PAU de Tecnologia Industrial, Tecnologia i Enginyeria i Electrotècnia.
 
-## Novetat principal de la v15
+## Novetat principal de la v16
 
-La v15 converteix l'aplicació en un entrenador més personalitzat:
+La v16 incorpora una mirada explícitament docent. L’aplicació ja no està pensada només com a entrenament individual de l’alumnat, sinó també com a eina per preparar, conduir i corregir classes.
 
-- pestanya nova **Progrés**;
-- seguiment local dels passos comprovats per l'alumne;
-- puntuació orientativa per pas;
-- detecció bàsica de paraules clau, valors numèrics compatibles i possibles problemes d'unitats;
-- recomanacions automàtiques de repàs segons els errors registrats;
-- proposta de fitxes PAU per reforçar els temes febles;
-- generador d'exercicis similars relacionats amb els temes a millorar;
-- exportació del progrés local en JSON.
+La pestanya nova **Docent** permet:
 
-Tot el seguiment es guarda amb `localStorage` al navegador de l'usuari. No hi ha servidor i no s'envien dades fora del dispositiu.
+- preparar una sessió de 45, 60 o 90 minuts;
+- filtrar fitxes PAU per matèria, any, tema i estat de verificació;
+- seleccionar les fitxes que es volen treballar;
+- generar un pla de classe imprimible;
+- crear un dossier d’alumne sense solucions;
+- crear un solucionari docent amb criteris de correcció;
+- guardar localment les sessions preparades;
+- enganxar exportacions JSON de progrés dels alumnes i obtenir una lectura global del grup.
+
+Tot continua funcionant sense servidor. Les dades docents i de progrés es guarden localment al navegador amb `localStorage`.
+
+## Flux docent recomanat
+
+### Abans de classe
+
+1. Obre la pestanya **Docent**.
+2. Tria durada, grup, matèria, any i tema.
+3. Selecciona les fitxes PAU que vols treballar.
+4. Genera el **pla de classe**.
+5. Imprimeix el dossier d’alumne o el solucionari docent.
+
+### Durant la classe
+
+1. Projecta l’enunciat o la figura de la fitxa.
+2. Treballa en **mode alumne** perquè no aparegui tota la solució de cop.
+3. Demana a l’alumnat que resolgui per passos: dades, unitats, fórmula, substitució, càlcul i interpretació.
+4. Canvia a **mode docent** per comentar la resposta model i els criteris.
+
+### Després de classe
+
+1. L’alumnat pot exportar el seu progrés des de la pestanya **Progrés**.
+2. El docent pot enganxar aquests JSON a la pestanya **Docent**.
+3. La PWA mostra una lectura global de temes forts i temes a reforçar.
 
 ## Contingut conservat de versions anteriors
 
@@ -26,29 +51,23 @@ Tot el seguiment es guarda amb `localStorage` al navegador de l'usuari. No hi ha
 - Mode alumne i mode docent.
 - Estat de verificació de cada fitxa.
 - Solucions formatades de la v14.1.
-- Mode examen PAU i dossiers imprimibles de la v14.
+- Mode examen PAU i dossiers imprimibles.
+- Correcció orientativa i seguiment local de la v15.
 - Calculadores, exercicis guiats, formulari i historial.
 - Funcionament offline amb Service Worker.
 
-## Com usar la pestanya Progrés
+## Pestanyes principals
 
-1. Obre una fitxa PAU en **mode alumne**.
-2. Escriu una resposta en algun pas.
-3. Prem **Comprovar aquest pas**.
-4. La PWA donarà una valoració orientativa i desarà l'intent localment.
-5. Entra a **Progrés** per veure:
-   - mitjana local;
-   - temes treballats;
-   - temes que cal reforçar;
-   - recomanacions;
-   - exercicis PAU per repassar;
-   - exercicis similars generats.
-
-## Mode examen i dossiers
-
-La pestanya **Examen** permet generar proves PAU filtrades per matèria, any, sèrie, tema o estat de verificació. Es poden imprimir en versió alumne o docent amb solucionari.
-
-Els dossiers permeten crear reculls per tema o any, útils per preparar classes, deures o repàs final.
+- **Inici**: presentació i accessos ràpids.
+- **PAU**: banc complet de fitxes PAU.
+- **Examen**: generació de proves i dossiers.
+- **Docent**: planificació de classe, dossiers, solucionaris i seguiment de grup.
+- **Progrés**: seguiment local de l’alumne.
+- **Exercicis**: exercicis resolubles amb dades modificables.
+- **Calculadores**: eines tècniques ràpides.
+- **Pràctica**: entrenament autocorregible.
+- **Formulari**: fórmules agrupades.
+- **Historial**: resolucions guardades.
 
 ## Fitxers
 
@@ -72,12 +91,8 @@ assets/
 1. Descomprimeix el ZIP.
 2. Puja tots els fitxers i carpetes al repositori.
 3. Activa GitHub Pages des de `Settings > Pages`.
-4. Si el navegador mostra una versió antiga, esborra les dades del lloc o força l'actualització del Service Worker.
+4. Si el navegador mostra una versió antiga, esborra les dades del lloc o força l’actualització del Service Worker.
 
 ## Limitació honesta
 
-La correcció de la v15 és orientativa. Ajuda a detectar si l'alumne inclou idees, valors i unitats raonables, però no substitueix una revisió docent completa, sobretot en exercicis amb figures, circuits, gràfics o lectures visuals.
-
-## Control de qualitat recomanat
-
-Abans d'usar l'app com a solucionari oficial, revisa manualment les fitxes marcades com a **guiat amb figura** o **revisió docent pendent**.
+La pestanya **Docent** ajuda a planificar i corregir, però no substitueix el criteri professional del professorat. La correcció automàtica continua sent orientativa, especialment en exercicis amb figures, circuits, gràfics o lectures visuals.

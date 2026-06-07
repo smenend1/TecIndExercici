@@ -56,3 +56,18 @@
 .quality-grid b{font-size:1.8rem;color:#1f6f5b;display:block}
 .quality-grid span{font-size:.92rem;color:#53645e}
 @media print{.v15-score,.warning{break-inside:avoid}.quality-grid{grid-template-columns:repeat(4,1fr)}}
+
+/* v16 · mirada docent */
+.teacher-panel{border:1px solid var(--line);border-radius:20px;background:#fff;padding:16px;margin:14px 0;box-shadow:var(--shadow)}
+.teacher-panel h3{margin-top:0;color:#123d34}
+.teacher-kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:12px 0}
+.teacher-kpi div{background:#eef7f3;border:1px solid #cfe7dc;border-radius:16px;padding:12px;text-align:center}
+.teacher-kpi b{display:block;font-size:1.7rem;color:#1f6f5b}
+.teacher-plan{border-left:6px solid #1f6f5b;background:#f8fcfa;border-radius:16px;padding:16px;margin:14px 0}
+.teacher-plan h3,.teacher-plan h4{color:#123d34}
+.teacher-timeline{counter-reset:step;list-style:none;padding:0;margin:0}
+.teacher-timeline li{counter-increment:step;margin:10px 0;padding:12px 12px 12px 48px;border:1px solid var(--line);border-radius:14px;background:#fff;position:relative}
+.teacher-timeline li:before{content:counter(step);position:absolute;left:12px;top:12px;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:#1f6f5b;color:#fff;font-weight:800}
+.teacher-note{background:#eef2ff;border:1px solid #c7d2fe;color:#1e3a8a;border-radius:14px;padding:12px;margin:10px 0}
+.teacher-danger{background:#fff7ed;border:1px solid #fdba74;color:#7c2d12;border-radius:14px;padding:12px;margin:10px 0}
+@media print{.teacher-panel,.teacher-plan{box-shadow:none;border:1px solid #888;break-inside:avoid}.teacher-timeline li{break-inside:avoid}.teacher-kpi{grid-template-columns:repeat(4,1fr)}.teacher-note,.teacher-danger{border:1px solid #999;background:#fff!important;color:#000}}

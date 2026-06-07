@@ -5712,3 +5712,129 @@ inici = function(){
 
 Object.assign(window, {progresV15, renderReviewListV15, generateSimilarV15, exportProgressV15, resetProgressV15, checkPauStep, finishPauActivity, checkTest, solveSelected, setView, inici});
 try { setView('inici'); } catch(e) { /* inici v15 opcional */ }
+
+/* === v16 · Mirada docent: planificació, dossiers i gestió d'aula === */
+const V16_VERSION = 'v16 · mirada docent i gestió d’aula';
+const LS_DOCENT_V16 = 'ti_exercicis_plus_docent_sessions_v16';
+
+function pauAllV16(){
+  try { return (typeof pauData === 'function' ? pauData() : (pauBank || [])) || []; }
+  catch(e){ return []; }
+}
+function loadDocentSessionsV16(){
+  try { return JSON.parse(localStorage.getItem(LS_DOCENT_V16) || '[]'); }
+  catch(e){ return []; }
+}
+function saveDocentSessionsV16(items){ localStorage.setItem(LS_DOCENT_V16, JSON.stringify(items.slice(0,80))); }
+function selectedDocentItemsV16(){
+  return Array.from(document.querySelectorAll('.docentPickV16:checked')).map(cb => pauAllV16().find(x => x.id === cb.value)).filter(Boolean);
+}
+function filterDocentItemsV16(){
+  const data = pauAllV16();
+  const materia = document.getElementById('docentMateriaV16')?.value || '';
+  const any = document.getElementById('docentAnyV16')?.value || '';
+  const bloc = (document.getElementById('docentBlocV16')?.value || '').toLowerCase();
+  const estat = document.getElementById('docentEstatV16')?.value || '';
+  const temps = Number(document.getElementById('docentTempsV16')?.value || 60);
+  const max = Math.max(2, Math.min(10, Math.floor(temps/15)));
+  return data.filter(x => {
+    const txt = [x.bloc,x.titol,x.enunciat,x.exercici,x.materia,x.serie].join(' ').toLowerCase();
+    const ver = (x.verificacio || (typeof inferVerificationV13 === 'function' ? inferVerificationV13(x).key : '') || '');
+    return (!materia || x.materia === materia) && (!any || String(x.any) === String(any)) && (!bloc || txt.includes(bloc)) && (!estat || ver === estat);
+  }).slice(0, max);
+}
+function renderDocentSelectorV16(){
+  const target = document.getElementById('docentSelectionV16');
+  if(!target) return;
+  const items = filterDocentItemsV16();
+  target.innerHTML = items.length ? items.map(x => {
+    const ver = typeof inferVerificationV13 === 'function' ? inferVerificationV13(x).label : (x.verificacio || 'pendent');
+    return `<label class="teacher-panel" style="display:block"><input class="docentPickV16" type="checkbox" value="${esc(x.id)}" checked> <b>${esc(x.any)} · ${esc(x.serie)} · ${esc(x.exercici)} · ${esc(x.titol)}</b><br><span class="pill">${esc(x.materia)}</span> <span class="pill">${esc(x.bloc)}</span> <span class="pill">${esc(ver)}</span><p class="small">${esc((x.resum || x.enunciat || '').slice(0,220))}...</p></label>`;
+  }).join('') : '<div class="notice">No hi ha fitxes amb aquests filtres. Prova un altre any, tema o estat.</div>';
+}
+function buildSessionPlanV16(items){
+  const temps = Number(document.getElementById('docentTempsV16')?.value || 60);
+  const group = document.getElementById('docentGrupV16')?.value || 'Grup classe';
+  const objectiu = document.getElementById('docentObjectiuV16')?.value || 'Preparar exercicis PAU treballant dades, fórmules, resolució i interpretació tècnica.';
+  const role = document.getElementById('docentModeSessioV16')?.value || 'mixt';
+  const minutesIntro = temps >= 90 ? 10 : 7;
+  const minutesWork = Math.max(20, temps - minutesIntro - 12);
+  const minutesClose = temps - minutesIntro - minutesWork;
+  const themes = [...new Set(items.map(normalizeThemeV15))].join(', ') || 'temes PAU diversos';
+  return {temps, group, objectiu, role, themes, minutesIntro, minutesWork, minutesClose, items};
+}
+function renderSessionPlanV16(plan){
+  const itemsHtml = plan.items.map((x,i)=>`<li><b>${i+1}. ${esc(x.any)} · ${esc(x.serie)} · ${esc(x.exercici)} · ${esc(x.titol)}</b><br><span class="small">${esc(x.bloc)} · ${esc(x.tipus)} · ${esc(typeof inferVerificationV13 === 'function' ? inferVerificationV13(x).label : (x.verificacio||''))}</span><br><span class="small">Ús docent: ${x.enllac?'pot començar amb resolutor i després passar a fitxa PAU':'millor projectar figura i resoldre per passos'}.</span></li>`).join('');
+  return `<section class="card print-sheet"><h2>Pla de classe docent · Tecnologia Industrial Exercicis Plus</h2><p><b>Grup:</b> ${esc(plan.group)} · <b>Durada:</b> ${plan.temps} min · <b>Temes:</b> ${esc(plan.themes)}</p><div class="teacher-note"><b>Objectiu didàctic:</b> ${esc(plan.objectiu)}</div><h3>Seqüència recomanada</h3><ol class="teacher-timeline"><li><b>Activació inicial (${plan.minutesIntro} min).</b> Projecta l’enunciat i demana a l’alumnat que identifiqui què es demana i quines dades són útils.</li><li><b>Treball per parelles o grups (${plan.minutesWork} min).</b> Cada grup resol un pas: dades, unitats, fórmula, substitució, càlcul o interpretació.</li><li><b>Posada en comú (${plan.minutesClose} min).</b> Mostra el mode docent, compara procediments i recull errors habituals.</li></ol><h3>Fitxes seleccionades</h3><ol>${itemsHtml}</ol><h3>Com usar-ho a l’aula</h3><ul><li><b>Abans:</b> imprimeix fitxa alumne sense solució o prepara el dossier.</li><li><b>Durant:</b> usa mode alumne per evitar mostrar la solució completa massa aviat.</li><li><b>Correcció:</b> canvia a mode docent i utilitza criteris de correcció.</li><li><b>Després:</b> guarda o exporta evidències amb la pestanya Progrés.</li></ul><h3>Atenció a la diversitat</h3><table><tbody><tr><td><b>Suport</b></td><td>Dona la llista de dades i fórmules abans de resoldre.</td></tr><tr><td><b>Ordinari</b></td><td>Demana fórmula, substitució i resultat amb unitats.</td></tr><tr><td><b>Ampliació</b></td><td>Demana interpretació tècnica, errors possibles i exercici similar.</td></tr></tbody></table><div class="no-print btnrow"><button class="primary" onclick="window.print()">Imprimir pla</button><button class="secondary" onclick="setView('docent')">Tornar a Docent</button></div></section>`;
+}
+function createClassPlanV16(){
+  const items = selectedDocentItemsV16();
+  if(!items.length){ alert('Selecciona almenys una fitxa.'); return; }
+  const plan = buildSessionPlanV16(items);
+  const saved = loadDocentSessionsV16();
+  saved.unshift({date:new Date().toISOString(), group:plan.group, temps:plan.temps, objectiu:plan.objectiu, ids:items.map(x=>x.id), themes:plan.themes});
+  saveDocentSessionsV16(saved);
+  document.getElementById('docentOutputV16').innerHTML = renderSessionPlanV16(plan);
+  document.getElementById('docentOutputV16').scrollIntoView({behavior:'smooth', block:'start'});
+}
+function buildTeacherDossierV16(withSolutions=false){
+  const items = selectedDocentItemsV16();
+  if(!items.length){ alert('Selecciona almenys una fitxa.'); return; }
+  const title = withSolutions ? 'Dossier docent amb solucions · v16' : 'Dossier alumne · v16';
+  if(typeof buildExamSheetV14 === 'function'){
+    app.innerHTML = buildExamSheetV14(items, withSolutions, title);
+    window.scrollTo(0,0);
+  } else {
+    app.innerHTML = `<section class="card"><h2>${esc(title)}</h2>${items.map(x=>`<article class="exam-item"><h3>${esc(x.exercici)} · ${esc(x.titol)}</h3><p>${esc(x.enunciat || x.resum)}</p>${withSolutions?`<div class="ok">${esc(x.resolucio || '')}</div>`:'<div class="blank-lines"></div>'}</article>`).join('')}</section>`;
+  }
+}
+function renderTeacherSavedSessionsV16(){
+  const sessions = loadDocentSessionsV16().slice(0,8);
+  if(!sessions.length) return '<p class="small">Encara no hi ha sessions guardades.</p>';
+  return sessions.map(s => `<article class="history-row"><b>${esc(s.group)} · ${esc(s.themes)}</b><br><span class="small">${new Date(s.date).toLocaleString('ca-ES')} · ${s.temps} min · ${s.ids.length} fitxes</span><p>${esc(s.objectiu)}</p></article>`).join('');
+}
+function aggregateGroupProgressV16(){
+  const raw = document.getElementById('groupProgressInputV16')?.value || '';
+  const out = document.getElementById('groupProgressOutV16');
+  if(!out) return;
+  let chunks = raw.split(/\n\s*---\s*\n|\n\s*\n/).map(x=>x.trim()).filter(Boolean);
+  let all=[];
+  try {
+    if(raw.trim().startsWith('[')) all = JSON.parse(raw);
+    else chunks.forEach(c => { const parsed = JSON.parse(c); all = all.concat(Array.isArray(parsed)?parsed:[parsed]); });
+  } catch(e){ out.innerHTML = '<div class="bad">No he pogut llegir el JSON. Enganxa exportacions de la pestanya Progrés, separades per una línia en blanc.</div>'; return; }
+  const themes={};
+  all.forEach(x=>{ const t=x.theme||'General'; themes[t] ||= {n:0,sum:0,low:0}; themes[t].n++; themes[t].sum += Number(x.score||0); if(Number(x.score||0)<65) themes[t].low++; });
+  const rows = Object.entries(themes).sort((a,b)=>b[1].low-a[1].low || b[1].n-a[1].n);
+  out.innerHTML = `<div class="ok"><b>${all.length}</b> registres llegits. Aquesta agregació és local i no envia dades.</div><table><thead><tr><th>Tema</th><th>Registres</th><th>Mitjana</th><th>Alertes</th><th>Acció docent</th></tr></thead><tbody>${rows.map(([t,v])=>{ const avg=Math.round(v.sum/v.n); return `<tr><td><b>${esc(t)}</b></td><td>${v.n}</td><td>${avg}%</td><td>${v.low}</td><td>${avg<65||v.low>2?'Fer repàs guiat i dossier curt':'Mantenir pràctica'}</td></tr>`; }).join('')}</tbody></table>`;
+}
+function docentV16(){
+  const data = pauAllV16();
+  const years = [...new Set(data.map(x=>x.any).filter(Boolean))].sort((a,b)=>b-a);
+  const materials = [...new Set(data.map(x=>x.materia).filter(Boolean))].sort();
+  const total = data.length;
+  const auto = data.filter(x => (x.verificacio || '').includes('calculator') || (typeof inferVerificationV13==='function' && inferVerificationV13(x).key==='calculator')).length;
+  const fig = data.filter(x => (x.verificacio || '').includes('guidedFigure') || (x.figures||[]).length).length;
+  app.innerHTML = `<section class="card"><h2>Mode docent · v16</h2><p>Aquesta pestanya està pensada per preparar, conduir i corregir una classe. No és un espai d’alumne: aquí tries què faràs, com ho imprimiràs i com ho corregiràs.</p><div class="teacher-kpi"><div><b>${total}</b><span>fitxes PAU</span></div><div><b>${years.length}</b><span>anys</span></div><div><b>${auto}</b><span>automatitzables</span></div><div><b>${fig}</b><span>amb figura</span></div></div><div class="teacher-danger"><b>Ús docent recomanat:</b> abans de classe genera un pla i una fitxa alumne; durant la classe usa mode alumne; al final obre mode docent i criteris de correcció.</div></section><section class="teacher-panel"><h3>1. Preparar una sessió de classe</h3><div class="grid"><div class="field"><label>Grup o nivell</label><input id="docentGrupV16" value="2n Batxillerat"></div><div class="field"><label>Durada</label><select id="docentTempsV16" onchange="renderDocentSelectorV16()"><option value="45">45 min</option><option value="60" selected>60 min</option><option value="90">90 min</option></select></div><div class="field"><label>Matèria</label><select id="docentMateriaV16" onchange="renderDocentSelectorV16()"><option value="">Totes</option>${materials.map(m=>`<option>${esc(m)}</option>`).join('')}</select></div><div class="field"><label>Any</label><select id="docentAnyV16" onchange="renderDocentSelectorV16()"><option value="">Tots</option>${years.map(y=>`<option>${esc(y)}</option>`).join('')}</select></div><div class="field"><label>Tema o paraula clau</label><input id="docentBlocV16" placeholder="motor, energia, lògica, trifàsica..." oninput="renderDocentSelectorV16()"></div><div class="field"><label>Estat</label><select id="docentEstatV16" onchange="renderDocentSelectorV16()"><option value="">Tots</option><option value="calculator">Automatitzable</option><option value="guidedFigure">Amb figura</option><option value="textOnly">Textual</option><option value="review">Revisió pendent</option></select></div></div><div class="field"><label>Objectiu de classe</label><textarea id="docentObjectiuV16">Identificar dades, triar fórmules, resoldre per passos i justificar el resultat amb unitats i interpretació tècnica.</textarea></div><div class="field"><label>Tipus de sessió</label><select id="docentModeSessioV16"><option value="mixt">Mixta: treball autònom + correcció guiada</option><option value="projectada">Projectada: resolució conjunta a la pissarra</option><option value="examen">Simulacre d’examen</option><option value="repas">Repàs per errors habituals</option></select></div><h3>Fitxes proposades</h3><div id="docentSelectionV16"></div><div class="btnrow"><button class="primary" onclick="createClassPlanV16()">Generar pla de classe</button><button class="secondary" onclick="buildTeacherDossierV16(false)">Imprimir dossier alumne</button><button class="secondary" onclick="buildTeacherDossierV16(true)">Imprimir solucionari docent</button></div></section><section class="teacher-panel"><h3>2. Correcció i seguiment del grup</h3><p>Demana a l’alumnat que exporti el seu progrés des de la pestanya <b>Progrés</b>. Enganxa aquí els JSON per obtenir una lectura global del grup. No s’envia res a internet.</p><textarea id="groupProgressInputV16" placeholder="Enganxa aquí un o més JSON exportats pels alumnes. Pots separar-los amb una línia en blanc."></textarea><div class="btnrow"><button class="secondary" onclick="aggregateGroupProgressV16()">Analitzar grup</button></div><div id="groupProgressOutV16"></div></section><section class="teacher-panel"><h3>3. Sessions guardades en aquest navegador</h3>${renderTeacherSavedSessionsV16()}</section><section id="docentOutputV16"></section>`;
+  renderDocentSelectorV16();
+}
+
+const oldSetViewV16 = setView;
+setView = function(view){
+  const views = {inici, pau, docent: docentV16, exercicis: exercicisView, calculadores, practica, formulari, historial, examen: examenV14, progres: progresV15};
+  (views[view] || inici)();
+  $$('.tab').forEach(b => b.classList.toggle('active', b.dataset.view === view));
+  window.scrollTo({top:0, behavior:'smooth'});
+};
+
+const oldIniciV16 = inici;
+inici = function(){
+  oldIniciV16();
+  const first = app.querySelector('.card');
+  if(first){
+    first.insertAdjacentHTML('beforeend', `<div class="teacher-note"><b>Novetat v16 per al professorat:</b> pestanya Docent per preparar sessions, generar dossiers, imprimir solucionaris i analitzar progrés de grup de manera local.</div><div class="btnrow"><button class="primary" onclick="setView('docent')">Obrir mode docent</button><button class="secondary" onclick="setView('examen')">Generar examen</button></div>`);
+  }
+};
+
+Object.assign(window, {docentV16, renderDocentSelectorV16, createClassPlanV16, buildTeacherDossierV16, aggregateGroupProgressV16, setView, inici});
+try { setView('inici'); } catch(e) { /* inici v16 opcional */ }
