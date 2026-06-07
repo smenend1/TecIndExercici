@@ -5967,3 +5967,179 @@ inici = function(){
 };
 Object.assign(window, {renderAuditoriaV17, renderAuditListV17, setAuditStateV17, printAuditReportV17, exportAuditJsonV17, docentV16, setView, inici});
 try { setView('inici'); } catch(e) { console.warn('Inici v17 no carregat', e); }
+
+/* === v18 · Reclassificació temàtica transversal ===
+   Afegeix una capa de matèria d'origen + bloc temàtic real + subblocs.
+   Permet filtrar motors, energia, materials, lògica, etc. independentment de si l'examen és de
+   Tecnologia industrial, Tecnologia i enginyeria o Electrotècnia. */
+const V18_VERSION = 'v18 · reclassificació temàtica transversal';
+const V18_TOPICS = [
+  {key:'materials', label:'Materials, assaigs i metrotècnia', words:['material','acer','assaig','tracció','charpy','proveta','tolerància','ajust','diàmetre nominal','metrotècnia','dilatació','corrosió','oxidació','resistència normalitzada'], sub:[['assaig de tracció',['tracció','tensió-deformació','mòdul d\'elasticitat']],['Charpy',['charpy','pèndol','proveta']],['toleràncies i ajustos',['tolerància','ajust','nominal','forat','eix']],['dilatació',['dilatació','coeficient de dilatació']]]},
+  {key:'energia', label:'Energia, rendiment i sostenibilitat', words:['energia','rendiment','calor','calorífica','combustible','butà','benzina','gasoil','gas','poder calorífic','emissió','co2','plaques solars','fotovoltaic','irradiació','pel·lets','petjada','consum','kwh','wh','maceració','rentadora','escalfador'], sub:[['calor i combustibles',['calor','butà','benzina','gasoil','poder calorífic','pel·lets','escalfador']],['fotovoltaica',['plaques solars','fotovoltaic','irradiació']],['emissions de CO₂',['emissió','co2','petjada']],['eficiència i rendiment',['rendiment','estalvi','consum']]]},
+  {key:'mecanismes', label:'Mecanismes, transmissions i estàtica', words:['mecanisme','transmissió','engranatge','politja','corretja','reductor','cargol','femella','pas de rosca','bombo','elevador','parell','moment','barra','estàtica','força','biomecànica','roda dentada','velocitat de rotació','relació de transmissió'], sub:[['engranatges i corretges',['engranatge','roda dentada','corretja','politja']],['cargol-femella',['cargol','femella','pas de rosca','elevador']],['estàtica i moments',['estàtica','moment','barra','equilibri','biomecànica']],['parell i velocitat',['parell','velocitat de gir','rotació','ω']]]},
+  {key:'motors', label:'Màquines tèrmiques i elèctriques', words:['motor','inducció','corrent continu','imants permanents','ventilador','motocicleta','quatre temps','compressió','cilindre','pistó','placa de característiques','lliscament','parells de pols','benzina','propà'], sub:[['motor tèrmic',['quatre temps','benzina','propà','compressió','cilindre','cicle']],['motor CC',['corrent continu','imants permanents','induït','ventilador']],['motor d\'inducció',['inducció','lliscament','parells de pols','trifàsic']],['placa de característiques',['placa de característiques','PN','UN','IN']]]},
+  {key:'electricitat', label:'Electricitat bàsica i circuits', words:['resistència','circuit','font de tensió','ohm','wattímetre','amperímetre','potència elèctrica','làmpada','bateria','interruptor','commutador','relé','díode','led','rectificador'], sub:[['llei d\'Ohm i potència',['ohm','resistència','potència elèctrica','P = U']],['mesura i instruments',['wattímetre','amperímetre','oscil·loscopi']],['rectificació i díodes',['díode','rectificador','led']],['instal·lacions i commutació',['interruptor','commutador','relé','intermitència']]]},
+  {key:'correntAltern', label:'Corrent altern, impedàncies i trifàsica', words:['alterna','sinusoidal','freqüència','trifàsic','trifàsica','reactància','inductiva','capacitiva','impedància','factor de potència','ressonància','estrella','fase','neutre','potència reactiva','potència aparent','cos φ','cosφ','rl','rc','rlc'], sub:[['valor eficaç i màxim',['eficaç','màxim','sinusoidal']],['impedància RL/RC/RLC',['impedància','reactància','inductiva','capacitiva','rl','rc','rlc']],['trifàsica',['trifàsic','trifàsica','estrella','fase','neutre']],['factor de potència i compensació',['factor de potència','cos φ','cosφ','ressonància','reactiva']]]},
+  {key:'digital', label:'Lògica digital i sistemes automàtics', words:['lògica','taula de veritat','portes lògiques','boole','digital','sortida','entrada','ascensor','persiana','accés','clau','targeta','empremta','polsador','sistema de control','domòtica','senyal','binari'], sub:[['taules de veritat',['taula de veritat','binari']],['portes lògiques',['portes lògiques','AND','OR','NOT','boole']],['automatismes de seguretat',['polsador','seguretat','tallat']],['control d\'accés i domòtica',['accés','clau','targeta','empremta','persiana','domòtica','ascensor']]]},
+  {key:'pneumatica', label:'Pneumàtica, oleohidràulica i actuadors', words:['pneumàtica','oleohidràulica','cilindre','pressió','cabal','actuador','vàlvula','aire comprimit','hidràulic'], sub:[['cilindres i força',['cilindre','força','pressió']],['cabal i velocitat',['cabal','velocitat','actuador']],['vàlvules i circuits',['vàlvula','pneumàtica','hidràulic']]]},
+  {key:'fabricacio', label:'Processos industrials i fabricació', words:['fabricació','producció','procés','qualitat','línia de producció','tallat','operacions','manteniment','residus'], sub:[['procés de fabricació',['fabricació','procés','producció']],['seguretat de producció',['tallat','seguretat','operacions']],['qualitat i manteniment',['qualitat','manteniment','residus']]]}
+];
+const V18_TOPIC_FALLBACK = {key:'altres', label:'Altres continguts tecnològics', sub:[['interpretació general',['figura','taula','dades','exercici']]]};
+function textV18(x){ return `${x.materia||''} ${x.serie||''} ${x.exercici||''} ${x.bloc||''} ${x.tipus||''} ${x.titol||''} ${x.resum||''} ${x.enunciat||''} ${(x.apartats||[]).join(' ')} ${(x.dades||[]).join(' ')} ${(x.formules||[]).join(' ')}`.toLowerCase(); }
+function scoreTopicV18(topic, txt){ return topic.words.reduce((n,w)=> n + (txt.includes(w.toLowerCase()) ? 1 : 0), 0); }
+function classifyPauTopicV18(x){
+  const txt = textV18(x);
+  const ranked = V18_TOPICS.map(t => ({...t, score:scoreTopicV18(t,txt)})).sort((a,b)=>b.score-a.score);
+  const main = ranked[0].score ? ranked[0] : V18_TOPIC_FALLBACK;
+  let sub = [];
+  (main.sub||[]).forEach(([label, words]) => { if(words.some(w => txt.includes(String(w).toLowerCase()))) sub.push(label); });
+  if(!sub.length && x.bloc) sub.push(x.bloc);
+  const related = ranked.filter(t => t.key !== main.key && t.score > 0).slice(0,2).map(t=>t.label);
+  return {key:main.key, label:main.label, subblocs:[...new Set(sub)].slice(0,4), relacionats:related};
+}
+function applyThemesV18(){
+  try{
+    pauAllV16().forEach(x => {
+      const c = classifyPauTopicV18(x);
+      x.materiaOrigen = x.materiaOrigen || x.materia;
+      x.blocOriginal = x.blocOriginal || x.bloc;
+      x.temaClau = c.key;
+      x.blocPrincipal = c.label;
+      x.subblocs = c.subblocs;
+      x.temesRelacionats = c.relacionats;
+      x.etiquetesTematiques = [...new Set([c.label, ...(c.subblocs||[]), ...(c.relacionats||[]), x.bloc].filter(Boolean))];
+    });
+  }catch(e){ console.warn('No s\'ha pogut aplicar la taxonomia v18', e); }
+}
+function allTopicsV18(){ applyThemesV18(); return [...new Set(pauAllV16().map(x=>x.blocPrincipal).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'ca')); }
+function allSubtopicsV18(topic=''){
+  applyThemesV18();
+  return [...new Set(pauAllV16().filter(x=>!topic || x.blocPrincipal===topic).flatMap(x=>x.subblocs||[]).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'ca'));
+}
+function topicOptionsV18(selected=''){
+  return allTopicsV18().map(t=>`<option ${t===selected?'selected':''}>${esc(t)}</option>`).join('');
+}
+function subtopicOptionsV18(topic='', selected=''){
+  return allSubtopicsV18(topic).map(t=>`<option ${t===selected?'selected':''}>${esc(t)}</option>`).join('');
+}
+function topicChipsV18(x){
+  const subs = (x.subblocs||[]).map(s=>`<span class="pill topic-sub">${esc(s)}</span>`).join('');
+  const rel = (x.temesRelacionats||[]).map(s=>`<span class="pill topic-rel">${esc(s)}</span>`).join('');
+  return `<p><span class="pill topic-main">${esc(x.blocPrincipal || x.bloc)}</span>${subs}${rel}</p>`;
+}
+function thematicStatsV18(){
+  applyThemesV18();
+  const counts = {};
+  pauAllV16().forEach(x => { counts[x.blocPrincipal] = (counts[x.blocPrincipal]||0)+1; });
+  return counts;
+}
+function thematicPanelV18(){
+  const counts = thematicStatsV18();
+  const total = pauAllV16().length || 1;
+  const cards = Object.entries(counts).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<button class="topic-kpi" onclick="setView('temes'); setTimeout(()=>{ const s=document.getElementById('topicTopicV18'); if(s){s.value='${esc(k)}'; renderTemaListV18();}},0)"><b>${v}</b><span>${esc(k)}</span></button>`).join('');
+  return `<section class="card topic-panel"><h2>Mapa temàtic v18</h2><p>Ara la PWA separa la <b>matèria d'origen</b> de l'examen i el <b>bloc temàtic real</b>. Això permet trobar, per exemple, tots els exercicis de motors encara que vinguin de Tecnologia industrial, Tecnologia i enginyeria o Electrotècnia.</p><div class="topic-grid">${cards}</div><p class="small">${total} fitxes classificades. La classificació és editable en futures versions si el docent vol refinar algun cas concret.</p></section>`;
+}
+const oldPauV18 = pau;
+pau = function(){
+  applyThemesV18();
+  const topics = topicOptionsV18();
+  app.innerHTML = `${thematicPanelV18()}${qualityPanelV13()}<section class="card"><h2>Banc PAU · v18 amb classificació temàtica</h2><p>Filtra per matèria d'origen o per tema real. El tema real és transversal i serveix per preparar classes per contingut: motors, energia, materials, corrent altern, lògica, etc.</p><div class="btnrow no-print"><button id="roleAlumne" class="${pauRole==='alumne'?'primary':'secondary'}" onclick="setPauRole('alumne')">Mode alumne</button><button id="roleDocent" class="${pauRole==='docent'?'primary':'secondary'}" onclick="setPauRole('docent')">Mode docent</button><button class="secondary" onclick="setView('temes')">Mapa de temes</button></div><div class="grid"><div class="field"><label>Matèria d'origen</label><select id="bankMateria" onchange="renderPauBank()"><option value="">Totes</option><option>Tecnologia i enginyeria</option><option>Tecnologia industrial</option><option>Electrotècnia</option></select></div><div class="field"><label>Any</label><select id="bankYear" onchange="renderPauBank()"><option value="">Tots</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option></select></div><div class="field"><label>Sèrie</label><select id="bankSerie" onchange="renderPauBank()"><option value="">Totes</option><option>Sèrie 1</option><option>Sèrie 2</option><option>Sèrie 5</option></select></div><div class="field"><label>Bloc temàtic real</label><select id="bankTopicV18" onchange="document.getElementById('bankSubtopicV18').innerHTML='<option value=&quot;&quot;>Tots</option>'+subtopicOptionsV18(this.value); renderPauBank();"><option value="">Tots</option>${topics}</select></div><div class="field"><label>Subbloc</label><select id="bankSubtopicV18" onchange="renderPauBank()"><option value="">Tots</option>${subtopicOptionsV18()}</select></div><div class="field"><label>Cerca</label><input id="bankSearch" placeholder="Ex.: motor, Charpy, energia, lògica..." oninput="renderPauBank()"></div><div class="field"><label>Mode</label><select id="bankMode" onchange="renderPauBank()"><option value="">Tots</option><option value="test">Test</option><option value="calculadora">Amb calculadora</option><option value="fitxa">Fitxa per parts</option></select></div><div class="field"><label>Verificació</label><select id="bankVerify" onchange="renderPauBank()"><option value="">Totes</option><option value="calculator">Automatitzable amb calculadora</option><option value="guidedFigure">Guiat amb figura</option><option value="textOnly">Resolt textualment</option><option value="review">Revisió docent pendent</option></select></div></div><div id="pauArea"></div></section><section class="card"><h2>Fitxes del banc</h2><div id="pauBankStats" class="small"></div><div id="pauBankCards" class="grid"></div></section>`;
+  renderPauBank();
+};
+renderPauBank = function(){
+  applyThemesV18();
+  const materia = document.getElementById('bankMateria')?.value || '';
+  const year = document.getElementById('bankYear')?.value || '';
+  const serie = document.getElementById('bankSerie')?.value || '';
+  const topic = document.getElementById('bankTopicV18')?.value || '';
+  const subtopic = document.getElementById('bankSubtopicV18')?.value || '';
+  const q = (document.getElementById('bankSearch')?.value || '').toLowerCase().trim();
+  const mode = document.getElementById('bankMode')?.value || '';
+  const verify = document.getElementById('bankVerify')?.value || '';
+  let items = pauData().filter(x => (!materia || x.materia === materia) && (!year || String(x.any) === year) && (!serie || x.serie === serie));
+  if(topic) items = items.filter(x => x.blocPrincipal === topic);
+  if(subtopic) items = items.filter(x => (x.subblocs||[]).includes(subtopic));
+  if(mode) items = items.filter(x => mode === 'calculadora' ? !!x.enllac : (mode === 'fitxa' ? !x.enllac && x.tipus !== 'test' : String(x.tipus||'').includes(mode)));
+  if(verify) items = items.filter(x => inferVerificationV13(x).key === verify);
+  if(q){
+    items = items.filter(x => `${x.any} ${x.materia} ${x.serie} ${x.exercici} ${x.bloc} ${x.blocPrincipal} ${(x.subblocs||[]).join(' ')} ${(x.temesRelacionats||[]).join(' ')} ${x.titol} ${x.resum} ${x.tipus} ${x.verificacio}`.toLowerCase().includes(q));
+  }
+  const stats = document.getElementById('pauBankStats');
+  if(stats) stats.innerHTML = `<p><b>${items.length}</b> fitxes mostrades de <b>${pauData().length}</b>. Filtres v18: matèria d'origen, any, sèrie, tema real, subbloc, mode i verificació.</p>`;
+  const el = document.getElementById('pauBankCards'); if(!el) return;
+  el.innerHTML = items.map(x => `<article class="card"><p><span class="pill">${esc(x.any)}</span> <span class="pill">${esc(x.materia)}</span> <span class="pill">${esc(x.serie)}</span></p><h3>${esc(x.exercici)} · ${esc(x.titol)}</h3>${topicChipsV18(x)}<p><b>Bloc original:</b> ${esc(x.blocOriginal || x.bloc)} · ${esc(x.tipus)} · ${esc(x.nivell)}</p><p>${esc(x.resum)}</p><p>${statusBadgeV13(x)}</p><p class="small">${esc(x.verificacioNota || inferVerificationV13(x).note)}</p><div class="btnrow"><button class="primary" onclick="openPauItem('${x.id}')">Treballar per parts</button>${x.enllac?`<button class="secondary" onclick="openExercise('${x.enllac}')">Obrir calculadora associada</button>`:''}</div></article>`).join('') || '<div class="notice">No hi ha fitxes amb aquest filtre.</div>';
+};
+const oldRenderPauHeaderV18 = renderPauHeader;
+renderPauHeader = function(x){
+  applyThemesV18();
+  return `<h2>${esc(x.exercici)} · ${esc(x.titol)}</h2><p><span class="pill">${esc(x.any)}</span> <span class="pill">Origen: ${esc(x.materia)}</span> <span class="pill">${esc(x.serie)}</span> <span class="pill">${esc(x.nivell)}</span> ${statusBadgeV13(x)}</p>${topicChipsV18(x)}<p><b>Bloc original del buidatge:</b> ${esc(x.blocOriginal || x.bloc)}</p><p>${esc(x.resum)}</p><div class="notice verify-note"><b>Estat de verificació:</b> ${esc(x.verificacioNota || inferVerificationV13(x).note)}</div><details class="enunciat-box" open><summary>Enunciat de treball</summary><p>${esc(x.enunciat || x.resum)}</p></details>${renderPauFigures(x)}`;
+};
+function temesV18(){
+  applyThemesV18();
+  app.innerHTML = `<section class="card"><h2>Mapa de temes · v18</h2><p>Aquesta vista ajuda el docent a preparar classes per contingut, no només per examen. Selecciona un bloc temàtic real i veuràs exercicis de totes les matèries d'origen.</p><div class="grid"><div class="field"><label>Bloc temàtic real</label><select id="topicTopicV18" onchange="document.getElementById('topicSubV18').innerHTML='<option value=&quot;&quot;>Tots</option>'+subtopicOptionsV18(this.value); renderTemaListV18();"><option value="">Tots</option>${topicOptionsV18()}</select></div><div class="field"><label>Subbloc</label><select id="topicSubV18" onchange="renderTemaListV18()"><option value="">Tots</option>${subtopicOptionsV18()}</select></div><div class="field"><label>Matèria d'origen</label><select id="topicMateriaV18" onchange="renderTemaListV18()"><option value="">Totes</option><option>Tecnologia i enginyeria</option><option>Tecnologia industrial</option><option>Electrotècnia</option></select></div><div class="field"><label>Cerca</label><input id="topicSearchV18" placeholder="Ex.: motor CC, emissions, rectificador..." oninput="renderTemaListV18()"></div></div><div class="btnrow"><button class="secondary" onclick="printTopicMapV18()">Imprimir mapa temàtic</button><button class="secondary" onclick="setView('pau')">Anar al banc PAU</button><button class="secondary" onclick="setView('docent')">Preparar classe</button></div></section><section id="topicListV18"></section>`;
+  renderTemaListV18();
+}
+function filteredByTopicV18(prefix='topic'){
+  const topic = document.getElementById(prefix+'TopicV18')?.value || '';
+  const sub = document.getElementById(prefix+'SubV18')?.value || '';
+  const materia = document.getElementById(prefix+'MateriaV18')?.value || '';
+  const q = (document.getElementById(prefix+'SearchV18')?.value || '').toLowerCase().trim();
+  let items = pauAllV16().filter(x => (!topic || x.blocPrincipal===topic) && (!sub || (x.subblocs||[]).includes(sub)) && (!materia || x.materia===materia));
+  if(q) items = items.filter(x => `${x.any} ${x.materia} ${x.serie} ${x.exercici} ${x.titol} ${x.blocPrincipal} ${(x.subblocs||[]).join(' ')} ${x.resum} ${x.enunciat}`.toLowerCase().includes(q));
+  return items.sort((a,b)=>String(a.blocPrincipal).localeCompare(String(b.blocPrincipal),'ca') || String(b.any).localeCompare(String(a.any)) || String(a.serie).localeCompare(String(b.serie)));
+}
+function renderTemaListV18(){
+  const out = document.getElementById('topicListV18'); if(!out) return;
+  const items = filteredByTopicV18('topic');
+  const counts = {};
+  items.forEach(x=>{ counts[x.blocPrincipal]=(counts[x.blocPrincipal]||0)+1; });
+  const summary = Object.entries(counts).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<span class="pill topic-main">${esc(k)}: ${v}</span>`).join(' ');
+  out.innerHTML = `<section class="card"><h3>${items.length} fitxes trobades</h3><p>${summary || 'Cap resultat amb aquests filtres.'}</p></section><div class="grid">${items.map(x=>`<article class="card"><h3>${esc(x.titol)}</h3><p><span class="pill">${esc(x.any)}</span> <span class="pill">${esc(x.materia)}</span> <span class="pill">${esc(x.serie)}</span> <span class="pill">${esc(x.exercici)}</span></p>${topicChipsV18(x)}<p>${esc(x.resum)}</p><div class="btnrow"><button class="primary" onclick="openPauItem('${x.id}'); setView('pau')">Obrir fitxa</button>${x.enllac?`<button class="secondary" onclick="openExercise('${x.enllac}')">Calculadora</button>`:''}</div></article>`).join('')}</div>`;
+}
+function printTopicMapV18(){
+  const items = filteredByTopicV18('topic');
+  app.innerHTML = `<section class="card print-sheet"><h2>Mapa temàtic PAU · v18</h2><p><b>Data:</b> ${new Date().toLocaleDateString('ca-ES')} · <b>Fitxes:</b> ${items.length}</p><table><thead><tr><th>Tema real</th><th>Subblocs</th><th>Any</th><th>Origen</th><th>Sèrie</th><th>Exercici</th><th>Títol</th></tr></thead><tbody>${items.map(x=>`<tr><td>${esc(x.blocPrincipal)}</td><td>${esc((x.subblocs||[]).join(', '))}</td><td>${esc(x.any)}</td><td>${esc(x.materia)}</td><td>${esc(x.serie)}</td><td>${esc(x.exercici)}</td><td>${esc(x.titol)}</td></tr>`).join('')}</tbody></table><div class="no-print btnrow"><button class="primary" onclick="window.print()">Imprimir</button><button class="secondary" onclick="setView('temes')">Tornar</button></div></section>`;
+}
+const oldExamOptionsV18 = examFilterOptionsV14;
+examFilterOptionsV14 = function(){
+  applyThemesV18();
+  const base = oldExamOptionsV18 ? oldExamOptionsV18() : {years:'', series:'', mats:''};
+  base.topics = topicOptionsV18();
+  base.subtopics = subtopicOptionsV18();
+  return base;
+};
+const oldGetFilteredItemsV18 = getFilteredItemsV14;
+getFilteredItemsV14 = function(prefix='exam'){
+  applyThemesV18();
+  let items = oldGetFilteredItemsV18(prefix);
+  const topic = document.getElementById(prefix+'TopicV18')?.value || '';
+  const sub = document.getElementById(prefix+'SubtopicV18')?.value || '';
+  if(topic) items = items.filter(x => x.blocPrincipal === topic);
+  if(sub) items = items.filter(x => (x.subblocs||[]).includes(sub));
+  return items;
+};
+examenV14 = function(){
+  const opts = examFilterOptionsV14();
+  app.innerHTML = `<section class="card"><h2>Mode examen PAU · v18 per temes</h2><p>Genera proves a partir del banc PAU, filtrant també per bloc temàtic real i subbloc.</p><div class="grid"><div class="field"><label>Matèria d'origen</label><select id="examMateria"><option value="">Totes</option>${opts.mats}</select></div><div class="field"><label>Any</label><select id="examYear"><option value="">Tots</option>${opts.years}</select></div><div class="field"><label>Sèrie</label><select id="examSerie"><option value="">Totes</option>${opts.series}</select></div><div class="field"><label>Bloc temàtic real</label><select id="examTopicV18" onchange="document.getElementById('examSubtopicV18').innerHTML='<option value=&quot;&quot;>Tots</option>'+subtopicOptionsV18(this.value)"><option value="">Tots</option>${opts.topics}</select></div><div class="field"><label>Subbloc</label><select id="examSubtopicV18"><option value="">Tots</option>${opts.subtopics}</select></div><div class="field"><label>Tema o paraula clau</label><input id="examSearch" placeholder="Ex.: motor, energia, lògica, trifàsica..."></div><div class="field"><label>Estat de verificació</label><select id="examVerify"><option value="">Tots</option><option value="calculator">Automatitzable</option><option value="guidedFigure">Guiat amb figura</option><option value="textOnly">Resolt textualment</option><option value="review">Revisió pendent</option></select></div><div class="field"><label>Nombre d’exercicis</label><input id="examCount" type="number" min="1" max="8" value="4"></div><div class="field"><label>Temps recomanat</label><input id="examMinutes" type="number" min="5" value="90"></div><div class="field"><label>Selecció</label><select id="examRandom"><option value="yes">Aleatòria</option><option value="no">Primers resultats del filtre</option></select></div></div><div class="btnrow no-print"><button class="primary" onclick="generateExamV14()">Generar examen</button><button class="secondary" onclick="startTimerV14()">Iniciar temporitzador</button><button class="secondary" onclick="stopTimerV14()">Aturar</button><span id="examTimer" class="pill">--:--</span></div><div id="examArea"></div></section><section class="card"><h2>Dossiers imprimibles · v18 per temes</h2><p>Crea un dossier per bloc temàtic real, any, sèrie o estat de verificació.</p><div class="grid"><div class="field"><label>Matèria d'origen</label><select id="dossierMateria"><option value="">Totes</option>${opts.mats}</select></div><div class="field"><label>Any</label><select id="dossierYear"><option value="">Tots</option>${opts.years}</select></div><div class="field"><label>Sèrie</label><select id="dossierSerie"><option value="">Totes</option>${opts.series}</select></div><div class="field"><label>Bloc temàtic real</label><select id="dossierTopicV18" onchange="document.getElementById('dossierSubtopicV18').innerHTML='<option value=&quot;&quot;>Tots</option>'+subtopicOptionsV18(this.value)"><option value="">Tots</option>${opts.topics}</select></div><div class="field"><label>Subbloc</label><select id="dossierSubtopicV18"><option value="">Tots</option>${opts.subtopics}</select></div><div class="field"><label>Tema o paraula clau</label><input id="dossierSearch" placeholder="Ex.: energia, mecanismes, circuits..."></div><div class="field"><label>Estat de verificació</label><select id="dossierVerify"><option value="">Tots</option><option value="calculator">Automatitzable</option><option value="guidedFigure">Guiat amb figura</option><option value="textOnly">Resolt textualment</option><option value="review">Revisió pendent</option></select></div><div class="field"><label>Màxim de fitxes</label><input id="dossierCount" type="number" min="1" max="80" value="12"></div></div><div class="btnrow no-print"><button class="primary" onclick="generateDossierV14(false)">Crear dossier alumne</button><button class="secondary" onclick="generateDossierV14(true)">Crear dossier docent</button></div><div id="dossierArea"></div></section>`;
+};
+const oldDocentV18 = docentV16;
+docentV16 = function(){
+  oldDocentV18();
+  const first = app.querySelector('.card');
+  if(first){ first.insertAdjacentHTML('beforeend', `<div class="teacher-note"><b>Novetat v18:</b> usa el mapa temàtic per preparar sessions per contingut real, independentment de la matèria d'origen de l'examen.</div><div class="btnrow"><button class="secondary" onclick="setView('temes')">Obrir mapa de temes</button></div>`); }
+};
+const oldIniciV18 = inici;
+inici = function(){
+  oldIniciV18();
+  const first = app.querySelector('.card');
+  if(first){ first.insertAdjacentHTML('beforeend', `<div class="teacher-note"><b>v18 · Reclassificació temàtica:</b> cada fitxa diferencia matèria d'origen i tema real. Això permet preparar classe de motors, energia o lògica amb exercicis de tots els anys i matèries.</div><div class="btnrow"><button class="primary" onclick="setView('temes')">Veure mapa de temes</button><button class="secondary" onclick="setView('pau')">Filtrar banc PAU</button></div>`); }
+};
+setView = function(view){
+  applyThemesV18();
+  const views = {inici, pau, temes: temesV18, docent: docentV16, auditoria: renderAuditoriaV17, exercicis: exercicisView, calculadores, practica, formulari, historial, examen: examenV14, progres: progresV15};
+  (views[view] || inici)();
+  $$('.tab').forEach(b => b.classList.toggle('active', b.dataset.view === view));
+  window.scrollTo({top:0, behavior:'smooth'});
+};
+Object.assign(window, {temesV18, renderTemaListV18, printTopicMapV18, classifyPauTopicV18, applyThemesV18, subtopicOptionsV18, renderPauBank, pau, examenV14, getFilteredItemsV14, docentV16, inici, setView});
+try { applyThemesV18(); setView('inici'); } catch(e) { console.warn('Inici v18 no carregat', e); }
