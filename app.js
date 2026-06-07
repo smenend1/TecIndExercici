@@ -5181,7 +5181,7 @@ function qualityPanelV13(){
   const counts = data.reduce((acc,x)=>{ const k=inferVerificationV13(x).key; acc[k]=(acc[k]||0)+1; return acc; },{});
   const total = data.length || 1;
   const pct = n => Math.round((n||0)/total*100);
-  return `<section class="card quality-panel"><h2>Control de qualitat v13</h2><p>La v13 afegeix estat de verificació, solucionari docent ampliat i comprovació millorada de respostes. No canvia els enunciats: millora el control docent del banc.</p><div class="quality-grid"><div><b>${counts.calculator||0}</b><span>amb calculadora</span></div><div><b>${counts.guidedFigure||0}</b><span>guiats amb figura</span></div><div><b>${counts.textOnly||0}</b><span>resolts textualment</span></div><div><b>${counts.review||0}</b><span>pendent revisió</span></div></div><div class="progressbar"><div style="width:${pct((counts.calculator||0)+(counts.guidedFigure||0)+(counts.textOnly||0))}%"></div></div><p class="small">Percentatge de fitxes amb resolució o guia docent: ${pct((counts.calculator||0)+(counts.guidedFigure||0)+(counts.textOnly||0))}%.</p></section>`;
+  return `<section class="card quality-panel"><h2>Control de qualitat v14</h2><p>La v14 conserva el control de qualitat i afegeix mode examen, temporitzador i dossiers imprimibles.</p><div class="quality-grid"><div><b>${counts.calculator||0}</b><span>amb calculadora</span></div><div><b>${counts.guidedFigure||0}</b><span>guiats amb figura</span></div><div><b>${counts.textOnly||0}</b><span>resolts textualment</span></div><div><b>${counts.review||0}</b><span>pendent revisió</span></div></div><div class="progressbar"><div style="width:${pct((counts.calculator||0)+(counts.guidedFigure||0)+(counts.textOnly||0))}%"></div></div><p class="small">Percentatge de fitxes amb resolució o guia docent: ${pct((counts.calculator||0)+(counts.guidedFigure||0)+(counts.textOnly||0))}%.</p></section>`;
 }
 
 function solutionNumbersV13(txt){
@@ -5212,7 +5212,7 @@ function renderNumericCorrectionV13(answer, solution){
 
 const oldPau = pau;
 pau = function(){
-  app.innerHTML = `${qualityPanelV13()}<section class="card"><h2>Banc PAU complet · v13 qualitat docent</h2><p>La v13 manté el banc multiany amb figures i resolucions, i afegeix <b>estat de verificació</b>, <b>solucionari docent ampliat</b> i <b>comprovació millorada</b> de respostes per passos.</p><div class="btnrow no-print"><button id="roleAlumne" class="${pauRole==='alumne'?'primary':'secondary'}" onclick="setPauRole('alumne')">Mode alumne</button><button id="roleDocent" class="${pauRole==='docent'?'primary':'secondary'}" onclick="setPauRole('docent')">Mode docent</button></div><div class="grid"><div class="field"><label>Matèria</label><select id="bankMateria" onchange="renderPauBank()"><option value="">Totes</option><option>Tecnologia i enginyeria</option><option>Tecnologia industrial</option><option>Electrotècnia</option></select></div><div class="field"><label>Any</label><select id="bankYear" onchange="renderPauBank()"><option value="">Tots</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option></select></div><div class="field"><label>Sèrie</label><select id="bankSerie" onchange="renderPauBank()"><option value="">Totes</option><option>Sèrie 1</option><option>Sèrie 2</option><option>Sèrie 5</option></select></div><div class="field"><label>Bloc o paraula clau</label><input id="bankSearch" placeholder="Ex.: motor, energia, lògica, estàtica..." oninput="renderPauBank()"></div><div class="field"><label>Mode</label><select id="bankMode" onchange="renderPauBank()"><option value="">Tots</option><option value="test">Test</option><option value="calculadora">Amb calculadora</option><option value="fitxa">Fitxa per parts</option></select></div><div class="field"><label>Verificació</label><select id="bankVerify" onchange="renderPauBank()"><option value="">Totes</option><option value="calculator">Automatitzable amb calculadora</option><option value="guidedFigure">Guiat amb figura</option><option value="textOnly">Resolt textualment</option><option value="review">Revisió docent pendent</option></select></div></div><div class="btnrow no-print"><button class="secondary" onclick="renderTest()">Obrir test autocorregible</button><button class="secondary" onclick="setView('exercicis')">Exercicis resolubles</button><button class="secondary" onclick="setView('calculadores')">Calculadores</button></div><div id="pauArea"></div></section><section class="card"><h2>Fitxes del banc</h2><div id="pauBankStats" class="small"></div><div id="pauBankCards" class="grid"></div></section>`;
+  app.innerHTML = `${qualityPanelV13()}<section class="card"><h2>Banc PAU complet · v14 qualitat docent i mode examen</h2><p>La v14 manté el banc multiany amb figures, resolucions, estat de verificació i afegeix mode examen i dossiers imprimibles.</p><div class="btnrow no-print"><button id="roleAlumne" class="${pauRole==='alumne'?'primary':'secondary'}" onclick="setPauRole('alumne')">Mode alumne</button><button id="roleDocent" class="${pauRole==='docent'?'primary':'secondary'}" onclick="setPauRole('docent')">Mode docent</button></div><div class="grid"><div class="field"><label>Matèria</label><select id="bankMateria" onchange="renderPauBank()"><option value="">Totes</option><option>Tecnologia i enginyeria</option><option>Tecnologia industrial</option><option>Electrotècnia</option></select></div><div class="field"><label>Any</label><select id="bankYear" onchange="renderPauBank()"><option value="">Tots</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option></select></div><div class="field"><label>Sèrie</label><select id="bankSerie" onchange="renderPauBank()"><option value="">Totes</option><option>Sèrie 1</option><option>Sèrie 2</option><option>Sèrie 5</option></select></div><div class="field"><label>Bloc o paraula clau</label><input id="bankSearch" placeholder="Ex.: motor, energia, lògica, estàtica..." oninput="renderPauBank()"></div><div class="field"><label>Mode</label><select id="bankMode" onchange="renderPauBank()"><option value="">Tots</option><option value="test">Test</option><option value="calculadora">Amb calculadora</option><option value="fitxa">Fitxa per parts</option></select></div><div class="field"><label>Verificació</label><select id="bankVerify" onchange="renderPauBank()"><option value="">Totes</option><option value="calculator">Automatitzable amb calculadora</option><option value="guidedFigure">Guiat amb figura</option><option value="textOnly">Resolt textualment</option><option value="review">Revisió docent pendent</option></select></div></div><div class="btnrow no-print"><button class="secondary" onclick="renderTest()">Obrir test autocorregible</button><button class="secondary" onclick="setView('exercicis')">Exercicis resolubles</button><button class="secondary" onclick="setView('calculadores')">Calculadores</button></div><div id="pauArea"></div></section><section class="card"><h2>Fitxes del banc</h2><div id="pauBankStats" class="small"></div><div id="pauBankCards" class="grid"></div></section>`;
   renderPauBank();
 };
 
@@ -5234,7 +5234,7 @@ renderPauBank = function(){
     items = items.filter(x => `${x.any} ${x.materia} ${x.serie} ${x.exercici} ${x.bloc} ${x.titol} ${x.resum} ${x.tipus} ${x.verificacio}`.toLowerCase().includes(q));
   }
   const stats = document.getElementById('pauBankStats');
-  if(stats) stats.innerHTML = `<p><b>${items.length}</b> fitxes mostrades de <b>${data.length}</b>. Filtres v13: any, sèrie, tema, mode i estat de verificació.</p>`;
+  if(stats) stats.innerHTML = `<p><b>${items.length}</b> fitxes mostrades de <b>${data.length}</b>. Filtres v14: any, sèrie, tema, mode i estat de verificació.</p>`;
   const el = document.getElementById('pauBankCards');
   if(!el) return;
   el.innerHTML = items.map(x => `<article class="card"><p><span class="pill">${esc(x.any)}</span> <span class="pill">${esc(x.materia)}</span> <span class="pill">${esc(x.serie)}</span></p><h3>${esc(x.exercici)} · ${esc(x.titol)}</h3><p><b>${esc(x.bloc)}</b> · ${esc(x.tipus)} · ${esc(x.nivell)}</p><p>${esc(x.resum)}</p><p>${statusBadgeV13(x)}</p><p class="small">${esc(x.verificacioNota || inferVerificationV13(x).note)}</p><div class="btnrow"><button class="primary" onclick="openPauItem('${x.id}')">Treballar per parts</button>${x.enllac?`<button class="secondary" onclick="openExercise('${x.enllac}')">Obrir calculadora associada</button>`:''}</div></article>`).join('') || '<div class="notice">No hi ha fitxes amb aquest filtre.</div>';
@@ -5242,14 +5242,14 @@ renderPauBank = function(){
 
 const oldRenderPauHeader = renderPauHeader;
 renderPauHeader = function(x){
-  return `<h2>${esc(x.exercici)} · ${esc(x.titol)}</h2><p><span class="pill">${esc(x.any)}</span> <span class="pill">${esc(x.materia)}</span> <span class="pill">${esc(x.serie)}</span> <span class="pill">${esc(x.bloc)}</span> <span class="pill">${esc(x.nivell)}</span> ${statusBadgeV13(x)}</p><p>${esc(x.resum)}</p><div class="notice verify-note"><b>Estat v13:</b> ${esc(x.verificacioNota || inferVerificationV13(x).note)}</div><details class="enunciat-box" open><summary>Enunciat de treball</summary><p>${esc(x.enunciat || x.resum)}</p></details>${renderPauFigures(x)}`;
+  return `<h2>${esc(x.exercici)} · ${esc(x.titol)}</h2><p><span class="pill">${esc(x.any)}</span> <span class="pill">${esc(x.materia)}</span> <span class="pill">${esc(x.serie)}</span> <span class="pill">${esc(x.bloc)}</span> <span class="pill">${esc(x.nivell)}</span> ${statusBadgeV13(x)}</p><p>${esc(x.resum)}</p><div class="notice verify-note"><b>Estat de verificació:</b> ${esc(x.verificacioNota || inferVerificationV13(x).note)}</div><details class="enunciat-box" open><summary>Enunciat de treball</summary><p>${esc(x.enunciat || x.resum)}</p></details>${renderPauFigures(x)}`;
 };
 
 const oldRenderPauDocent = renderPauDocent;
 renderPauDocent = function(x){
   const list = arr => `<ul>${(arr||[]).map(v=>`<li>${esc(v)}</li>`).join('')}</ul>`;
   const rubric = x.criterisCorreccioV13 || buildRubricV13(x);
-  return `<section class="card pau-work"><div class="mode-banner teacher"><b>Mode docent v13:</b> solucionari ampliat, criteris de correcció i estat de verificació.</div>${renderPauHeader(x)}<details class="explain" open><summary>1. Apartats que cal resoldre</summary>${list(x.apartats)}</details><details class="explain" open><summary>2. Dades principals</summary>${list(x.dades)}</details><details class="explain" open><summary>3. Fórmules i idees clau</summary>${list(x.formules)}</details><details class="explain" open><summary>4. Pistes graduades</summary>${list(x.pistes)}</details><details class="explain" open><summary>5. Resolució pas a pas</summary><pre>${esc(x.resolucio)}</pre>${x.enllac?`<p><button class="primary" onclick="openExercise('${x.enllac}')">Obrir resolutor amb dades modificables</button></p>`:'<p class="notice">Aquesta fitxa depèn de figura o esquema. És millor treballar-la com a lectura guiada i correcció per criteris.</p>'}</details><details class="explain" open><summary>6. Resposta final orientativa</summary><pre>${esc(x.respostaFinal || buildFinalAnswerV13(x))}</pre></details><details class="explain" open><summary>7. Errors habituals</summary>${list(x.errors)}</details><details class="explain" open><summary>8. Criteris orientatius de correcció</summary><table><thead><tr><th>Criteri</th><th>Què cal observar</th></tr></thead><tbody>${rubric.map(r=>`<tr><td><b>${esc(r[0])}</b></td><td>${esc(r[1])}</td></tr>`).join('')}</tbody></table><p class="small"><b>Resposta mínima acceptable:</b> procediment coherent, resultat amb unitat i justificació bàsica.<br><b>Resposta excel·lent:</b> inclou modelització, conversions, comprovació d’ordre de magnitud, interpretació i revisió d’errors habituals.</p></details><div class="btnrow no-print"><button class="secondary" onclick="printClassSheet('${x.id}', false)">Imprimir fitxa alumne</button><button class="secondary" onclick="printClassSheet('${x.id}', true)">Imprimir amb solucions</button><button class="secondary" onclick="navigator.clipboard.writeText(document.getElementById('pauArea').innerText)">Copiar fitxa</button><button class="secondary" onclick="saveCurrent('${esc(x.exercici+' · '+x.titol)}', document.getElementById('pauArea').innerText)">Guardar a l’historial</button></div></section>`;
+  return `<section class="card pau-work"><div class="mode-banner teacher"><b>Mode docent v14:</b> solucionari ampliat, criteris de correcció i estat de verificació.</div>${renderPauHeader(x)}<details class="explain" open><summary>1. Apartats que cal resoldre</summary>${list(x.apartats)}</details><details class="explain" open><summary>2. Dades principals</summary>${list(x.dades)}</details><details class="explain" open><summary>3. Fórmules i idees clau</summary>${list(x.formules)}</details><details class="explain" open><summary>4. Pistes graduades</summary>${list(x.pistes)}</details><details class="explain" open><summary>5. Resolució pas a pas</summary><pre>${esc(x.resolucio)}</pre>${x.enllac?`<p><button class="primary" onclick="openExercise('${x.enllac}')">Obrir resolutor amb dades modificables</button></p>`:'<p class="notice">Aquesta fitxa depèn de figura o esquema. És millor treballar-la com a lectura guiada i correcció per criteris.</p>'}</details><details class="explain" open><summary>6. Resposta final orientativa</summary><pre>${esc(x.respostaFinal || buildFinalAnswerV13(x))}</pre></details><details class="explain" open><summary>7. Errors habituals</summary>${list(x.errors)}</details><details class="explain" open><summary>8. Criteris orientatius de correcció</summary><table><thead><tr><th>Criteri</th><th>Què cal observar</th></tr></thead><tbody>${rubric.map(r=>`<tr><td><b>${esc(r[0])}</b></td><td>${esc(r[1])}</td></tr>`).join('')}</tbody></table><p class="small"><b>Resposta mínima acceptable:</b> procediment coherent, resultat amb unitat i justificació bàsica.<br><b>Resposta excel·lent:</b> inclou modelització, conversions, comprovació d’ordre de magnitud, interpretació i revisió d’errors habituals.</p></details><div class="btnrow no-print"><button class="secondary" onclick="printClassSheet('${x.id}', false)">Imprimir fitxa alumne</button><button class="secondary" onclick="printClassSheet('${x.id}', true)">Imprimir amb solucions</button><button class="secondary" onclick="navigator.clipboard.writeText(document.getElementById('pauArea').innerText)">Copiar fitxa</button><button class="secondary" onclick="saveCurrent('${esc(x.exercici+' · '+x.titol)}', document.getElementById('pauArea').innerText)">Guardar a l’historial</button></div></section>`;
 };
 
 const oldCheckPauStep = checkPauStep;
@@ -5277,10 +5277,131 @@ printClassSheet = function(id, withSolutions=false){
   const steps = makePauSteps(x);
   const blanks = `<div class="blank-lines"></div>`;
   const rubric = x.criterisCorreccioV13 || buildRubricV13(x);
-  const sheet = `<section class="card print-sheet"><h2>${withSolutions ? 'Fitxa PAU amb solucions v13' : 'Fitxa de treball PAU v13'}</h2>${renderPauHeader(x)}<p><b>Temps recomanat:</b> 20-35 min segons dificultat.</p>${withSolutions?`<div class="notice"><b>Estat de verificació:</b> ${esc(x.verificacio || inferVerificationV13(x).label)}. ${esc(x.verificacioNota || inferVerificationV13(x).note)}</div>`:''}${steps.map((st,i)=>`<article class="sheet-step"><h3>${esc(st.title)}</h3><p>${esc(st.prompt)}</p>${withSolutions?`<div class="ok"><b>Solució orientativa:</b><pre>${esc(st.solution)}</pre></div>`:blanks}</article>`).join('')}${withSolutions?`<h3>Criteris de correcció</h3><table><tbody>${rubric.map(r=>`<tr><td><b>${esc(r[0])}</b></td><td>${esc(r[1])}</td></tr>`).join('')}</tbody></table>`:''}<div class="no-print btnrow"><button class="secondary" onclick="openPauItem('${id}')">Tornar a l’activitat</button><button class="primary" onclick="window.print()">Imprimir ara</button></div></section>`;
+  const sheet = `<section class="card print-sheet"><h2>${withSolutions ? 'Fitxa PAU amb solucions v14' : 'Fitxa de treball PAU v14'}</h2>${renderPauHeader(x)}<p><b>Temps recomanat:</b> 20-35 min segons dificultat.</p>${withSolutions?`<div class="notice"><b>Estat de verificació:</b> ${esc(x.verificacio || inferVerificationV13(x).label)}. ${esc(x.verificacioNota || inferVerificationV13(x).note)}</div>`:''}${steps.map((st,i)=>`<article class="sheet-step"><h3>${esc(st.title)}</h3><p>${esc(st.prompt)}</p>${withSolutions?`<div class="ok"><b>Solució orientativa:</b><pre>${esc(st.solution)}</pre></div>`:blanks}</article>`).join('')}${withSolutions?`<h3>Criteris de correcció</h3><table><tbody>${rubric.map(r=>`<tr><td><b>${esc(r[0])}</b></td><td>${esc(r[1])}</td></tr>`).join('')}</tbody></table>`:''}<div class="no-print btnrow"><button class="secondary" onclick="openPauItem('${id}')">Tornar a l’activitat</button><button class="primary" onclick="window.print()">Imprimir ara</button></div></section>`;
   app.innerHTML = sheet;
   window.scrollTo(0, 0);
 };
 
 applyVerificationV13();
 Object.assign(window, {pau, renderPauBank, renderPauHeader, renderPauDocent, checkPauStep, printClassSheet, inferVerificationV13, applyVerificationV13});
+
+/* === v14 · Mode examen PAU i dossiers imprimibles === */
+const V14_VERSION = 'v14 · mode examen i dossiers imprimibles';
+let v14ExamItems = [];
+let v14ExamStartedAt = null;
+let v14TimerHandle = null;
+
+function uniqueV14(field){
+  return [...new Set(pauData().map(x => x[field]).filter(Boolean))].sort((a,b)=>String(a).localeCompare(String(b),'ca',{numeric:true}));
+}
+function examFilterOptionsV14(){
+  const years = uniqueV14('any').sort((a,b)=>b-a).map(y=>`<option>${y}</option>`).join('');
+  const series = uniqueV14('serie').map(s=>`<option>${esc(s)}</option>`).join('');
+  const mats = uniqueV14('materia').map(m=>`<option>${esc(m)}</option>`).join('');
+  return {years, series, mats};
+}
+function getFilteredItemsV14(prefix='exam'){
+  const materia = document.getElementById(prefix+'Materia')?.value || '';
+  const year = document.getElementById(prefix+'Year')?.value || '';
+  const serie = document.getElementById(prefix+'Serie')?.value || '';
+  const q = (document.getElementById(prefix+'Search')?.value || '').toLowerCase().trim();
+  const verify = document.getElementById(prefix+'Verify')?.value || '';
+  let items = pauData().filter(x => (!materia || x.materia === materia) && (!year || String(x.any) === String(year)) && (!serie || x.serie === serie));
+  if(verify) items = items.filter(x => inferVerificationV13(x).key === verify);
+  if(q){
+    items = items.filter(x => `${x.any} ${x.materia} ${x.serie} ${x.exercici} ${x.bloc} ${x.titol} ${x.resum} ${x.enunciat} ${x.tipus}`.toLowerCase().includes(q));
+  }
+  return items;
+}
+function shuffleV14(arr){
+  const a = [...arr];
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
+}
+function minutesV14(){ return Math.max(5, parseInt(document.getElementById('examMinutes')?.value || '90', 10) || 90); }
+function renderTimerV14(){
+  const el = document.getElementById('examTimer');
+  if(!el || !v14ExamStartedAt) return;
+  const total = minutesV14()*60;
+  const used = Math.floor((Date.now()-v14ExamStartedAt)/1000);
+  const left = Math.max(0, total-used);
+  const mm = String(Math.floor(left/60)).padStart(2,'0');
+  const ss = String(left%60).padStart(2,'0');
+  el.textContent = `${mm}:${ss}`;
+  el.className = left < 300 ? 'pill bad' : 'pill';
+}
+function startTimerV14(){
+  v14ExamStartedAt = Date.now();
+  if(v14TimerHandle) clearInterval(v14TimerHandle);
+  v14TimerHandle = setInterval(renderTimerV14, 1000);
+  renderTimerV14();
+}
+function stopTimerV14(){ if(v14TimerHandle) clearInterval(v14TimerHandle); v14TimerHandle=null; v14ExamStartedAt=null; renderTimerV14(); }
+
+function examenV14(){
+  const opts = examFilterOptionsV14();
+  app.innerHTML = `<section class="card"><h2>Mode examen PAU · v14</h2><p>Genera una prova a partir del banc PAU multiany, amb temporitzador, full imprimible, versió amb solucions i informe de revisió.</p><div class="grid"><div class="field"><label>Matèria</label><select id="examMateria"><option value="">Totes</option>${opts.mats}</select></div><div class="field"><label>Any</label><select id="examYear"><option value="">Tots</option>${opts.years}</select></div><div class="field"><label>Sèrie</label><select id="examSerie"><option value="">Totes</option>${opts.series}</select></div><div class="field"><label>Tema o paraula clau</label><input id="examSearch" placeholder="Ex.: motor, energia, lògica, trifàsica..."></div><div class="field"><label>Estat de verificació</label><select id="examVerify"><option value="">Tots</option><option value="calculator">Automatitzable</option><option value="guidedFigure">Guiat amb figura</option><option value="textOnly">Resolt textualment</option><option value="review">Revisió pendent</option></select></div><div class="field"><label>Nombre d’exercicis</label><input id="examCount" type="number" min="1" max="8" value="4"></div><div class="field"><label>Temps recomanat</label><input id="examMinutes" type="number" min="5" value="90"></div><div class="field"><label>Selecció</label><select id="examRandom"><option value="yes">Aleatòria</option><option value="no">Primers resultats del filtre</option></select></div></div><div class="btnrow no-print"><button class="primary" onclick="generateExamV14()">Generar examen</button><button class="secondary" onclick="startTimerV14()">Iniciar temporitzador</button><button class="secondary" onclick="stopTimerV14()">Aturar</button><span id="examTimer" class="pill">--:--</span></div><div id="examArea"></div></section><section class="card"><h2>Dossiers imprimibles · v14</h2><p>Crea un dossier per tema, any o sèrie. Pots imprimir-lo com a dossier d’alumne o dossier docent amb solucions.</p><div class="grid"><div class="field"><label>Matèria</label><select id="dossierMateria"><option value="">Totes</option>${opts.mats}</select></div><div class="field"><label>Any</label><select id="dossierYear"><option value="">Tots</option>${opts.years}</select></div><div class="field"><label>Sèrie</label><select id="dossierSerie"><option value="">Totes</option>${opts.series}</select></div><div class="field"><label>Tema o paraula clau</label><input id="dossierSearch" placeholder="Ex.: energia, mecanismes, circuits..."></div><div class="field"><label>Estat de verificació</label><select id="dossierVerify"><option value="">Tots</option><option value="calculator">Automatitzable</option><option value="guidedFigure">Guiat amb figura</option><option value="textOnly">Resolt textualment</option><option value="review">Revisió pendent</option></select></div><div class="field"><label>Màxim de fitxes</label><input id="dossierCount" type="number" min="1" max="52" value="12"></div></div><div class="btnrow no-print"><button class="primary" onclick="generateDossierV14(false)">Crear dossier alumne</button><button class="secondary" onclick="generateDossierV14(true)">Crear dossier docent</button></div><div id="dossierArea"></div></section>`;
+}
+
+function buildExamSheetV14(items, withSolutions=false, title='Prova PAU generada'){
+  const date = new Date().toLocaleDateString('ca-ES');
+  return `<section class="card print-sheet exam-sheet"><h2>${esc(title)}</h2><p><b>Data:</b> ${date} · <b>Nombre d’exercicis:</b> ${items.length} · <b>Mode:</b> ${withSolutions?'docent amb solucions':'alumne'}</p><p class="notice no-print"><b>Ús recomanat:</b> imprimeix la versió alumne per fer la prova i la versió docent per corregir. Les fitxes amb figura inclouen les pàgines originals integrades.</p>${items.map((x,idx)=>`<article class="exam-item"><h3>${idx+1}. ${esc(x.any)} · ${esc(x.serie)} · ${esc(x.exercici)} · ${esc(x.titol)}</h3><p><span class="pill">${esc(x.materia)}</span> <span class="pill">${esc(x.bloc)}</span> <span class="pill">${esc(x.tipus)}</span> ${statusBadgeV13(x)}</p><div class="enunciat-box"><b>Enunciat</b><p>${esc(x.enunciat || x.resum)}</p></div>${(x.apartats||[]).length?`<h4>Apartats</h4><ul>${x.apartats.map(a=>`<li>${esc(a)}</li>`).join('')}</ul>`:''}${renderPauFigures(x)}${withSolutions?`<details class="explain" open><summary>Solució orientativa</summary><pre>${esc(x.resolucio || buildFinalAnswerV13(x))}</pre></details><details class="explain" open><summary>Criteris de correcció</summary><table><tbody>${buildRubricV13(x).map(r=>`<tr><td><b>${esc(r[0])}</b></td><td>${esc(r[1])}</td></tr>`).join('')}</tbody></table></details>`:`<h4>Resposta</h4><div class="blank-lines"></div><h4>Esquema o càlculs</h4><div class="blank-lines"></div>`}</article>`).join('')}<div class="no-print btnrow"><button class="secondary" onclick="setView('examen')">Tornar al mode examen</button><button class="primary" onclick="window.print()">Imprimir ara</button></div></section>`;
+}
+
+function generateExamV14(){
+  let items = getFilteredItemsV14('exam');
+  const count = Math.max(1, Math.min(8, parseInt(document.getElementById('examCount')?.value || '4',10) || 4));
+  if(document.getElementById('examRandom')?.value === 'yes') items = shuffleV14(items);
+  v14ExamItems = items.slice(0, count);
+  const el = document.getElementById('examArea');
+  if(!el) return;
+  if(!v14ExamItems.length){ el.innerHTML = '<div class="notice">No hi ha exercicis amb aquest filtre.</div>'; return; }
+  el.innerHTML = `<div class="ok"><b>Examen generat:</b> ${v14ExamItems.length} exercicis seleccionats.</div><div class="btnrow no-print"><button class="primary" onclick="printExamV14(false)">Imprimir examen alumne</button><button class="secondary" onclick="printExamV14(true)">Imprimir amb solucions</button><button class="secondary" onclick="renderExamReviewV14()">Veure informe de revisió</button></div><div class="grid">${v14ExamItems.map(x=>`<article class="card"><h3>${esc(x.exercici)} · ${esc(x.titol)}</h3><p><span class="pill">${esc(x.any)}</span> <span class="pill">${esc(x.serie)}</span> ${statusBadgeV13(x)}</p><p>${esc(x.resum)}</p><button class="secondary" onclick="openPauItem('${x.id}')">Obrir fitxa</button></article>`).join('')}</div>`;
+}
+function printExamV14(withSolutions=false){
+  if(!v14ExamItems.length) generateExamV14();
+  if(!v14ExamItems.length) return;
+  app.innerHTML = buildExamSheetV14(v14ExamItems, withSolutions, withSolutions?'Prova PAU generada · solucionari docent':'Prova PAU generada · full alumne');
+  window.scrollTo(0,0);
+}
+function renderExamReviewV14(){
+  const el = document.getElementById('examArea'); if(!el) return;
+  if(!v14ExamItems.length){ el.innerHTML = '<div class="notice">Primer genera un examen.</div>'; return; }
+  const byStatus = v14ExamItems.reduce((a,x)=>{ const k=inferVerificationV13(x).label; a[k]=(a[k]||0)+1; return a; },{});
+  const rows = Object.entries(byStatus).map(([k,v])=>`<tr><td>${esc(k)}</td><td>${v}</td></tr>`).join('');
+  el.innerHTML = `<section class="card"><h3>Informe de revisió de la prova</h3><table><tbody><tr><td>Exercicis</td><td>${v14ExamItems.length}</td></tr>${rows}</tbody></table><h4>Temes inclosos</h4><ul>${v14ExamItems.map(x=>`<li>${esc(x.any)} · ${esc(x.bloc)} · ${esc(x.titol)}</li>`).join('')}</ul><p class="small">Per avaluació formal, prioritza exercicis automatitzables, resolts textualment o revisats manualment.</p></section>`;
+}
+function generateDossierV14(withSolutions=false){
+  let items = getFilteredItemsV14('dossier');
+  const count = Math.max(1, Math.min(52, parseInt(document.getElementById('dossierCount')?.value || '12',10) || 12));
+  items = items.slice(0,count);
+  const el = document.getElementById('dossierArea'); if(!el) return;
+  if(!items.length){ el.innerHTML = '<div class="notice">No hi ha fitxes amb aquest filtre.</div>'; return; }
+  el.innerHTML = `<div class="ok"><b>Dossier creat:</b> ${items.length} fitxes seleccionades.</div><div class="btnrow no-print"><button class="primary" onclick="printDossierV14(${withSolutions})">Imprimir dossier ${withSolutions?'docent':'alumne'}</button><button class="secondary" onclick="saveCurrent('Dossier PAU v14', document.getElementById('dossierArea').innerText)">Guardar resum</button></div><div class="grid">${items.map(x=>`<article class="card"><h3>${esc(x.exercici)} · ${esc(x.titol)}</h3><p><span class="pill">${esc(x.any)}</span> <span class="pill">${esc(x.serie)}</span> <span class="pill">${esc(x.bloc)}</span></p><p>${esc(x.resum)}</p></article>`).join('')}</div>`;
+  v14ExamItems = items;
+}
+function printDossierV14(withSolutions=false){
+  if(!v14ExamItems.length) return;
+  app.innerHTML = buildExamSheetV14(v14ExamItems, withSolutions, withSolutions?'Dossier PAU docent amb solucions':'Dossier PAU alumne');
+  window.scrollTo(0,0);
+}
+
+const oldSetViewV14 = setView;
+setView = function(view){
+  const views = {inici, pau, exercicis: exercicisView, calculadores, practica, formulari, historial, examen: examenV14};
+  (views[view] || inici)();
+  $$('.tab').forEach(b => b.classList.toggle('active', b.dataset.view === view));
+  window.scrollTo({top:0, behavior:'smooth'});
+};
+
+const oldIniciV14 = inici;
+inici = function(){
+  oldIniciV14();
+  const first = app.querySelector('.card');
+  if(first){
+    first.insertAdjacentHTML('beforeend', `<div class="notice"><b>Novetat v14:</b> mode examen PAU i dossiers imprimibles per any, tema o estat de verificació.</div><div class="btnrow"><button class="primary" onclick="setView('examen')">Obrir mode examen</button><button class="secondary" onclick="setView('pau')">Explorar banc PAU</button></div>`);
+  }
+};
+
+Object.assign(window, {examenV14, generateExamV14, printExamV14, renderExamReviewV14, generateDossierV14, printDossierV14, startTimerV14, stopTimerV14, setView});
+try { setView('inici'); } catch(e) { /* inici v14 opcional */ }

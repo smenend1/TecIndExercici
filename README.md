@@ -1,38 +1,46 @@
-# Tecnologia Industrial Exercicis Plus v13 · Verificació i qualitat docent
+# Tecnologia Industrial Exercicis Plus v14 · Mode examen i dossiers imprimibles
 
 PWA educativa en català per treballar exercicis tipus PAU de Tecnologia Industrial, Tecnologia i Enginyeria i Electrotècnia.
 
-## Novetat principal de la v13
+## Novetat principal de la v14
 
-La v13 no afegeix més volum de PDFs. Millora la qualitat docent del banc existent:
+La v14 afegeix una capa d'ús d'aula i preparació d'examen sobre el banc PAU ja verificat a la v13:
 
-- estat de verificació a cada fitxa PAU;
-- filtre per estat de verificació;
-- panell de control de qualitat del banc;
-- solucionari docent ampliat;
-- criteris de correcció per fitxa;
-- resposta mínima acceptable i resposta excel·lent;
-- comprovació millorada de respostes de l’alumne amb paraules clau, valors numèrics i unitats;
-- fitxa imprimible alumne/docent amb estat de verificació i criteris.
+- pestanya nova **Examen**;
+- generador de proves PAU per filtres;
+- temporitzador d'examen;
+- impressió de prova d'alumne;
+- impressió de solucionari docent;
+- informe de revisió de la prova generada;
+- generador de dossiers imprimibles per any, sèrie, matèria, tema o estat de verificació.
 
-## Estats de verificació
-
-- **Automatitzable amb calculadora**: té resolutor associat amb dades modificables.
-- **Guiat amb figura**: depèn de figura, circuit, gràfic, oscil·loscopi o cotes visuals.
-- **Resolt textualment**: té resolució pas a pas textual i és adequat per treball guiat.
-- **Revisió docent pendent**: cal revisar o completar abans d’avaluació formal.
-
-## Contingut conservat de versions anteriors
+## Contingut conservat
 
 - Banc PAU multiany: 2021, 2022, 2023, 2024 i 2025.
 - 52 fitxes PAU de treball.
 - Enunciats textuals i pàgines originals PNG integrades.
-- Mode alumne amb passos, pistes, comprovació i solució del pas.
-- Mode docent amb criteris i fitxes imprimibles.
-- Calculadores i resolutors guiats.
-- Formulari tècnic.
-- Historial amb localStorage.
+- Resolucions per passos.
+- Mode alumne i mode docent.
+- Estat de verificació de cada fitxa.
+- Calculadores, exercicis guiats, formulari i historial.
 - Funcionament offline amb Service Worker.
+
+## Ús recomanat
+
+### Mode examen
+
+1. Obre la pestanya **Examen**.
+2. Filtra per matèria, any, sèrie, tema o estat de verificació.
+3. Tria el nombre d'exercicis i el temps recomanat.
+4. Genera la prova.
+5. Imprimeix la versió d'alumne o la versió amb solucions.
+
+### Dossiers imprimibles
+
+1. Escull un tema, any o sèrie.
+2. Defineix el màxim de fitxes.
+3. Crea un dossier d'alumne o docent.
+4. Imprimeix-lo o guarda'n el resum a l'historial.
 
 ## Fitxers
 
@@ -56,8 +64,8 @@ assets/
 1. Descomprimeix el ZIP.
 2. Puja tots els fitxers i carpetes al repositori.
 3. Activa GitHub Pages des de `Settings > Pages`.
-4. Si el navegador mostra una versió antiga, esborra les dades del lloc o força l’actualització del Service Worker.
+4. Si el navegador mostra una versió antiga, esborra les dades del lloc o força l'actualització del Service Worker.
 
 ## Limitació honesta
 
-La v13 millora el control de qualitat i la correcció docent, però no garanteix que totes les respostes numèriques hagin estat verificades manualment contra un solucionari oficial. Les fitxes marcades com a **guiat amb figura** o **revisió docent pendent** s’han de revisar abans d’utilitzar-les com a solucionari definitiu.
+La v14 millora la preparació d'exàmens i dossiers, però les fitxes marcades com a **guiat amb figura** o **revisió docent pendent** encara poden requerir revisió manual abans d'usar-les com a solucionari oficial.
