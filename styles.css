@@ -21,3 +21,7 @@
   .pdf-page-card{break-inside:avoid; box-shadow:none; border:1px solid #999;}
   .pdf-page-card img{max-height:23cm; width:auto; max-width:100%; margin:0 auto;}
 }
+
+
+/* v13 · verificació i qualitat docent */
+.quality-panel{border-left:6px solid #1f6f5b}.quality-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:12px 0}.quality-grid div{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;text-align:center}.quality-grid b{display:block;font-size:1.6rem;color:#1f6f5b}.quality-grid span{font-size:.9rem;color:var(--muted)}.verify-calc{background:#e0f2fe;color:#075985}.verify-figure{background:#fff7ed;color:#9a3412}.verify-text{background:#ecfdf5;color:#166534}.verify-review{background:#fef2f2;color:#991b1b}.verify-note{margin:10px 0}.pau-work table{font-size:.95rem}.pau-work table td:first-child{width:28%}@media print{.quality-panel,.verify-note{display:none!important}.pau-work table{break-inside:avoid}}

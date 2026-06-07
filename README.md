@@ -1,27 +1,28 @@
-# Tecnologia Industrial Exercicis Plus v12.1 · PAU resolt pas a pas ampliat
+# Tecnologia Industrial Exercicis Plus v13 · Verificació i qualitat docent
 
 PWA educativa en català per treballar exercicis tipus PAU de Tecnologia Industrial, Tecnologia i Enginyeria i Electrotècnia.
 
-## Novetat principal de la v12.1
+## Novetat principal de la v13
 
-La v12.1 continua la v12 i amplia la resolució pas a pas del banc PAU als exercicis de **2023, 2022 i 2021**.
+La v13 no afegeix més volum de PDFs. Millora la qualitat docent del banc existent:
 
-Ara el botó **PAU** ofereix, per a totes les fitxes del banc, una estructura de treball amb:
+- estat de verificació a cada fitxa PAU;
+- filtre per estat de verificació;
+- panell de control de qualitat del banc;
+- solucionari docent ampliat;
+- criteris de correcció per fitxa;
+- resposta mínima acceptable i resposta excel·lent;
+- comprovació millorada de respostes de l’alumne amb paraules clau, valors numèrics i unitats;
+- fitxa imprimible alumne/docent amb estat de verificació i criteris.
 
-- què demana l’exercici;
-- dades i unitats;
-- fórmules o principis;
-- desenvolupament per apartats;
-- interpretació tècnica;
-- errors habituals i criteris de correcció.
+## Estats de verificació
 
-## Estat de les resolucions
+- **Automatitzable amb calculadora**: té resolutor associat amb dades modificables.
+- **Guiat amb figura**: depèn de figura, circuit, gràfic, oscil·loscopi o cotes visuals.
+- **Resolt textualment**: té resolució pas a pas textual i és adequat per treball guiat.
+- **Revisió docent pendent**: cal revisar o completar abans d’avaluació formal.
 
-- **v12 resolt pas a pas**: resolució numèrica o lògica detallada incorporada a 2025 i 2024.
-- **v12.1 resolt pas a pas**: resolució docent incorporada als exercicis de 2023, 2022 i 2021.
-- **v12.1 resolt/guiat amb figura**: exercici amb figura, circuit, gràfic, estructura o oscil·loscopi. La fitxa dona el procediment complet, però indica quan cal llegir una dada directament a la imatge original integrada.
-
-## Contingut
+## Contingut conservat de versions anteriors
 
 - Banc PAU multiany: 2021, 2022, 2023, 2024 i 2025.
 - 52 fitxes PAU de treball.
@@ -43,6 +44,7 @@ manifest.json
 sw.js
 README.md
 pau_v10_entries.json
+pau_figures_map.json
 assets/
   icon-192.png
   icon-512.png
@@ -58,4 +60,4 @@ assets/
 
 ## Limitació honesta
 
-La v12.1 no converteix tots els circuits, gràfics o esquemes en calculadores automàtiques. Els exercicis amb figura tenen el procediment pas a pas i la pàgina original integrada, però alguns resultats exigeixen llegir una cota, una escala o una dada visual del PDF. La fase següent podria convertir alguns d’aquests casos en activitats interactives específiques.
+La v13 millora el control de qualitat i la correcció docent, però no garanteix que totes les respostes numèriques hagin estat verificades manualment contra un solucionari oficial. Les fitxes marcades com a **guiat amb figura** o **revisió docent pendent** s’han de revisar abans d’utilitzar-les com a solucionari definitiu.

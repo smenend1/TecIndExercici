@@ -1,7 +1,7 @@
 {
-  "name": "Tecnologia Industrial Exercicis Plus v12.1 v12",
+  "name": "Tecnologia Industrial Exercicis Plus v13",
   "short_name": "TI Exercicis",
-  "description": "PWA educativa per resoldre exercicis PAU amb figures integrades i resolucions pas a pas per a 2025 i 2024.",
+  "description": "PWA educativa per resoldre exercicis PAU amb figures integrades, resolucions pas a pas, verificació docent i correcció millorada.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#f4f7f5",
