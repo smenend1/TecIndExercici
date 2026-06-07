@@ -1,0 +1,418 @@
+{
+  "full-tec2025-s1-e1": [
+    "./assets/pau_pages/full-tec2025-s1-e1_p02.webp",
+    "./assets/pau_pages/full-tec2025-s1-e1_p03.webp"
+  ],
+  "tec2025-s1-e1": [
+    "./assets/pau_pages/full-tec2025-s1-e1_p02.webp",
+    "./assets/pau_pages/full-tec2025-s1-e1_p03.webp"
+  ],
+  "full-tec2025-s1-e2": [
+    "./assets/pau_pages/full-tec2025-s1-e2_p04.webp",
+    "./assets/pau_pages/full-tec2025-s1-e2_p05.webp"
+  ],
+  "tec2025-s1-e2": [
+    "./assets/pau_pages/full-tec2025-s1-e2_p04.webp",
+    "./assets/pau_pages/full-tec2025-s1-e2_p05.webp"
+  ],
+  "full-tec2025-s1-e3": [
+    "./assets/pau_pages/full-tec2025-s1-e3_p06.webp",
+    "./assets/pau_pages/full-tec2025-s1-e3_p07.webp"
+  ],
+  "tec2025-s1-e3": [
+    "./assets/pau_pages/full-tec2025-s1-e3_p06.webp",
+    "./assets/pau_pages/full-tec2025-s1-e3_p07.webp"
+  ],
+  "full-tec2025-s1-e4": [
+    "./assets/pau_pages/full-tec2025-s1-e4_p08.webp",
+    "./assets/pau_pages/full-tec2025-s1-e4_p09.webp"
+  ],
+  "tec2025-s1-e4": [
+    "./assets/pau_pages/full-tec2025-s1-e4_p08.webp",
+    "./assets/pau_pages/full-tec2025-s1-e4_p09.webp"
+  ],
+  "full-elec2023-s1-e1": [
+    "./assets/pau_pages/full-elec2023-s1-e1_p02.webp",
+    "./assets/pau_pages/full-elec2023-s1-e1_p03.webp"
+  ],
+  "elec2023-s1-e1": [
+    "./assets/pau_pages/full-elec2023-s1-e1_p02.webp",
+    "./assets/pau_pages/full-elec2023-s1-e1_p03.webp"
+  ],
+  "full-elec2023-s1-e2": [
+    "./assets/pau_pages/full-elec2023-s1-e2_p04.webp",
+    "./assets/pau_pages/full-elec2023-s1-e2_p05.webp"
+  ],
+  "elec2023-s1-e2": [
+    "./assets/pau_pages/full-elec2023-s1-e2_p04.webp",
+    "./assets/pau_pages/full-elec2023-s1-e2_p05.webp"
+  ],
+  "full-elec2023-s1-e3": [
+    "./assets/pau_pages/full-elec2023-s1-e3_p06.webp",
+    "./assets/pau_pages/full-elec2023-s1-e3_p07.webp"
+  ],
+  "elec2023-s1-e3": [
+    "./assets/pau_pages/full-elec2023-s1-e3_p06.webp",
+    "./assets/pau_pages/full-elec2023-s1-e3_p07.webp"
+  ],
+  "full-elec2023-s1-e4": [
+    "./assets/pau_pages/full-elec2023-s1-e4_p08.webp",
+    "./assets/pau_pages/full-elec2023-s1-e4_p09.webp"
+  ],
+  "elec2023-s1-e4": [
+    "./assets/pau_pages/full-elec2023-s1-e4_p08.webp",
+    "./assets/pau_pages/full-elec2023-s1-e4_p09.webp"
+  ],
+  "full-elec2023-s1-e5": [
+    "./assets/pau_pages/full-elec2023-s1-e5_p10.webp",
+    "./assets/pau_pages/full-elec2023-s1-e5_p11.webp"
+  ],
+  "elec2023-s1-e5": [
+    "./assets/pau_pages/full-elec2023-s1-e5_p10.webp",
+    "./assets/pau_pages/full-elec2023-s1-e5_p11.webp"
+  ],
+  "full-elec2023-s1-e6": [
+    "./assets/pau_pages/full-elec2023-s1-e6_p12.webp",
+    "./assets/pau_pages/full-elec2023-s1-e6_p13.webp"
+  ],
+  "elec2023-s1-e6": [
+    "./assets/pau_pages/full-elec2023-s1-e6_p12.webp",
+    "./assets/pau_pages/full-elec2023-s1-e6_p13.webp"
+  ],
+  "full-elec2023-s5-e1": [
+    "./assets/pau_pages/full-elec2023-s5-e1_p18.webp",
+    "./assets/pau_pages/full-elec2023-s5-e1_p19.webp"
+  ],
+  "elec2023-s5-e1": [
+    "./assets/pau_pages/full-elec2023-s5-e1_p18.webp",
+    "./assets/pau_pages/full-elec2023-s5-e1_p19.webp"
+  ],
+  "full-elec2023-s5-e2": [
+    "./assets/pau_pages/full-elec2023-s5-e2_p20.webp",
+    "./assets/pau_pages/full-elec2023-s5-e2_p21.webp"
+  ],
+  "elec2023-s5-e2": [
+    "./assets/pau_pages/full-elec2023-s5-e2_p20.webp",
+    "./assets/pau_pages/full-elec2023-s5-e2_p21.webp"
+  ],
+  "full-elec2023-s5-e3": [
+    "./assets/pau_pages/full-elec2023-s5-e3_p22.webp",
+    "./assets/pau_pages/full-elec2023-s5-e3_p23.webp"
+  ],
+  "elec2023-s5-e3": [
+    "./assets/pau_pages/full-elec2023-s5-e3_p22.webp",
+    "./assets/pau_pages/full-elec2023-s5-e3_p23.webp"
+  ],
+  "full-elec2023-s5-e4": [
+    "./assets/pau_pages/full-elec2023-s5-e4_p24.webp",
+    "./assets/pau_pages/full-elec2023-s5-e4_p25.webp"
+  ],
+  "elec2023-s5-e4": [
+    "./assets/pau_pages/full-elec2023-s5-e4_p24.webp",
+    "./assets/pau_pages/full-elec2023-s5-e4_p25.webp"
+  ],
+  "full-elec2023-s5-e5": [
+    "./assets/pau_pages/full-elec2023-s5-e5_p26.webp",
+    "./assets/pau_pages/full-elec2023-s5-e5_p27.webp"
+  ],
+  "elec2023-s5-e5": [
+    "./assets/pau_pages/full-elec2023-s5-e5_p26.webp",
+    "./assets/pau_pages/full-elec2023-s5-e5_p27.webp"
+  ],
+  "full-elec2023-s5-e6": [
+    "./assets/pau_pages/full-elec2023-s5-e6_p28.webp",
+    "./assets/pau_pages/full-elec2023-s5-e6_p29.webp"
+  ],
+  "elec2023-s5-e6": [
+    "./assets/pau_pages/full-elec2023-s5-e6_p28.webp",
+    "./assets/pau_pages/full-elec2023-s5-e6_p29.webp"
+  ],
+  "full-tec2024-s1-e1": [
+    "./assets/pau_pages/full-tec2024-s1-e1_p02.webp",
+    "./assets/pau_pages/full-tec2024-s1-e1_p03.webp"
+  ],
+  "tec2024-s1-e1": [
+    "./assets/pau_pages/full-tec2024-s1-e1_p02.webp",
+    "./assets/pau_pages/full-tec2024-s1-e1_p03.webp"
+  ],
+  "full-tec2024-s1-e2": [
+    "./assets/pau_pages/full-tec2024-s1-e2_p04.webp",
+    "./assets/pau_pages/full-tec2024-s1-e2_p05.webp"
+  ],
+  "tec2024-s1-e2": [
+    "./assets/pau_pages/full-tec2024-s1-e2_p04.webp",
+    "./assets/pau_pages/full-tec2024-s1-e2_p05.webp"
+  ],
+  "full-tec2024-s1-e3": [
+    "./assets/pau_pages/full-tec2024-s1-e3_p06.webp",
+    "./assets/pau_pages/full-tec2024-s1-e3_p07.webp"
+  ],
+  "tec2024-s1-e3": [
+    "./assets/pau_pages/full-tec2024-s1-e3_p06.webp",
+    "./assets/pau_pages/full-tec2024-s1-e3_p07.webp"
+  ],
+  "full-tec2024-s1-e4": [
+    "./assets/pau_pages/full-tec2024-s1-e4_p08.webp",
+    "./assets/pau_pages/full-tec2024-s1-e4_p09.webp"
+  ],
+  "tec2024-s1-e4": [
+    "./assets/pau_pages/full-tec2024-s1-e4_p08.webp",
+    "./assets/pau_pages/full-tec2024-s1-e4_p09.webp"
+  ],
+  "full-tec2024-s1-e5": [
+    "./assets/pau_pages/full-tec2024-s1-e5_p10.webp",
+    "./assets/pau_pages/full-tec2024-s1-e5_p11.webp"
+  ],
+  "tec2024-s1-e5": [
+    "./assets/pau_pages/full-tec2024-s1-e5_p10.webp",
+    "./assets/pau_pages/full-tec2024-s1-e5_p11.webp"
+  ],
+  "full-tec2024-s1-e6": [
+    "./assets/pau_pages/full-tec2024-s1-e6_p12.webp",
+    "./assets/pau_pages/full-tec2024-s1-e6_p13.webp"
+  ],
+  "tec2024-s1-e6": [
+    "./assets/pau_pages/full-tec2024-s1-e6_p12.webp",
+    "./assets/pau_pages/full-tec2024-s1-e6_p13.webp"
+  ],
+  "full-tec2024-s5-e1": [
+    "./assets/pau_pages/full-tec2024-s5-e1_p18.webp",
+    "./assets/pau_pages/full-tec2024-s5-e1_p19.webp"
+  ],
+  "tec2024-s5-e1": [
+    "./assets/pau_pages/full-tec2024-s5-e1_p18.webp",
+    "./assets/pau_pages/full-tec2024-s5-e1_p19.webp"
+  ],
+  "full-tec2024-s5-e2": [
+    "./assets/pau_pages/full-tec2024-s5-e2_p20.webp",
+    "./assets/pau_pages/full-tec2024-s5-e2_p21.webp"
+  ],
+  "tec2024-s5-e2": [
+    "./assets/pau_pages/full-tec2024-s5-e2_p20.webp",
+    "./assets/pau_pages/full-tec2024-s5-e2_p21.webp"
+  ],
+  "full-tec2024-s5-e3": [
+    "./assets/pau_pages/full-tec2024-s5-e3_p22.webp",
+    "./assets/pau_pages/full-tec2024-s5-e3_p23.webp"
+  ],
+  "tec2024-s5-e3": [
+    "./assets/pau_pages/full-tec2024-s5-e3_p22.webp",
+    "./assets/pau_pages/full-tec2024-s5-e3_p23.webp"
+  ],
+  "full-tec2024-s5-e4": [
+    "./assets/pau_pages/full-tec2024-s5-e4_p24.webp",
+    "./assets/pau_pages/full-tec2024-s5-e4_p25.webp"
+  ],
+  "tec2024-s5-e4": [
+    "./assets/pau_pages/full-tec2024-s5-e4_p24.webp",
+    "./assets/pau_pages/full-tec2024-s5-e4_p25.webp"
+  ],
+  "full-tec2024-s5-e5": [
+    "./assets/pau_pages/full-tec2024-s5-e5_p26.webp",
+    "./assets/pau_pages/full-tec2024-s5-e5_p27.webp"
+  ],
+  "tec2024-s5-e5": [
+    "./assets/pau_pages/full-tec2024-s5-e5_p26.webp",
+    "./assets/pau_pages/full-tec2024-s5-e5_p27.webp"
+  ],
+  "full-tec2024-s5-e6": [
+    "./assets/pau_pages/full-tec2024-s5-e6_p28.webp",
+    "./assets/pau_pages/full-tec2024-s5-e6_p29.webp"
+  ],
+  "tec2024-s5-e6": [
+    "./assets/pau_pages/full-tec2024-s5-e6_p28.webp",
+    "./assets/pau_pages/full-tec2024-s5-e6_p29.webp"
+  ],
+  "full-tec2022-s2-e1": [
+    "./assets/pau_pages/full-tec2022-s2-e1_p02.webp",
+    "./assets/pau_pages/full-tec2022-s2-e1_p03.webp"
+  ],
+  "tec2022-s2-e1": [
+    "./assets/pau_pages/full-tec2022-s2-e1_p02.webp",
+    "./assets/pau_pages/full-tec2022-s2-e1_p03.webp"
+  ],
+  "full-tec2022-s2-e2": [
+    "./assets/pau_pages/full-tec2022-s2-e2_p04.webp",
+    "./assets/pau_pages/full-tec2022-s2-e2_p05.webp"
+  ],
+  "tec2022-s2-e2": [
+    "./assets/pau_pages/full-tec2022-s2-e2_p04.webp",
+    "./assets/pau_pages/full-tec2022-s2-e2_p05.webp"
+  ],
+  "full-tec2022-s2-e3": [
+    "./assets/pau_pages/full-tec2022-s2-e3_p06.webp",
+    "./assets/pau_pages/full-tec2022-s2-e3_p07.webp"
+  ],
+  "tec2022-s2-e3": [
+    "./assets/pau_pages/full-tec2022-s2-e3_p06.webp",
+    "./assets/pau_pages/full-tec2022-s2-e3_p07.webp"
+  ],
+  "full-tec2022-s2-e4": [
+    "./assets/pau_pages/full-tec2022-s2-e4_p08.webp",
+    "./assets/pau_pages/full-tec2022-s2-e4_p09.webp"
+  ],
+  "tec2022-s2-e4": [
+    "./assets/pau_pages/full-tec2022-s2-e4_p08.webp",
+    "./assets/pau_pages/full-tec2022-s2-e4_p09.webp"
+  ],
+  "full-tec2022-s2-e5": [
+    "./assets/pau_pages/full-tec2022-s2-e5_p10.webp",
+    "./assets/pau_pages/full-tec2022-s2-e5_p11.webp"
+  ],
+  "tec2022-s2-e5": [
+    "./assets/pau_pages/full-tec2022-s2-e5_p10.webp",
+    "./assets/pau_pages/full-tec2022-s2-e5_p11.webp"
+  ],
+  "full-tec2022-s2-e6": [
+    "./assets/pau_pages/full-tec2022-s2-e6_p12.webp",
+    "./assets/pau_pages/full-tec2022-s2-e6_p13.webp"
+  ],
+  "tec2022-s2-e6": [
+    "./assets/pau_pages/full-tec2022-s2-e6_p12.webp",
+    "./assets/pau_pages/full-tec2022-s2-e6_p13.webp"
+  ],
+  "full-tec2022-s5-e1": [
+    "./assets/pau_pages/full-tec2022-s5-e1_p18.webp",
+    "./assets/pau_pages/full-tec2022-s5-e1_p19.webp"
+  ],
+  "tec2022-s5-e1": [
+    "./assets/pau_pages/full-tec2022-s5-e1_p18.webp",
+    "./assets/pau_pages/full-tec2022-s5-e1_p19.webp"
+  ],
+  "full-tec2022-s5-e2": [
+    "./assets/pau_pages/full-tec2022-s5-e2_p20.webp",
+    "./assets/pau_pages/full-tec2022-s5-e2_p21.webp"
+  ],
+  "tec2022-s5-e2": [
+    "./assets/pau_pages/full-tec2022-s5-e2_p20.webp",
+    "./assets/pau_pages/full-tec2022-s5-e2_p21.webp"
+  ],
+  "full-tec2022-s5-e3": [
+    "./assets/pau_pages/full-tec2022-s5-e3_p22.webp",
+    "./assets/pau_pages/full-tec2022-s5-e3_p23.webp"
+  ],
+  "tec2022-s5-e3": [
+    "./assets/pau_pages/full-tec2022-s5-e3_p22.webp",
+    "./assets/pau_pages/full-tec2022-s5-e3_p23.webp"
+  ],
+  "full-tec2022-s5-e4": [
+    "./assets/pau_pages/full-tec2022-s5-e4_p24.webp",
+    "./assets/pau_pages/full-tec2022-s5-e4_p25.webp"
+  ],
+  "tec2022-s5-e4": [
+    "./assets/pau_pages/full-tec2022-s5-e4_p24.webp",
+    "./assets/pau_pages/full-tec2022-s5-e4_p25.webp"
+  ],
+  "full-tec2022-s5-e5": [
+    "./assets/pau_pages/full-tec2022-s5-e5_p26.webp",
+    "./assets/pau_pages/full-tec2022-s5-e5_p27.webp"
+  ],
+  "tec2022-s5-e5": [
+    "./assets/pau_pages/full-tec2022-s5-e5_p26.webp",
+    "./assets/pau_pages/full-tec2022-s5-e5_p27.webp"
+  ],
+  "full-tec2022-s5-e6": [
+    "./assets/pau_pages/full-tec2022-s5-e6_p28.webp",
+    "./assets/pau_pages/full-tec2022-s5-e6_p29.webp"
+  ],
+  "tec2022-s5-e6": [
+    "./assets/pau_pages/full-tec2022-s5-e6_p28.webp",
+    "./assets/pau_pages/full-tec2022-s5-e6_p29.webp"
+  ],
+  "full-tec2021-s2-e1": [
+    "./assets/pau_pages/full-tec2021-s2-e1_p02.webp",
+    "./assets/pau_pages/full-tec2021-s2-e1_p03.webp"
+  ],
+  "tec2021-s2-e1": [
+    "./assets/pau_pages/full-tec2021-s2-e1_p02.webp",
+    "./assets/pau_pages/full-tec2021-s2-e1_p03.webp"
+  ],
+  "full-tec2021-s2-e2": [
+    "./assets/pau_pages/full-tec2021-s2-e2_p04.webp",
+    "./assets/pau_pages/full-tec2021-s2-e2_p05.webp"
+  ],
+  "tec2021-s2-e2": [
+    "./assets/pau_pages/full-tec2021-s2-e2_p04.webp",
+    "./assets/pau_pages/full-tec2021-s2-e2_p05.webp"
+  ],
+  "full-tec2021-s2-e3": [
+    "./assets/pau_pages/full-tec2021-s2-e3_p06.webp",
+    "./assets/pau_pages/full-tec2021-s2-e3_p07.webp"
+  ],
+  "tec2021-s2-e3": [
+    "./assets/pau_pages/full-tec2021-s2-e3_p06.webp",
+    "./assets/pau_pages/full-tec2021-s2-e3_p07.webp"
+  ],
+  "full-tec2021-s2-e4": [
+    "./assets/pau_pages/full-tec2021-s2-e4_p08.webp",
+    "./assets/pau_pages/full-tec2021-s2-e4_p09.webp"
+  ],
+  "tec2021-s2-e4": [
+    "./assets/pau_pages/full-tec2021-s2-e4_p08.webp",
+    "./assets/pau_pages/full-tec2021-s2-e4_p09.webp"
+  ],
+  "full-tec2021-s2-e5": [
+    "./assets/pau_pages/full-tec2021-s2-e5_p10.webp",
+    "./assets/pau_pages/full-tec2021-s2-e5_p11.webp"
+  ],
+  "tec2021-s2-e5": [
+    "./assets/pau_pages/full-tec2021-s2-e5_p10.webp",
+    "./assets/pau_pages/full-tec2021-s2-e5_p11.webp"
+  ],
+  "full-tec2021-s2-e6": [
+    "./assets/pau_pages/full-tec2021-s2-e6_p12.webp",
+    "./assets/pau_pages/full-tec2021-s2-e6_p13.webp"
+  ],
+  "tec2021-s2-e6": [
+    "./assets/pau_pages/full-tec2021-s2-e6_p12.webp",
+    "./assets/pau_pages/full-tec2021-s2-e6_p13.webp"
+  ],
+  "full-tec2021-s5-e1": [
+    "./assets/pau_pages/full-tec2021-s5-e1_p18.webp",
+    "./assets/pau_pages/full-tec2021-s5-e1_p19.webp"
+  ],
+  "tec2021-s5-e1": [
+    "./assets/pau_pages/full-tec2021-s5-e1_p18.webp",
+    "./assets/pau_pages/full-tec2021-s5-e1_p19.webp"
+  ],
+  "full-tec2021-s5-e2": [
+    "./assets/pau_pages/full-tec2021-s5-e2_p20.webp",
+    "./assets/pau_pages/full-tec2021-s5-e2_p21.webp"
+  ],
+  "tec2021-s5-e2": [
+    "./assets/pau_pages/full-tec2021-s5-e2_p20.webp",
+    "./assets/pau_pages/full-tec2021-s5-e2_p21.webp"
+  ],
+  "full-tec2021-s5-e3": [
+    "./assets/pau_pages/full-tec2021-s5-e3_p22.webp",
+    "./assets/pau_pages/full-tec2021-s5-e3_p23.webp"
+  ],
+  "tec2021-s5-e3": [
+    "./assets/pau_pages/full-tec2021-s5-e3_p22.webp",
+    "./assets/pau_pages/full-tec2021-s5-e3_p23.webp"
+  ],
+  "full-tec2021-s5-e4": [
+    "./assets/pau_pages/full-tec2021-s5-e4_p24.webp",
+    "./assets/pau_pages/full-tec2021-s5-e4_p25.webp"
+  ],
+  "tec2021-s5-e4": [
+    "./assets/pau_pages/full-tec2021-s5-e4_p24.webp",
+    "./assets/pau_pages/full-tec2021-s5-e4_p25.webp"
+  ],
+  "full-tec2021-s5-e5": [
+    "./assets/pau_pages/full-tec2021-s5-e5_p26.webp",
+    "./assets/pau_pages/full-tec2021-s5-e5_p27.webp"
+  ],
+  "tec2021-s5-e5": [
+    "./assets/pau_pages/full-tec2021-s5-e5_p26.webp",
+    "./assets/pau_pages/full-tec2021-s5-e5_p27.webp"
+  ],
+  "full-tec2021-s5-e6": [
+    "./assets/pau_pages/full-tec2021-s5-e6_p28.webp",
+    "./assets/pau_pages/full-tec2021-s5-e6_p29.webp"
+  ],
+  "tec2021-s5-e6": [
+    "./assets/pau_pages/full-tec2021-s5-e6_p28.webp",
+    "./assets/pau_pages/full-tec2021-s5-e6_p29.webp"
+  ]
+}
