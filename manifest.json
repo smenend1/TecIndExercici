@@ -1,13 +1,21 @@
 {
-  "name": "Tecnologia Industrial Exercicis Plus v16",
-  "short_name": "TI PAU v16",
-  "description": "PWA educativa amb banc PAU resolt, mode docent, dossiers, mode examen, correcció orientativa i seguiment local.",
+  "name": "Tecnologia Industrial Exercicis Plus v17",
+  "short_name": "TI Exercicis v17",
+  "description": "PWA educativa per resoldre exercicis PAU, preparar classes, generar dossiers i auditar el banc de fitxes.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#f4f7f5",
   "theme_color": "#1f6f5b",
   "icons": [
-    {"src":"./assets/icon-192.png","sizes":"192x192","type":"image/png"},
-    {"src":"./assets/icon-512.png","sizes":"512x512","type":"image/png"}
+    {
+      "src": "./assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
   ]
 }

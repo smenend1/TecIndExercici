@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#1f6f5b">
-  <title>Tecnologia Industrial Exercicis Plus v16</title>
+  <title>Tecnologia Industrial Exercicis Plus v17</title>
   <link rel="manifest" href="./manifest.json">
   <link rel="stylesheet" href="./styles.css">
   <link rel="icon" href="./assets/icon-192.png">
@@ -34,17 +34,25 @@
 .teacher-note{background:#eef2ff;border:1px solid #c7d2fe;color:#1e3a8a;border-radius:14px;padding:12px;margin:10px 0}
 .teacher-danger{background:#fff7ed;border:1px solid #fdba74;color:#7c2d12;border-radius:14px;padding:12px;margin:10px 0}
 @media print{.teacher-panel,.teacher-plan{box-shadow:none;border:1px solid #888;break-inside:avoid}.teacher-timeline li{break-inside:avoid}.teacher-kpi{grid-template-columns:repeat(4,1fr)}.teacher-note,.teacher-danger{border:1px solid #999;background:#fff!important;color:#000}}
+
+/* v17 · auditoria docent */
+.audit-grid .audit-kpi{border:1px solid var(--line);border-radius:16px;background:#fff;padding:12px;text-align:center;cursor:pointer}
+.audit-grid .audit-kpi b{display:block;font-size:1.5rem;color:#1f6f5b}
+.audit-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,360px);gap:14px;border:1px solid var(--line);border-radius:18px;background:#fff;padding:16px;margin:14px 0;box-shadow:var(--shadow)}
+.audit-actions textarea{min-height:70px}.verify-ok{background:#dcfce7;color:#14532d}.verify-calculator{background:#dbeafe;color:#1e3a8a}.verify-figure{background:#fef3c7;color:#78350f}.verify-text{background:#ede9fe;color:#4c1d95}.verify-review{background:#fee2e2;color:#7f1d1d}
+@media(max-width:800px){.audit-row{grid-template-columns:1fr}}@media print{.audit-row{display:block;box-shadow:none;border:1px solid #888;break-inside:avoid}.audit-actions{display:none!important}}
 </style>
 </head>
 <body>
   <header>
     <div class="wrap">
-      <div class="brand"><div class="logo">PAU</div><div><h1>Tecnologia Industrial Exercicis Plus</h1><p class="tag">PWA educativa · PAU resolt · Mode docent · Dossiers · Seguiment</p></div></div>
+      <div class="brand"><div class="logo">PAU</div><div><h1>Tecnologia Industrial Exercicis Plus</h1><p class="tag">PWA educativa · PAU resolt · Auditoria docent · Dossiers · Seguiment</p></div></div>
       <nav class="tabs" aria-label="Navegació principal">
         <button class="tab active" data-view="inici">Inici</button>
         <button class="tab" data-view="pau">PAU</button>
         <button class="tab" data-view="examen">Examen</button>
         <button class="tab" data-view="docent">Docent</button>
+        <button class="tab" data-view="auditoria">Auditoria</button>
         <button class="tab" data-view="progres">Progrés</button>
         <button class="tab" data-view="exercicis">Exercicis</button>
         <button class="tab" data-view="calculadores">Calculadores</button>

@@ -5838,3 +5838,132 @@ inici = function(){
 
 Object.assign(window, {docentV16, renderDocentSelectorV16, createClassPlanV16, buildTeacherDossierV16, aggregateGroupProgressV16, setView, inici});
 try { setView('inici'); } catch(e) { /* inici v16 opcional */ }
+
+/* === v17 · Auditoria docent i verificació del banc PAU ===
+   Objectiu: consolidar el banc abans de continuar afegint funcionalitats.
+   Afegeix una vista d'auditoria, estat docent editable localment i informe imprimible.
+*/
+const V17_VERSION = 'v17 · auditoria docent i verificació';
+const LS_AUDIT_V17 = 'ti_exercicis_plus_audit_v17';
+const V17_AUDIT_STATES = {
+  verified: {label:'Verificat pel docent', cls:'verify-ok', priority:1, advice:'Apte per usar directament a classe o en dossier.'},
+  calculator: {label:'Connectat a calculadora', cls:'verify-calculator', priority:2, advice:'Té resolutor o calculadora associada; comprova només dades del PDF.'},
+  figure: {label:'Depèn de figura', cls:'verify-figure', priority:3, advice:'Cal projectar o imprimir la figura i revisar-ne la lectura visual.'},
+  orientative: {label:'Resolució orientativa', cls:'verify-text', priority:4, advice:'Útil per classe, però no és solucionari tancat.'},
+  review: {label:'Revisió docent pendent', cls:'verify-review', priority:5, advice:'No recomanable per avaluació sense revisió prèvia.'},
+  needsText: {label:'Cal millorar enunciat', cls:'verify-review', priority:6, advice:'Revisa enunciat, apartats o dades abans d’usar-lo.'},
+  needsResult: {label:'Cal revisar resultat', cls:'verify-review', priority:7, advice:'Revisa càlculs, unitats i resposta final.'}
+};
+function loadAuditV17(){
+  try { return JSON.parse(localStorage.getItem(LS_AUDIT_V17) || '{}'); }
+  catch(e){ return {}; }
+}
+function saveAuditV17(data){ localStorage.setItem(LS_AUDIT_V17, JSON.stringify(data)); }
+function baseAuditStateV17(x){
+  if(!x) return {key:'review', ...V17_AUDIT_STATES.review};
+  const inf = typeof inferVerificationV13 === 'function' ? inferVerificationV13(x) : null;
+  const text = `${x.enunciat||''} ${x.resolucio||''} ${x.resum||''}`.toLowerCase();
+  if(x.enllac) return {key:'calculator', ...V17_AUDIT_STATES.calculator};
+  if((x.figures||[]).length || (inf && inf.key === 'guidedFigure')) return {key:'figure', ...V17_AUDIT_STATES.figure};
+  if(text.includes('revisió docent pendent') || text.includes('orientativa per passos') || text.includes('procediment general')) return {key:'orientative', ...V17_AUDIT_STATES.orientative};
+  if((x.enunciat||'').length < 120) return {key:'needsText', ...V17_AUDIT_STATES.needsText};
+  if((x.resolucio||'').length < 180) return {key:'needsResult', ...V17_AUDIT_STATES.needsResult};
+  return {key:'review', ...V17_AUDIT_STATES.review};
+}
+function auditStateV17(x){
+  const manual = loadAuditV17()[x.id];
+  if(manual && V17_AUDIT_STATES[manual.state]){
+    return {key:manual.state, manual:true, note:manual.note||'', updated:manual.updated, ...V17_AUDIT_STATES[manual.state]};
+  }
+  return baseAuditStateV17(x);
+}
+function setAuditStateV17(id, state){
+  const note = document.getElementById('auditNote_'+id)?.value || '';
+  const data = loadAuditV17();
+  if(state === 'auto') delete data[id];
+  else data[id] = {state, note, updated:new Date().toISOString()};
+  saveAuditV17(data);
+  renderAuditoriaV17();
+}
+function auditStatsV17(items=pauAllV16()){
+  const counts = {};
+  items.forEach(x => { const s = auditStateV17(x); counts[s.key] = (counts[s.key]||0)+1; });
+  return counts;
+}
+function auditFilteredItemsV17(){
+  const q = (document.getElementById('auditSearchV17')?.value || '').toLowerCase();
+  const state = document.getElementById('auditStateFilterV17')?.value || '';
+  const materia = document.getElementById('auditMateriaV17')?.value || '';
+  const any = document.getElementById('auditAnyV17')?.value || '';
+  return pauAllV16().filter(x => {
+    const st = auditStateV17(x).key;
+    const hay = `${x.any} ${x.serie} ${x.materia} ${x.exercici} ${x.bloc} ${x.titol} ${x.enunciat}`.toLowerCase();
+    return (!state || st===state) && (!materia || x.materia===materia) && (!any || String(x.any)===String(any)) && (!q || hay.includes(q));
+  }).sort((a,b)=> V17_AUDIT_STATES[auditStateV17(a).key].priority - V17_AUDIT_STATES[auditStateV17(b).key].priority || String(b.any).localeCompare(String(a.any)) || String(a.serie).localeCompare(String(b.serie)));
+}
+function auditDashboardV17(){
+  const all = pauAllV16();
+  const counts = auditStatsV17(all);
+  const usable = (counts.verified||0)+(counts.calculator||0)+(counts.figure||0)+(counts.orientative||0);
+  const pct = all.length ? Math.round(usable*100/all.length) : 0;
+  const cells = Object.entries(V17_AUDIT_STATES).map(([k,v])=>`<button class="audit-kpi" onclick="document.getElementById('auditStateFilterV17').value='${k}'; renderAuditListV17();"><b>${counts[k]||0}</b><span>${esc(v.label)}</span></button>`).join('');
+  return `<section class="card"><h2>Auditoria docent · v17</h2><p>Aquesta pantalla serveix per saber quines fitxes PAU es poden usar directament, quines depenen de figures i quines necessiten revisió abans de portar-les a classe.</p><div class="teacher-kpi audit-grid">${cells}</div><div class="progressbar"><div style="width:${pct}%"></div></div><p class="small"><b>${pct}%</b> de fitxes tenen ús docent viable o orientatiu. Les fitxes pendents s’han de revisar abans d’utilitzar-les com a solucionari o prova.</p><div class="teacher-danger"><b>Important:</b> marcar una fitxa com a verificada és una decisió local d’aquest navegador. No modifica els PDF originals ni envia dades.</div></section>`;
+}
+function renderAuditListV17(){
+  const out = document.getElementById('auditListV17');
+  if(!out) return;
+  const items = auditFilteredItemsV17();
+  document.getElementById('auditCountV17').textContent = `${items.length} fitxes trobades`;
+  out.innerHTML = items.map(x => {
+    const st = auditStateV17(x);
+    const short = (x.enunciat || x.resum || '').replace(/\s+/g,' ').slice(0,260);
+    const options = ['auto', ...Object.keys(V17_AUDIT_STATES)].map(k => `<option value="${k}" ${k===st.key?'selected':''}>${k==='auto'?'Automàtic':V17_AUDIT_STATES[k].label}</option>`).join('');
+    return `<article class="audit-row"><div><h3>${esc(x.any)} · ${esc(x.serie)} · ${esc(x.exercici)} · ${esc(x.titol)}</h3><p><span class="pill">${esc(x.materia)}</span> <span class="pill">${esc(x.bloc)}</span> <span class="pill ${st.cls}">${esc(st.label)}${st.manual?' · manual':''}</span></p><p class="small">${esc(short)}...</p><p class="small"><b>Acció docent recomanada:</b> ${esc(st.advice)} ${st.note?'<br><b>Nota:</b> '+esc(st.note):''}</p></div><div class="audit-actions no-print"><label>Estat docent</label><select id="auditSelect_${esc(x.id)}">${options}</select><label>Nota de revisió</label><textarea id="auditNote_${esc(x.id)}" placeholder="Ex.: revisat amb el grup B, cal millorar apartat c...">${esc(st.note||'')}</textarea><div class="btnrow"><button class="secondary" onclick="setAuditStateV17('${esc(x.id)}', document.getElementById('auditSelect_${esc(x.id)}').value)">Desar estat</button><button class="secondary" onclick="openPauItem('${esc(x.id)}'); setView('pau')">Obrir fitxa</button></div></div></article>`;
+  }).join('') || '<div class="notice">No hi ha fitxes amb aquests filtres.</div>';
+}
+function renderAuditoriaV17(){
+  const data = pauAllV16();
+  const materials = [...new Set(data.map(x=>x.materia).filter(Boolean))].sort();
+  const years = [...new Set(data.map(x=>x.any).filter(Boolean))].sort((a,b)=>b-a);
+  app.innerHTML = `${auditDashboardV17()}<section class="teacher-panel"><h3>Filtres d’auditoria</h3><div class="grid"><div class="field"><label>Matèria</label><select id="auditMateriaV17" onchange="renderAuditListV17()"><option value="">Totes</option>${materials.map(m=>`<option>${esc(m)}</option>`).join('')}</select></div><div class="field"><label>Any</label><select id="auditAnyV17" onchange="renderAuditListV17()"><option value="">Tots</option>${years.map(y=>`<option>${esc(y)}</option>`).join('')}</select></div><div class="field"><label>Estat</label><select id="auditStateFilterV17" onchange="renderAuditListV17()"><option value="">Tots</option>${Object.entries(V17_AUDIT_STATES).map(([k,v])=>`<option value="${k}">${esc(v.label)}</option>`).join('')}</select></div><div class="field"><label>Cerca</label><input id="auditSearchV17" placeholder="motor, trifàsica, figura, energia..." oninput="renderAuditListV17()"></div></div><div class="btnrow"><button class="primary" onclick="printAuditReportV17()">Imprimir informe d’auditoria</button><button class="secondary" onclick="exportAuditJsonV17()">Exportar revisió JSON</button><button class="secondary" onclick="setView('docent')">Anar a Docent</button></div><p id="auditCountV17" class="small"></p></section><section id="auditListV17"></section>`;
+  renderAuditListV17();
+}
+function printAuditReportV17(){
+  const items = auditFilteredItemsV17();
+  const counts = auditStatsV17(items);
+  app.innerHTML = `<section class="card print-sheet"><h2>Informe d’auditoria docent · v17</h2><p><b>Data:</b> ${new Date().toLocaleString('ca-ES')} · <b>Fitxes incloses:</b> ${items.length}</p><table><thead><tr><th>Estat</th><th>Nombre</th></tr></thead><tbody>${Object.entries(V17_AUDIT_STATES).map(([k,v])=>`<tr><td>${esc(v.label)}</td><td>${counts[k]||0}</td></tr>`).join('')}</tbody></table><h3>Detall de fitxes</h3><table><thead><tr><th>Any</th><th>Sèrie</th><th>Exercici</th><th>Títol</th><th>Bloc</th><th>Estat</th><th>Acció docent</th></tr></thead><tbody>${items.map(x=>{ const st=auditStateV17(x); return `<tr><td>${esc(x.any)}</td><td>${esc(x.serie)}</td><td>${esc(x.exercici)}</td><td>${esc(x.titol)}</td><td>${esc(x.bloc)}</td><td>${esc(st.label)}</td><td>${esc(st.advice)}</td></tr>`; }).join('')}</tbody></table><div class="no-print btnrow"><button class="primary" onclick="window.print()">Imprimir</button><button class="secondary" onclick="setView('auditoria')">Tornar a auditoria</button></div></section>`;
+}
+function exportAuditJsonV17(){
+  const payload = {version:V17_VERSION, exportedAt:new Date().toISOString(), overrides:loadAuditV17(), summary:auditStatsV17(pauAllV16())};
+  const blob = new Blob([JSON.stringify(payload,null,2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'auditoria_docent_v17.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+const oldDocentV17 = docentV16;
+docentV16 = function(){
+  oldDocentV17();
+  const first = app.querySelector('.card');
+  if(first){
+    first.insertAdjacentHTML('beforeend', `<div class="teacher-note"><b>Novetat v17:</b> abans de generar una prova o un dossier, revisa l’estat de les fitxes a Auditoria. Això evita usar com a solucionari una fitxa que només és orientativa.</div><div class="btnrow"><button class="primary" onclick="setView('auditoria')">Obrir auditoria docent</button></div>`);
+  }
+};
+const oldSetViewV17 = setView;
+setView = function(view){
+  const views = {inici, pau, docent: docentV16, auditoria: renderAuditoriaV17, exercicis: exercicisView, calculadores, practica, formulari, historial, examen: examenV14, progres: progresV15};
+  (views[view] || inici)();
+  $$('.tab').forEach(b => b.classList.toggle('active', b.dataset.view === view));
+  window.scrollTo({top:0, behavior:'smooth'});
+};
+const oldIniciV17 = inici;
+inici = function(){
+  oldIniciV17();
+  const first = app.querySelector('.card');
+  if(first){
+    first.insertAdjacentHTML('beforeend', `<div class="teacher-note"><b>v17 · Auditoria docent:</b> ara pots filtrar fitxes pendents, marcar exercicis com a verificats i imprimir un informe de qualitat abans de preparar dossiers o exàmens.</div><div class="btnrow"><button class="primary" onclick="setView('auditoria')">Revisar banc PAU</button><button class="secondary" onclick="setView('docent')">Preparar classe</button></div>`);
+  }
+};
+Object.assign(window, {renderAuditoriaV17, renderAuditListV17, setAuditStateV17, printAuditReportV17, exportAuditJsonV17, docentV16, setView, inici});
+try { setView('inici'); } catch(e) { console.warn('Inici v17 no carregat', e); }
