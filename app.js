@@ -5502,3 +5502,213 @@ inici = function(){
 
 Object.assign(window, {renderSolutionBlockV141, renderPauDocent, showPauSolution, printClassSheet, buildExamSheetV14, examenV14, inici});
 try { setView('inici'); } catch(e) { /* inici v14.1 opcional */ }
+
+/* === v15 · Correcció intel·ligent, seguiment local i repàs personalitzat === */
+const V15_VERSION = 'v15 · correcció intel·ligent i seguiment local';
+const LS_PROGRESS_V15 = 'ti_exercicis_plus_progress_v15';
+const LS_SETTINGS_V15 = 'ti_exercicis_plus_settings_v15';
+
+function loadProgressV15(){
+  try { return JSON.parse(localStorage.getItem(LS_PROGRESS_V15) || '[]'); }
+  catch(e){ return []; }
+}
+function saveProgressV15(items){ localStorage.setItem(LS_PROGRESS_V15, JSON.stringify(items.slice(0,400))); }
+function resetProgressV15(){ if(confirm('Vols esborrar tot el seguiment local?')){ localStorage.removeItem(LS_PROGRESS_V15); progresV15(); } }
+function normalizeThemeV15(x){
+  const raw = String((x && (x.bloc || x.titol || x.materia)) || 'General').toLowerCase();
+  if(/energia|calor|combustible|pèl|pellet|solar|emiss/.test(raw)) return 'Energia i rendiment';
+  if(/motor|màquina|maquina|bombo|patinet|motocicleta|ventilador/.test(raw)) return 'Motors i màquines';
+  if(/electro|corrent|trifàsic|trifasic|circuit|rl|rc|rectificador|watt|imped/.test(raw)) return 'Electricitat i corrent altern';
+  if(/lògica|logica|digital|portes|veritat|accés|ascensor|persiana/.test(raw)) return 'Lògica digital';
+  if(/mecan|transmiss|engran|politja|cargol|parell/.test(raw)) return 'Mecanismes i transmissió';
+  if(/material|assaig|tracció|charpy|toler/.test(raw)) return 'Materials i assaigs';
+  if(/pneum|cilindre|pressió|pressio|cabal/.test(raw)) return 'Pneumàtica';
+  return 'General';
+}
+function detectUnitWarningsV15(answer){
+  const a = String(answer||'').toLowerCase();
+  const warnings = [];
+  if(/\d/.test(a) && !/(v|a|w|kw|kwh|j|kj|mj|kg|g|n|n·m|nm|pa|bar|hz|s|min|h|mm|m|%|ω|ohm|Ω)/i.test(a)) warnings.push('Hi ha números però no es detecten unitats.');
+  if(/kw\/h/i.test(a)) warnings.push('Vigila: kW/h normalment no és energia. Potser volies kW o kWh.');
+  if(/min/.test(a) && /(2π|rad\/s|omega|ω)/i.test(a) && !/\/60/.test(a)) warnings.push('Si passes min⁻¹ a rad/s, comprova el factor 2π/60.');
+  if(/mm/.test(a) && /(m\b|joule|energia|força|forca|pressió|pressio)/i.test(a)) warnings.push('Si fas càlculs en SI, comprova si has convertit mm a m.');
+  return warnings;
+}
+function smartScoreV15(answer, solution, keywords=[]){
+  const ans = String(answer||'').trim();
+  const low = ans.toLowerCase();
+  const words = (keywords||[]).filter(w => String(w).length>2);
+  const hits = words.filter(w => low.includes(String(w).toLowerCase())).length;
+  const numsS = (typeof solutionNumbersV13 === 'function') ? solutionNumbersV13(solution || '') : [];
+  const numsA = (typeof solutionNumbersV13 === 'function') ? solutionNumbersV13(ans) : [];
+  let numericHits = 0;
+  if(numsS.length && numsA.length){
+    numsA.forEach(a => numsS.forEach(s => { if(Math.abs(a-s) <= Math.max(0.05*Math.abs(s), 0.02)) numericHits++; }));
+  }
+  const unitWarnings = detectUnitWarningsV15(ans);
+  let score = 0;
+  if(ans.length > 10) score += 20;
+  if(words.length) score += Math.min(35, Math.round((hits / Math.max(words.length,1))*45)); else score += 20;
+  if(numericHits) score += 35;
+  if(/[=]/.test(ans) || /(fórmula|formula|substitu|calcula|per tant|resultat)/i.test(ans)) score += 10;
+  if(unitWarnings.length) score -= 10;
+  score = Math.max(0, Math.min(100, score));
+  let level = 'Resposta inicial';
+  if(score >= 85) level = 'Molt bé'; else if(score >= 65) level = 'Bon camí'; else if(score >= 40) level = 'Parcial';
+  return {score, level, hits, totalKeywords: words.length, numericHits, unitWarnings};
+}
+function recordProgressV15(entry){
+  const items = loadProgressV15();
+  items.unshift({
+    date: new Date().toISOString(),
+    title: entry.title || 'Activitat',
+    id: entry.id || currentPauId || '',
+    type: entry.type || 'PAU',
+    theme: entry.theme || normalizeThemeV15(entry.item),
+    score: Math.round(entry.score || 0),
+    status: entry.status || '',
+    note: entry.note || '',
+    step: entry.step ?? null,
+    year: entry.item?.any || '',
+    serie: entry.item?.serie || ''
+  });
+  saveProgressV15(items);
+}
+function progressStatsV15(){
+  const items = loadProgressV15();
+  const themes = {};
+  items.forEach(x => {
+    const t = x.theme || 'General';
+    themes[t] ||= {count:0, sum:0, weak:0, recent:null};
+    themes[t].count++; themes[t].sum += Number(x.score||0); if(Number(x.score||0)<65) themes[t].weak++;
+    if(!themes[t].recent || x.date > themes[t].recent) themes[t].recent = x.date;
+  });
+  return {items, themes};
+}
+function themeRowsV15(){
+  const {themes} = progressStatsV15();
+  const rows = Object.entries(themes).sort((a,b)=>b[1].count-a[1].count);
+  if(!rows.length) return '<p>Encara no hi ha dades. Fes una activitat PAU i prem “Comprovar aquest pas”.</p>';
+  return `<table><thead><tr><th>Tema</th><th>Intents</th><th>Mitjana</th><th>Reforç</th></tr></thead><tbody>${rows.map(([t,v])=>{ const avg=Math.round(v.sum/v.count); return `<tr><td><b>${esc(t)}</b></td><td>${v.count}</td><td>${avg}%</td><td>${avg<65||v.weak>1?'Repassar':'Correcte'}</td></tr>`; }).join('')}</tbody></table>`;
+}
+function weakThemesV15(){
+  const {themes} = progressStatsV15();
+  return Object.entries(themes).filter(([t,v]) => v.count>=1 && (v.sum/v.count < 70 || v.weak>=2)).map(([t])=>t);
+}
+function recommendationTextV15(){
+  const weak = weakThemesV15();
+  if(!loadProgressV15().length) return 'Comença fent una fitxa PAU en mode alumne. Després torna aquí per veure recomanacions.';
+  if(!weak.length) return 'El progrés és equilibrat. Pots generar un examen mixt o buscar exercicis amb figura per millorar lectura visual.';
+  return 'Recomanació: repassa ' + weak.join(', ') + '. Treballa primer el pas de dades i unitats, després la fórmula i finalment la interpretació.';
+}
+function matchingPauForThemesV15(themes){
+  const data = (typeof pauData === 'function' ? pauData() : pauBank) || [];
+  if(!themes.length) return data.slice(0,8);
+  return data.filter(x => themes.includes(normalizeThemeV15(x))).slice(0,12);
+}
+function renderReviewListV15(){
+  const themes = weakThemesV15();
+  const list = matchingPauForThemesV15(themes);
+  const target = document.getElementById('reviewListV15');
+  if(!target) return;
+  target.innerHTML = list.length ? `<div class="grid">${list.map(x=>`<article class="card"><h3>${esc(x.exercici)} · ${esc(x.titol)}</h3><p><span class="pill">${esc(x.any)}</span> <span class="pill">${esc(x.serie)}</span> <span class="pill">${esc(normalizeThemeV15(x))}</span></p><p>${esc(x.resum || x.enunciat || '').slice(0,220)}...</p><button class="secondary" onclick="openPauItem('${x.id}')">Obrir per repassar</button></article>`).join('')}</div>` : '<p>No hi ha fitxes recomanades encara.</p>';
+}
+function generateSimilarV15(){
+  const themes = weakThemesV15();
+  let key = 'calor';
+  if(themes.some(t=>/motor|màquin/.test(t))) key='motor';
+  else if(themes.some(t=>/electricitat/.test(t))) key='rl';
+  else if(themes.some(t=>/mecanismes/.test(t))) key='elevador';
+  else if(themes.some(t=>/pneum/.test(t))) key='pneumatica';
+  else if(themes.some(t=>/lògica/.test(t))) key='logica';
+  const variants = {
+    calor: `Escalfa 3 L d'aigua de 18 °C a 95 °C amb un cremador de rendiment 0,25 i poder calorífic 45 MJ/kg. Calcula Q útil i massa de combustible.`,
+    motor: `Un motor lliura 750 W a 1 450 min⁻¹. Calcula la velocitat angular i el parell útil. Si absorbeix 950 W, calcula el rendiment.`,
+    rl: `Un circuit RL sèrie té U = 230 V, f = 50 Hz, R = 80 Ω i L = 120 mH. Calcula XL, Z i I.`,
+    elevador: `Un elevador puja 1 500 kg fins a 1,6 m en 40 s amb rendiment 0,45. El cargol té pas 6 mm/volta i el motor gira a 1 400 min⁻¹. Calcula potències, voltes i relació.`,
+    pneumatica: `Un cilindre de diàmetre 50 mm treballa a 5 bar. Calcula l'àrea i la força teòrica.`,
+    logica: `Un sistema s'activa si hi ha presència i llum, o si hi ha emergència. Defineix variables, funció lògica i taula de veritat.`
+  };
+  const el = document.getElementById('similarV15');
+  if(el) el.innerHTML = `<div class="result"><h3>Exercici similar recomanat</h3><p>${esc(variants[key])}</p><div class="btnrow"><button class="primary" onclick="openExercise('${key}')">Obrir calculadora relacionada</button><button class="secondary" onclick="navigator.clipboard.writeText(document.getElementById('similarV15').innerText)">Copiar</button></div></div>`;
+}
+function exportProgressV15(){
+  const data = JSON.stringify(loadProgressV15(), null, 2);
+  const blob = new Blob([data], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = 'progres_tecnologia_exercicis_plus_v15.json'; a.click(); URL.revokeObjectURL(a.href);
+}
+function progresV15(){
+  const items = loadProgressV15();
+  const avg = items.length ? Math.round(items.reduce((s,x)=>s+Number(x.score||0),0)/items.length) : 0;
+  const recent = items.slice(0,10);
+  app.innerHTML = `<section class="card"><h2>Progrés i repàs intel·ligent · v15</h2><p>Aquest apartat guarda dades només en aquest navegador. No envia res a cap servidor.</p><div class="quality-grid"><div><b>${items.length}</b><span>comprovacions</span></div><div><b>${avg}%</b><span>mitjana local</span></div><div><b>${weakThemesV15().length}</b><span>temes a reforçar</span></div><div><b>${new Set(items.map(x=>x.theme)).size}</b><span>temes treballats</span></div></div><div class="notice"><b>Recomanació automàtica:</b> ${esc(recommendationTextV15())}</div><div class="btnrow"><button class="primary" onclick="renderReviewListV15()">Proposar repàs</button><button class="secondary" onclick="generateSimilarV15()">Generar exercici similar</button><button class="secondary" onclick="exportProgressV15()">Exportar progrés</button><button class="secondary" onclick="resetProgressV15()">Esborrar progrés</button></div></section><section class="card"><h2>Resultats per tema</h2>${themeRowsV15()}</section><section class="card"><h2>Repàs recomanat</h2><div id="reviewListV15"><p>Prem “Proposar repàs” per veure fitxes del banc PAU relacionades amb els teus errors.</p></div><div id="similarV15"></div></section><section class="card"><h2>Últimes comprovacions</h2>${recent.length?recent.map(x=>`<article class="history-row"><b>${esc(x.title)}</b><br><span class="small">${new Date(x.date).toLocaleString('ca-ES')} · ${esc(x.theme)} · ${x.score}% · ${esc(x.status)}</span><p>${esc(x.note)}</p></article>`).join(''):'<p>Encara no hi ha comprovacions registrades.</p>'}</section>`;
+}
+
+const oldCheckPauStepV15 = checkPauStep;
+checkPauStep = function(i){
+  const x = (typeof getPauItemByIdV13 === 'function' ? getPauItemByIdV13(currentPauId) : null) || (pauBank||[]).find(p => p.id === currentPauId);
+  const st = x ? makePauSteps(x)[i] : null;
+  oldCheckPauStepV15(i);
+  if(!x || !st) return;
+  const ans = document.getElementById(`pauAnswer${i}`)?.value || '';
+  const sc = smartScoreV15(ans, st.solution || '', st.keywords || []);
+  const extra = sc.unitWarnings.length ? `<div class="warning"><b>Unitats:</b> ${esc(sc.unitWarnings.join(' '))}</div>` : '';
+  const fb = document.getElementById(`pauFeedback${i}`);
+  if(fb) fb.insertAdjacentHTML('beforeend', `<div class="v15-score"><b>Puntuació orientativa del pas:</b> ${sc.score}% · ${esc(sc.level)}${extra}</div>`);
+  recordProgressV15({item:x, id:x.id, title:`${x.any} · ${x.serie} · ${x.exercici} · pas ${i+1}`, type:'Pas PAU', theme:normalizeThemeV15(x), score:sc.score, status:sc.level, note:`Paraules clau: ${sc.hits}/${sc.totalKeywords}. Valors compatibles: ${sc.numericHits}.`, step:i+1});
+};
+
+const oldFinishPauActivityV15 = finishPauActivity;
+finishPauActivity = function(){
+  oldFinishPauActivityV15();
+  const x = (typeof getPauItemByIdV13 === 'function' ? getPauItemByIdV13(currentPauId) : null) || (pauBank||[]).find(p => p.id === currentPauId);
+  if(x){
+    const answers = $$('[id^="pauAnswer"]').map(t=>t.value.trim()).filter(Boolean).join('\n');
+    const sc = smartScoreV15(answers, x.resolucio || x.respostaFinal || '', (x.formules||[]).concat(x.dades||[]));
+    recordProgressV15({item:x, id:x.id, title:`Activitat completa · ${x.exercici} · ${x.titol}`, type:'Activitat PAU', theme:normalizeThemeV15(x), score:sc.score, status:'Finalitzada', note:'Activitat finalitzada en mode alumne.'});
+    const s = document.getElementById('pauSummary');
+    if(s) s.insertAdjacentHTML('beforeend', `<div class="notice"><b>Seguiment v15:</b> activitat registrada al progrés local. <button class="secondary" onclick="setView('progres')">Veure progrés</button></div>`);
+  }
+};
+
+const oldCheckTestV15 = typeof checkTest === 'function' ? checkTest : null;
+if(oldCheckTestV15){
+  checkTest = function(){
+    oldCheckTestV15();
+    const txt = document.getElementById('testResult')?.innerText || '';
+    const m = txt.match(/([\d,.]+)\s*punts/i);
+    const pts = m ? parseFloat(m[1].replace(',','.')) : 0;
+    recordProgressV15({title:'Test PAU autocorregible', type:'Test', theme:'Test PAU', score:Math.max(0, Math.min(100, Math.round((pts/3)*100))), status:'Corregit', note:txt.slice(0,180)});
+  };
+}
+
+const oldSolveSelectedV15 = typeof solveSelected === 'function' ? solveSelected : null;
+if(oldSolveSelectedV15){
+  solveSelected = function(){
+    oldSolveSelectedV15();
+    const key = document.getElementById('exerciseSelect')?.value;
+    const ex = exercises[key];
+    if(ex) recordProgressV15({title:`Resolutor · ${ex.title}`, type:'Resolutor', theme:normalizeThemeV15({bloc:ex.title}), score:80, status:'Resolució generada', note:'S’ha generat una resolució pas a pas amb dades modificables.'});
+  };
+}
+
+const oldSetViewV15 = setView;
+setView = function(view){
+  const views = {inici, pau, exercicis: exercicisView, calculadores, practica, formulari, historial, examen: examenV14, progres: progresV15};
+  (views[view] || inici)();
+  $$('.tab').forEach(b => b.classList.toggle('active', b.dataset.view === view));
+  window.scrollTo({top:0, behavior:'smooth'});
+};
+
+const oldIniciV15 = inici;
+inici = function(){
+  oldIniciV15();
+  const first = app.querySelector('.card');
+  if(first){
+    first.insertAdjacentHTML('beforeend', `<div class="notice"><b>Novetat v15:</b> correcció més intel·ligent, seguiment local, recomanacions de repàs i exercicis similars.</div><div class="btnrow"><button class="primary" onclick="setView('progres')">Veure progrés</button><button class="secondary" onclick="setView('pau')">Practicar PAU</button></div>`);
+  }
+};
+
+Object.assign(window, {progresV15, renderReviewListV15, generateSimilarV15, exportProgressV15, resetProgressV15, checkPauStep, finishPauActivity, checkTest, solveSelected, setView, inici});
+try { setView('inici'); } catch(e) { /* inici v15 opcional */ }

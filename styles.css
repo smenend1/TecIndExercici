@@ -46,3 +46,13 @@
   .formula-line{background:#f8f8f8!important;border:1px solid #aaa;border-radius:0;padding:3pt 5pt;white-space:normal;}
   .solution-rich p,.solution-rich li{orphans:2;widows:2;}
 }
+
+/* v15 · progrés i repàs intel·ligent */
+.v15-score{margin-top:.75rem;padding:.8rem;border-radius:14px;background:#eef8f3;border:1px solid #b7ddcb;color:#173d32}
+.warning{margin-top:.5rem;padding:.65rem;border-radius:12px;background:#fff7ed;border:1px solid #fdba74;color:#7c2d12}
+.history-row{padding:1rem;border:1px solid var(--line,#d8e0dc);border-radius:16px;margin:.7rem 0;background:#fff}
+.quality-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:.8rem;margin:1rem 0}
+.quality-grid>div{background:#eef8f3;border:1px solid #cfe7dc;border-radius:16px;padding:1rem;text-align:center}
+.quality-grid b{font-size:1.8rem;color:#1f6f5b;display:block}
+.quality-grid span{font-size:.92rem;color:#53645e}
+@media print{.v15-score,.warning{break-inside:avoid}.quality-grid{grid-template-columns:repeat(4,1fr)}}

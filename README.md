@@ -1,31 +1,23 @@
-# Tecnologia Industrial Exercicis Plus v14.1 · Solucions formatades
+# Tecnologia Industrial Exercicis Plus v15 · Correcció intel·ligent i seguiment local
 
 PWA educativa en català per treballar exercicis tipus PAU de Tecnologia Industrial, Tecnologia i Enginyeria i Electrotècnia.
 
+## Novetat principal de la v15
 
-## Novetat principal de la v14.1
+La v15 converteix l'aplicació en un entrenador més personalitzat:
 
-La v14.1 corregeix el problema del text pla a les solucions i a la impressió:
+- pestanya nova **Progrés**;
+- seguiment local dels passos comprovats per l'alumne;
+- puntuació orientativa per pas;
+- detecció bàsica de paraules clau, valors numèrics compatibles i possibles problemes d'unitats;
+- recomanacions automàtiques de repàs segons els errors registrats;
+- proposta de fitxes PAU per reforçar els temes febles;
+- generador d'exercicis similars relacionats amb els temes a millorar;
+- exportació del progrés local en JSON.
 
-- les solucions ja no es mostren com un bloc monoespaiat;
-- els passos apareixen separats amb títols, subtítols, punts i fórmules;
-- les fitxes imprimibles d'alumne i docent tenen una lectura més clara;
-- el mode examen i els dossiers amb solucionari també usen el nou format;
-- s'actualitzen `manifest.json` i `sw.js` a v14.1.
+Tot el seguiment es guarda amb `localStorage` al navegador de l'usuari. No hi ha servidor i no s'envien dades fora del dispositiu.
 
-## Novetat principal de la v14
-
-La v14, conservada dins aquesta versió, afegeix una capa d'ús d'aula i preparació d'examen sobre el banc PAU ja verificat a la v13:
-
-- pestanya nova **Examen**;
-- generador de proves PAU per filtres;
-- temporitzador d'examen;
-- impressió de prova d'alumne;
-- impressió de solucionari docent;
-- informe de revisió de la prova generada;
-- generador de dossiers imprimibles per any, sèrie, matèria, tema o estat de verificació.
-
-## Contingut conservat
+## Contingut conservat de versions anteriors
 
 - Banc PAU multiany: 2021, 2022, 2023, 2024 i 2025.
 - 52 fitxes PAU de treball.
@@ -33,25 +25,30 @@ La v14, conservada dins aquesta versió, afegeix una capa d'ús d'aula i prepara
 - Resolucions per passos.
 - Mode alumne i mode docent.
 - Estat de verificació de cada fitxa.
+- Solucions formatades de la v14.1.
+- Mode examen PAU i dossiers imprimibles de la v14.
 - Calculadores, exercicis guiats, formulari i historial.
 - Funcionament offline amb Service Worker.
 
-## Ús recomanat
+## Com usar la pestanya Progrés
 
-### Mode examen
+1. Obre una fitxa PAU en **mode alumne**.
+2. Escriu una resposta en algun pas.
+3. Prem **Comprovar aquest pas**.
+4. La PWA donarà una valoració orientativa i desarà l'intent localment.
+5. Entra a **Progrés** per veure:
+   - mitjana local;
+   - temes treballats;
+   - temes que cal reforçar;
+   - recomanacions;
+   - exercicis PAU per repassar;
+   - exercicis similars generats.
 
-1. Obre la pestanya **Examen**.
-2. Filtra per matèria, any, sèrie, tema o estat de verificació.
-3. Tria el nombre d'exercicis i el temps recomanat.
-4. Genera la prova.
-5. Imprimeix la versió d'alumne o la versió amb solucions.
+## Mode examen i dossiers
 
-### Dossiers imprimibles
+La pestanya **Examen** permet generar proves PAU filtrades per matèria, any, sèrie, tema o estat de verificació. Es poden imprimir en versió alumne o docent amb solucionari.
 
-1. Escull un tema, any o sèrie.
-2. Defineix el màxim de fitxes.
-3. Crea un dossier d'alumne o docent.
-4. Imprimeix-lo o guarda'n el resum a l'historial.
+Els dossiers permeten crear reculls per tema o any, útils per preparar classes, deures o repàs final.
 
 ## Fitxers
 
@@ -79,8 +76,8 @@ assets/
 
 ## Limitació honesta
 
-La v14 millora la preparació d'exàmens i dossiers, però les fitxes marcades com a **guiat amb figura** o **revisió docent pendent** encara poden requerir revisió manual abans d'usar-les com a solucionari oficial.
+La correcció de la v15 és orientativa. Ajuda a detectar si l'alumne inclou idees, valors i unitats raonables, però no substitueix una revisió docent completa, sobretot en exercicis amb figures, circuits, gràfics o lectures visuals.
 
-## Notes de control de qualitat v14.1
+## Control de qualitat recomanat
 
-Aquesta versió no afegeix més exercicis. Se centra a millorar la llegibilitat de les respostes en pantalla i en paper. Encara és recomanable revisar manualment les fitxes marcades com a guiat amb figura o revisió docent pendent abans d'usar-les com a solucionari oficial.
+Abans d'usar l'app com a solucionari oficial, revisa manualment les fitxes marcades com a **guiat amb figura** o **revisió docent pendent**.
