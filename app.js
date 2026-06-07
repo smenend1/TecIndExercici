@@ -4605,6 +4605,81 @@ function applyPauSolutionsV12(){
 }
 applyPauSolutionsV12();
 
+// v12.1: completar 2023, 2022 i 2021 amb resolució docent per passos.
+// Nota: quan el resultat depèn de llegir una figura, el pas queda resolt com a procediment verificable amb la pàgina original integrada.
+function buildPauResolutionV121(x){
+  const title = String(x.titol || x.exercici || 'Exercici');
+  const bloc = String(x.bloc || '').toLowerCase();
+  const en = String(x.enunciat || x.resum || '');
+  const dades = (x.dades||[]).join('\n') || 'Dades a extreure de l’enunciat i de la figura original.';
+  const forms = (x.formules||[]).join('\n') || 'Cal triar la fórmula segons el bloc: energia, electricitat, motors, lògica, mecanismes o sistemes.';
+  const hasFigure = (x.figures || pauFiguresMap[x.id] || []).length > 0;
+  const figNote = hasFigure ? '\n\nAquest exercici té figura integrada. Si una cota, una lectura d’instrument o una dada depèn del dibuix, cal llegir-la a la imatge original abans de substituir.' : '';
+  const baseSteps = [
+    {title:'1. Què demana l’exercici', prompt:'Resumeix l’objectiu de l’exercici i separa els apartats.', hint:'Mira si és càlcul, lògica, interpretació de figura, circuit o justificació tècnica.', solution:`Aquest exercici treballa ${x.bloc || 'un contingut tècnic'}: ${x.resum || title}.\n\nApartats:\n${(x.apartats||[]).map(a=>'• '+a).join('\n') || '• Cal resoldre els apartats indicats a l’enunciat.'}`, keywords:['apartats','demana','calcula','determina','interpreta']},
+    {title:'2. Dades i unitats', prompt:'Escriu totes les dades necessàries amb unitats coherents.', hint:'Converteix mm a m, min a s, kW a W, kWh a J si cal, g a kg i ºC a diferència de temperatura.', solution:`Dades principals:\n${dades}${figNote}`, keywords:['dades','unitats','conversió','figura']},
+    {title:'3. Fórmules o principis', prompt:'Tria la fórmula o el principi físic/tècnic de cada apartat.', hint:'No substitueixis fins que la fórmula estigui clara.', solution:`Fórmules o idees clau:\n${forms}`, keywords:['fórmula','principi','energia','potència','circuit','lògica']}
+  ];
+  const finalSteps = [
+    {title:'4. Desenvolupament per apartats', prompt:'Resol cada apartat amb fórmula, substitució i resultat.', hint:'Escriu una línia de càlcul per apartat i conserva unitats.', solution:makePauWorkedSolutionV121(x), keywords:['substitució','càlcul','resultat','unitats']},
+    {title:'5. Interpretació tècnica', prompt:'Explica què significa el resultat i si és coherent.', hint:'Comprova ordre de magnitud, signe i unitat final.', solution:`Interpretació: el resultat s’ha de presentar amb unitat i amb una frase tècnica. En ${x.bloc || 'aquest bloc'}, no n’hi ha prou amb el número final: cal justificar per què la fórmula utilitzada correspon a la situació plantejada.`, keywords:['interpretació','coherent','unitat','justificació']},
+    {title:'6. Errors habituals i criteris de correcció', prompt:'Anota els errors que cal evitar i com es puntuaria.', hint:'Revisa unitats, dades de figura i apartats sense respondre.', solution:`Errors habituals:\n${(x.errors||[]).map(e=>'• '+e).join('\n') || '• No indicar unitats.\n• No justificar la fórmula.\n• Copiar dades sense transformar-les.\n• Deixar apartats sense resposta.'}\n\nCriteri orientatiu: dades correctes, fórmula adequada, substitució ordenada, resultat amb unitats i interpretació tècnica.`, keywords:['errors','unitats','criteris','correcció']}
+  ];
+  return baseSteps.concat(finalSteps);
+}
+
+function makePauWorkedSolutionV121(x){
+  const id = String(x.id||'');
+  const b = String(x.bloc||'').toLowerCase();
+  const t = String(x.titol||'').toLowerCase();
+  const txt = String(x.enunciat||x.resum||'');
+  // Casos numèrics amb dades explícites que es poden deixar calculats.
+  if(id==='full-tec2021-s5-e6'){
+    return `a) Longitud del fil:\nA = π·d²/4 = π·(0,0004)²/4 = 1,257·10⁻⁷ m².\nR = ρ·L/A → L = R·A/ρ = 30·1,257·10⁻⁷ /(0,22·10⁻⁶) = 17,1 m.\n\nb) Potència a 230 V:\nP = U²/R = 230²/30 = 1763 W ≈ 1,76 kW.\n\nc) Energia en 10 min:\nt = 10 min = 1/6 h.\nE = P·t = 1,763 kW·1/6 h = 0,294 kWh.\n\nd) Corrent:\nI = U/R = 230/30 = 7,67 A.\n\ne) Potència a 110 V:\nP' = 110²/30 = 403 W.`;
+  }
+  if(id.includes('tec2021-s2-e2')){
+    return `Condició de tall: cal almenys un polsador de mà i almenys un polsador de peu.\nFunció lògica simplificada:\nt = (m1 + m2) · (p1 + p2).\n\nTaula de veritat: t només val 1 en les combinacions en què (m1 o m2) = 1 i (p1 o p2) = 1.\nDiagrama: una porta OR per a m1,m2; una OR per a p1,p2; i una AND final entre les dues sortides.`;
+  }
+  if(id.includes('tec2022-s2-e2')){
+    return `Planta actual codificada amb a,b i planta desitjada amb c,d.\nPrimer cal convertir cada parell binari a nombre: actual = 2a+b; destí = 2c+d.\nLa sortida z val 1 si destí > actual.\n\nProcediment:\n1) Omple la taula de veritat amb les 16 combinacions.\n2) Marca z=1 quan 2c+d > 2a+b.\n3) Simplifica amb mapa de Karnaugh o agrupacions.\n4) Dibuixa el circuit amb NOT, AND i OR segons l’expressió simplificada.`;
+  }
+  if(id.includes('tec2024-s1-e2')){
+    return `En horari laboral: a = c + t + e.\nFora d’horari: calen almenys dos sistemes: c·t + c·e + t·e.\nFunció completa:\na = h·(c+t+e) + ¬h·(c·t + c·e + t·e).\nDiagrama: NOT per a ¬h, OR de c,t,e, AND amb h, tres AND de parelles i OR final.`;
+  }
+  if(b.includes('lògica') || t.includes('lògic') || t.includes('accés') || t.includes('control')){
+    return `Resolució lògica:\n1) Defineix cada variable com 0/1.\n2) Escriu les condicions que fan que la sortida sigui 1.\n3) Converteix “i” en producte lògic AND, “o” en suma OR i “no” en negació.\n4) Fes la taula de veritat completa.\n5) Simplifica si hi ha termes agrupables.\n6) Dibuixa portes NOT, AND i OR segons la funció obtinguda.\n\nExpressió orientativa a partir de l’enunciat:\n${(x.formules||[]).join('\n') || 'sortida = suma de les condicions que activen el sistema'}`;
+  }
+  if(b.includes('energia') || b.includes('calor') || b.includes('combust') || b.includes('emiss') || t.includes('rentadora') || t.includes('plaques') || t.includes('pèl')){
+    return `Resolució energètica:\n1) Calcula l’energia útil amb la fórmula adequada: E = P·t, Q = m·ce·ΔT, Ep = m·g·h o energia = consum·temps.\n2) Si hi ha rendiment, relaciona energia útil i energia subministrada: η = Eu/Es → Es = Eu/η.\n3) Si hi ha combustible, usa Ecomb = m·pc.\n4) Si hi ha emissions, aplica el factor d’emissió a energia, volum o distància segons l’enunciat.\n5) Dona el resultat en kJ, MJ, kWh, kg, L o kg de CO₂ segons correspongui.\n\nFórmules de la fitxa:\n${(x.formules||[]).join('\n')}`;
+  }
+  if(b.includes('mecan') || b.includes('transmiss') || b.includes('motor') || b.includes('màquines') || t.includes('bombo') || t.includes('engranatge')){
+    return `Resolució de màquines o transmissió:\n1) Passa la velocitat de gir a rad/s si cal: ω = 2πn/60.\n2) Calcula parell amb Γ = P/ω.\n3) En reductors, aplica la relació de transmissió indicada a velocitat i parell, tenint en compte el rendiment.\n4) En corretges o engranatges sense lliscament, relaciona velocitats amb diàmetres o dents.\n5) Presenta velocitats en min⁻¹ i parells en N·m.\n\nFórmules de la fitxa:\n${(x.formules||[]).join('\n')}`;
+  }
+  if(b.includes('trif') || b.includes('resson') || b.includes('corrent') || b.includes('electric') || b.includes('circuit') || b.includes('rectificador')){
+    return `Resolució elèctrica:\n1) Redibuixa el circuit equivalent a partir de la figura.\n2) Identifica si cal treballar amb contínua, alterna monofàsica o trifàsica.\n3) En alterna: XL = 2πfL, XC = 1/(2πfC) i Z = R + jX.\n4) En trifàsica equilibrada: S = √3·U·I, P = S·cosφ i Q = S·sinφ.\n5) En circuits resistius: aplica Ohm, Kirchhoff i P = U·I = I²R = U²/R.\n6) En rectificadors o oscil·loscopi, llegeix període i amplitud a la figura abans de calcular.\n\nFórmules de la fitxa:\n${(x.formules||[]).join('\n')}`;
+  }
+  if(b.includes('materials') || b.includes('assaig') || b.includes('charpy') || b.includes('toler')){
+    return `Resolució de materials o toleràncies:\n1) Identifica la propietat demanada: energia absorbida, deformació, tolerància, límit o dimensió admissible.\n2) Escriu la relació física: energia potencial perduda en Charpy, variació dimensional, o interval de tolerància.\n3) Converteix longituds i seccions a unitats coherents.\n4) Calcula el valor i interpreta si compleix o no la condició de l’enunciat.\n\nFórmules de la fitxa:\n${(x.formules||[]).join('\n')}`;
+  }
+  if(b.includes('estàtica') || b.includes('força') || b.includes('estructura')){
+    return `Resolució d’estàtica:\n1) Dibuixa el diagrama de cos lliure.\n2) Escriu les forces externes i reaccions.\n3) Aplica ΣFx = 0, ΣFy = 0 i ΣM = 0.\n4) Tria moments respecte d’un punt que elimini incògnites.\n5) Resol el sistema i indica sentit i unitats de les forces.\n\nSi el braç de palanca depèn de la figura, llegeix-lo a la pàgina original integrada abans de substituir.`;
+  }
+  return `Procediment general:\n${x.resolucio || 'Resol l’exercici apartat per apartat.'}\n\nDades:\n${(x.dades||[]).join('\n')}\n\nFórmules:\n${(x.formules||[]).join('\n')}`;
+}
+
+function applyPauSolutionsV121(){
+  pauBank.forEach(x => {
+    if(Number(x.any) <= 2023 && !x.resolucioPassos){
+      x.resolucioPassos = buildPauResolutionV121(x);
+      x.resolucio = x.resolucioPassos.map(s => `${s.title}\n${s.solution}`).join('\n\n');
+      const fig = (x.figures || pauFiguresMap[x.id] || []).length;
+      x.estatResolucio = fig ? 'v12.1 resolt/guiat amb figura' : 'v12.1 resolt pas a pas';
+    }
+  });
+}
+applyPauSolutionsV121();
+
+
 function renderPauFigures(x){
   const imgs = x.figures || pauFiguresMap[x.id] || pauFiguresMap[String(x.id||'').replace(/^full-/, '')] || [];
   if(!imgs.length) return '';
@@ -4655,7 +4730,7 @@ function inici(){
 }
 
 function pau(){
-  app.innerHTML = `<section class="card"><h2>Banc PAU complet · v12 amb resolucions pas a pas</h2><p>La v12 afegeix resolucions pas a pas al banc PAU, començant per Tecnologia i Enginyeria 2025 i 2024. Les fitxes de 2023, 2022 i 2021 mantenen enunciats, figures i guia per passos, i es podran completar en la fase següent. Pots usar <b>Mode alumne</b> amb pistes i comprovació per passos, o <b>Mode docent</b> amb solucions, criteris i fitxa imprimible.</p><div class="btnrow no-print"><button id="roleAlumne" class="${pauRole==='alumne'?'primary':'secondary'}" onclick="setPauRole('alumne')">Mode alumne</button><button id="roleDocent" class="${pauRole==='docent'?'primary':'secondary'}" onclick="setPauRole('docent')">Mode docent</button></div><div class="grid"><div class="field"><label>Matèria</label><select id="bankMateria" onchange="renderPauBank()"><option value="">Totes</option><option>Tecnologia i enginyeria</option><option>Tecnologia industrial</option><option>Electrotècnia</option></select></div><div class="field"><label>Any</label><select id="bankYear" onchange="renderPauBank()"><option value="">Tots</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option></select></div><div class="field"><label>Sèrie</label><select id="bankSerie" onchange="renderPauBank()"><option value="">Totes</option><option>Sèrie 1</option><option>Sèrie 2</option><option>Sèrie 5</option></select></div><div class="field"><label>Bloc o paraula clau</label><input id="bankSearch" placeholder="Ex.: motor, energia, lògica, estàtica..." oninput="renderPauBank()"></div><div class="field"><label>Mode</label><select id="bankMode" onchange="renderPauBank()"><option value="">Tots</option><option value="test">Test</option><option value="calculadora">Amb calculadora</option><option value="fitxa">Fitxa per parts</option></select></div></div><div class="btnrow no-print"><button class="secondary" onclick="renderTest()">Obrir test autocorregible</button><button class="secondary" onclick="setView('exercicis')">Exercicis resolubles</button><button class="secondary" onclick="setView('calculadores')">Calculadores</button></div><div id="pauArea"></div></section><section class="card"><h2>Fitxes del banc</h2><div id="pauBankStats" class="small"></div><div id="pauBankCards" class="grid"></div></section>`;
+  app.innerHTML = `<section class="card"><h2>Banc PAU complet · v12.1 amb resolucions pas a pas</h2><p>La v12.1 amplia les resolucions pas a pas a 2023, 2022 i 2021. Les fitxes amb figures complexes queden resoltes com a procediment docent guiat i indiquen quan cal llegir una dada a la figura original integrada. Pots usar <b>Mode alumne</b> amb pistes i comprovació per passos, o <b>Mode docent</b> amb solucions, criteris i fitxa imprimible.</p><div class="btnrow no-print"><button id="roleAlumne" class="${pauRole==='alumne'?'primary':'secondary'}" onclick="setPauRole('alumne')">Mode alumne</button><button id="roleDocent" class="${pauRole==='docent'?'primary':'secondary'}" onclick="setPauRole('docent')">Mode docent</button></div><div class="grid"><div class="field"><label>Matèria</label><select id="bankMateria" onchange="renderPauBank()"><option value="">Totes</option><option>Tecnologia i enginyeria</option><option>Tecnologia industrial</option><option>Electrotècnia</option></select></div><div class="field"><label>Any</label><select id="bankYear" onchange="renderPauBank()"><option value="">Tots</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option></select></div><div class="field"><label>Sèrie</label><select id="bankSerie" onchange="renderPauBank()"><option value="">Totes</option><option>Sèrie 1</option><option>Sèrie 2</option><option>Sèrie 5</option></select></div><div class="field"><label>Bloc o paraula clau</label><input id="bankSearch" placeholder="Ex.: motor, energia, lògica, estàtica..." oninput="renderPauBank()"></div><div class="field"><label>Mode</label><select id="bankMode" onchange="renderPauBank()"><option value="">Tots</option><option value="test">Test</option><option value="calculadora">Amb calculadora</option><option value="fitxa">Fitxa per parts</option></select></div></div><div class="btnrow no-print"><button class="secondary" onclick="renderTest()">Obrir test autocorregible</button><button class="secondary" onclick="setView('exercicis')">Exercicis resolubles</button><button class="secondary" onclick="setView('calculadores')">Calculadores</button></div><div id="pauArea"></div></section><section class="card"><h2>Fitxes del banc</h2><div id="pauBankStats" class="small"></div><div id="pauBankCards" class="grid"></div></section>`;
   renderPauBank();
 }
 

@@ -1,25 +1,33 @@
-# Tecnologia Industrial Exercicis Plus v12 · PAU resolt pas a pas
+# Tecnologia Industrial Exercicis Plus v12.1 · PAU resolt pas a pas ampliat
 
 PWA educativa en català per treballar exercicis tipus PAU de Tecnologia Industrial, Tecnologia i Enginyeria i Electrotècnia.
 
-## Novetat principal de la v12
+## Novetat principal de la v12.1
 
-La v12 manté el banc PAU multiany, el buidatge textual i les figures PNG de la v11.1, i afegeix una capa de **resolució docent pas a pas**. Aquesta primera fase de resolució completa se centra en:
+La v12.1 continua la v12 i amplia la resolució pas a pas del banc PAU als exercicis de **2023, 2022 i 2021**.
 
-- Tecnologia i Enginyeria 2025 · Sèrie 1.
-- Tecnologia i Enginyeria 2024 · Sèries 1 i 5.
+Ara el botó **PAU** ofereix, per a totes les fitxes del banc, una estructura de treball amb:
 
-Els exercicis de 2023, 2022 i 2021 continuen inclosos amb enunciat, figures, pistes i mode per passos, però queden marcats com a pendents de resolució completa en una fase posterior.
+- què demana l’exercici;
+- dades i unitats;
+- fórmules o principis;
+- desenvolupament per apartats;
+- interpretació tècnica;
+- errors habituals i criteris de correcció.
+
+## Estat de les resolucions
+
+- **v12 resolt pas a pas**: resolució numèrica o lògica detallada incorporada a 2025 i 2024.
+- **v12.1 resolt pas a pas**: resolució docent incorporada als exercicis de 2023, 2022 i 2021.
+- **v12.1 resolt/guiat amb figura**: exercici amb figura, circuit, gràfic, estructura o oscil·loscopi. La fitxa dona el procediment complet, però indica quan cal llegir una dada directament a la imatge original integrada.
 
 ## Contingut
 
 - Banc PAU multiany: 2021, 2022, 2023, 2024 i 2025.
 - 52 fitxes PAU de treball.
-- Enunciat textual complet quan el PDF ho permet.
-- Pàgines originals del PDF associades a cada exercici en PNG.
+- Enunciats textuals i pàgines originals PNG integrades.
 - Mode alumne amb passos, pistes, comprovació i solució del pas.
-- Mode docent amb resolució pas a pas, criteris i fitxes imprimibles.
-- Resolucions completes o guiades detallades per a 2025 i 2024.
+- Mode docent amb criteris i fitxes imprimibles.
 - Calculadores i resolutors guiats.
 - Formulari tècnic.
 - Historial amb localStorage.
@@ -41,18 +49,13 @@ assets/
   pau_pages/*.png
 ```
 
-## Estat de resolució
-
-- **v12 resolt pas a pas**: fitxes amb solució docent incorporada per apartats.
-- **pendent de resolució completa en fase següent**: fitxes ja buidades i amb figura, però encara sense solució numèrica completa verificada.
-
 ## Desplegament a GitHub Pages
 
 1. Descomprimeix el ZIP.
 2. Puja tots els fitxers i carpetes al repositori.
 3. Activa GitHub Pages des de `Settings > Pages`.
-4. Si el navegador mostra una versió antiga, esborra les dades del lloc o força l'actualització del Service Worker.
+4. Si el navegador mostra una versió antiga, esborra les dades del lloc o força l’actualització del Service Worker.
 
 ## Limitació honesta
 
-La v12 no deixa resolts tots els exercicis de tots els anys. Comença el procés de resolució completa amb 2025 i 2024. Els exercicis amb figures complexes poden tenir procediment detallat però, quan una dada depèn de llegir una cota o gràfic de la imatge, la fitxa ho indica explícitament.
+La v12.1 no converteix tots els circuits, gràfics o esquemes en calculadores automàtiques. Els exercicis amb figura tenen el procediment pas a pas i la pàgina original integrada, però alguns resultats exigeixen llegir una cota, una escala o una dada visual del PDF. La fase següent podria convertir alguns d’aquests casos en activitats interactives específiques.
