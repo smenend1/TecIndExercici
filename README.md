@@ -1,10 +1,21 @@
-# Tecnologia Industrial Exercicis Plus v14 · Mode examen i dossiers imprimibles
+# Tecnologia Industrial Exercicis Plus v14.1 · Solucions formatades
 
 PWA educativa en català per treballar exercicis tipus PAU de Tecnologia Industrial, Tecnologia i Enginyeria i Electrotècnia.
 
+
+## Novetat principal de la v14.1
+
+La v14.1 corregeix el problema del text pla a les solucions i a la impressió:
+
+- les solucions ja no es mostren com un bloc monoespaiat;
+- els passos apareixen separats amb títols, subtítols, punts i fórmules;
+- les fitxes imprimibles d'alumne i docent tenen una lectura més clara;
+- el mode examen i els dossiers amb solucionari també usen el nou format;
+- s'actualitzen `manifest.json` i `sw.js` a v14.1.
+
 ## Novetat principal de la v14
 
-La v14 afegeix una capa d'ús d'aula i preparació d'examen sobre el banc PAU ja verificat a la v13:
+La v14, conservada dins aquesta versió, afegeix una capa d'ús d'aula i preparació d'examen sobre el banc PAU ja verificat a la v13:
 
 - pestanya nova **Examen**;
 - generador de proves PAU per filtres;
@@ -69,3 +80,7 @@ assets/
 ## Limitació honesta
 
 La v14 millora la preparació d'exàmens i dossiers, però les fitxes marcades com a **guiat amb figura** o **revisió docent pendent** encara poden requerir revisió manual abans d'usar-les com a solucionari oficial.
+
+## Notes de control de qualitat v14.1
+
+Aquesta versió no afegeix més exercicis. Se centra a millorar la llegibilitat de les respostes en pantalla i en paper. Encara és recomanable revisar manualment les fitxes marcades com a guiat amb figura o revisió docent pendent abans d'usar-les com a solucionari oficial.

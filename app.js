@@ -5405,3 +5405,100 @@ inici = function(){
 
 Object.assign(window, {examenV14, generateExamV14, printExamV14, renderExamReviewV14, generateDossierV14, printDossierV14, startTimerV14, stopTimerV14, setView});
 try { setView('inici'); } catch(e) { /* inici v14 opcional */ }
+
+/* === v14.1 · Millora de format de solucions i impressió === */
+const V141_VERSION = 'v14.1 · solucions formatades';
+
+function solutionLineTypeV141(line){
+  const s = String(line || '').trim();
+  if(!s) return 'blank';
+  if(/^\d+\.\s+/.test(s)) return 'heading';
+  if(/^(apartat\s*)?[a-e]\)/i.test(s)) return 'subheading';
+  if(/^(q\d+|qüestió\s*\d+)/i.test(s)) return 'subheading';
+  if(/^[-•*]\s+/.test(s)) return 'bullet';
+  if(/^(dades|fórmules|errors habituals|criteri|interpretació|procediment|substitució|resultat|conversió|apartats)\s*:?$/i.test(s)) return 'section';
+  if(/[=√π·]|\b(kW|kWh|J|kg|N|Ω|V|A|Hz|min|rad\/s|N·m|MJ|kJ|m\/s)\b/.test(s) && s.length < 120) return 'formula';
+  return 'paragraph';
+}
+
+function renderSolutionBlockV141(text){
+  const lines = String(text || 'Resolució pendent de completar.').replace(/\r/g,'').split('\n');
+  let html = '<div class="solution-rich">';
+  let inList = false;
+  const closeList = () => { if(inList){ html += '</ul>'; inList = false; } };
+  lines.forEach(raw => {
+    const line = raw.trim();
+    const type = solutionLineTypeV141(line);
+    if(type === 'blank'){ closeList(); html += '<div class="solution-gap"></div>'; return; }
+    if(type !== 'bullet') closeList();
+    if(type === 'heading'){
+      html += `<h4>${esc(line)}</h4>`;
+    } else if(type === 'section'){
+      html += `<h4>${esc(line.replace(/:?$/, ''))}</h4>`;
+    } else if(type === 'subheading'){
+      html += `<h5>${esc(line)}</h5>`;
+    } else if(type === 'bullet'){
+      if(!inList){ html += '<ul>'; inList = true; }
+      html += `<li>${esc(line.replace(/^[-•*]\s+/, ''))}</li>`;
+    } else if(type === 'formula'){
+      html += `<div class="formula-line">${esc(line)}</div>`;
+    } else {
+      html += `<p>${esc(line)}</p>`;
+    }
+  });
+  closeList();
+  html += '</div>';
+  return html;
+}
+
+function renderAnswerSummaryV141(x){
+  return renderSolutionBlockV141(x.respostaFinal || buildFinalAnswerV13(x));
+}
+
+function printHeaderV141(x){
+  return renderPauHeader(x).replace(/<details class="enunciat-box" open>/, '<details class="enunciat-box" open>');
+}
+
+renderPauDocent = function(x){
+  const list = arr => `<ul>${(arr||[]).map(v=>`<li>${esc(v)}</li>`).join('')}</ul>`;
+  const rubric = x.criterisCorreccioV13 || buildRubricV13(x);
+  return `<section class="card pau-work"><div class="mode-banner teacher"><b>Mode docent v14.1:</b> solucionari amb format didàctic, criteris de correcció i estat de verificació.</div>${renderPauHeader(x)}<details class="explain" open><summary>1. Apartats que cal resoldre</summary>${list(x.apartats)}</details><details class="explain" open><summary>2. Dades principals</summary>${list(x.dades)}</details><details class="explain" open><summary>3. Fórmules i idees clau</summary>${list(x.formules)}</details><details class="explain" open><summary>4. Pistes graduades</summary>${list(x.pistes)}</details><details class="explain solution-panel" open><summary>5. Resolució pas a pas</summary>${renderSolutionBlockV141(x.resolucio || buildFinalAnswerV13(x))}${x.enllac?`<p><button class="primary" onclick="openExercise('${x.enllac}')">Obrir resolutor amb dades modificables</button></p>`:'<p class="notice">Aquesta fitxa depèn de figura o esquema. És millor treballar-la com a lectura guiada i correcció per criteris.</p>'}</details><details class="explain solution-panel" open><summary>6. Resposta final orientativa</summary>${renderAnswerSummaryV141(x)}</details><details class="explain" open><summary>7. Errors habituals</summary>${list(x.errors)}</details><details class="explain" open><summary>8. Criteris orientatius de correcció</summary><table><thead><tr><th>Criteri</th><th>Què cal observar</th></tr></thead><tbody>${rubric.map(r=>`<tr><td><b>${esc(r[0])}</b></td><td>${esc(r[1])}</td></tr>`).join('')}</tbody></table><p class="small"><b>Resposta mínima acceptable:</b> procediment coherent, resultat amb unitat i justificació bàsica.<br><b>Resposta excel·lent:</b> inclou modelització, conversions, comprovació d’ordre de magnitud, interpretació i revisió d’errors habituals.</p></details><div class="btnrow no-print"><button class="secondary" onclick="printClassSheet('${x.id}', false)">Imprimir fitxa alumne</button><button class="secondary" onclick="printClassSheet('${x.id}', true)">Imprimir amb solucions</button><button class="secondary" onclick="navigator.clipboard.writeText(document.getElementById('pauArea').innerText)">Copiar fitxa</button><button class="secondary" onclick="saveCurrent('${esc(x.exercici+' · '+x.titol)}', document.getElementById('pauArea').innerText)">Guardar a l’historial</button></div></section>`;
+};
+
+showPauSolution = function(i){
+  const x = getPauItemByIdV13(currentPauId) || pauBank.find(p => p.id === currentPauId); if(!x) return;
+  const st = makePauSteps(x)[i];
+  document.getElementById(`pauFeedback${i}`).innerHTML = `<div class="ok solution-panel"><b>Solució orientativa del pas:</b>${renderSolutionBlockV141(st.solution)}</div>`;
+};
+
+printClassSheet = function(id, withSolutions=false){
+  const x = getPauItemByIdV13(id); if(!x) return;
+  const steps = makePauSteps(x);
+  const blanks = `<div class="blank-lines"></div>`;
+  const rubric = x.criterisCorreccioV13 || buildRubricV13(x);
+  const sheet = `<section class="card print-sheet"><h2>${withSolutions ? 'Fitxa PAU amb solucions v14.1' : 'Fitxa de treball PAU v14.1'}</h2>${renderPauHeader(x)}<p><b>Temps recomanat:</b> 20-35 min segons dificultat.</p>${withSolutions?`<div class="notice"><b>Estat de verificació:</b> ${esc(x.verificacio || inferVerificationV13(x).label)}. ${esc(x.verificacioNota || inferVerificationV13(x).note)}</div>`:''}${steps.map((st,i)=>`<article class="sheet-step"><h3>${esc(st.title)}</h3><p>${esc(st.prompt)}</p>${withSolutions?`<div class="ok solution-panel"><b>Solució orientativa:</b>${renderSolutionBlockV141(st.solution)}</div>`:blanks}</article>`).join('')}${withSolutions?`<h3>Criteris de correcció</h3><table><tbody>${rubric.map(r=>`<tr><td><b>${esc(r[0])}</b></td><td>${esc(r[1])}</td></tr>`).join('')}</tbody></table>`:''}<div class="no-print btnrow"><button class="secondary" onclick="openPauItem('${id}')">Tornar a l’activitat</button><button class="primary" onclick="window.print()">Imprimir ara</button></div></section>`;
+  app.innerHTML = sheet;
+  window.scrollTo(0, 0);
+};
+
+buildExamSheetV14 = function(items, withSolutions=false, title='Prova PAU generada'){
+  const date = new Date().toLocaleDateString('ca-ES');
+  return `<section class="card print-sheet exam-sheet"><h2>${esc(title.replace('v14','v14.1'))}</h2><p><b>Data:</b> ${date} · <b>Nombre d’exercicis:</b> ${items.length} · <b>Mode:</b> ${withSolutions?'docent amb solucions':'alumne'}</p><p class="notice no-print"><b>Ús recomanat:</b> imprimeix la versió alumne per fer la prova i la versió docent per corregir. Les solucions s’han formatat per apartats, fórmules i punts clau.</p>${items.map((x,idx)=>`<article class="exam-item"><h3>${idx+1}. ${esc(x.any)} · ${esc(x.serie)} · ${esc(x.exercici)} · ${esc(x.titol)}</h3><p><span class="pill">${esc(x.materia)}</span> <span class="pill">${esc(x.bloc)}</span> <span class="pill">${esc(x.tipus)}</span> ${statusBadgeV13(x)}</p><div class="enunciat-box"><b>Enunciat</b><p>${esc(x.enunciat || x.resum)}</p></div>${(x.apartats||[]).length?`<h4>Apartats</h4><ul>${x.apartats.map(a=>`<li>${esc(a)}</li>`).join('')}</ul>`:''}${renderPauFigures(x)}${withSolutions?`<details class="explain solution-panel" open><summary>Solució orientativa</summary>${renderSolutionBlockV141(x.resolucio || buildFinalAnswerV13(x))}</details><details class="explain" open><summary>Criteris de correcció</summary><table><tbody>${buildRubricV13(x).map(r=>`<tr><td><b>${esc(r[0])}</b></td><td>${esc(r[1])}</td></tr>`).join('')}</tbody></table></details>`:`<h4>Resposta</h4><div class="blank-lines"></div><h4>Esquema o càlculs</h4><div class="blank-lines"></div>`}</article>`).join('')}<div class="no-print btnrow"><button class="secondary" onclick="setView('examen')">Tornar al mode examen</button><button class="primary" onclick="window.print()">Imprimir ara</button></div></section>`;
+};
+
+const oldExamenV141 = examenV14;
+examenV14 = function(){
+  oldExamenV141();
+  const card = app.querySelector('.card');
+  if(card){ card.querySelector('h2').textContent = 'Mode examen PAU · v14.1'; card.insertAdjacentHTML('beforeend', '<div class="notice"><b>Millora v14.1:</b> les solucions del mode docent i de la impressió ja no surten en text pla; apareixen separades per apartats, fórmules i explicacions.</div>'); }
+};
+
+const oldIniciV141 = inici;
+inici = function(){
+  oldIniciV141();
+  const first = app.querySelector('.card');
+  if(first){ first.insertAdjacentHTML('beforeend', `<div class="notice"><b>Novetat v14.1:</b> format didàctic de les solucions en pantalla i en impressió.</div>`); }
+};
+
+Object.assign(window, {renderSolutionBlockV141, renderPauDocent, showPauSolution, printClassSheet, buildExamSheetV14, examenV14, inici});
+try { setView('inici'); } catch(e) { /* inici v14.1 opcional */ }

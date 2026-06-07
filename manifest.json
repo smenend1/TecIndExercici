@@ -1,7 +1,7 @@
 {
-  "name": "Tecnologia Industrial Exercicis Plus v14",
-  "short_name": "TI PAU v14",
-  "description": "PWA educativa amb banc PAU resolt, mode examen i dossiers imprimibles de Tecnologia Industrial.",
+  "name": "Tecnologia Industrial Exercicis Plus v14.1",
+  "short_name": "TI PAU v14.1",
+  "description": "PWA educativa amb banc PAU resolt, mode examen, dossiers imprimibles i solucions formatades de Tecnologia Industrial.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#f4f7f5",
