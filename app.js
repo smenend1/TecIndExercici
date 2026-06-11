@@ -4504,6 +4504,383 @@ const pauBankV10Full = [
 ];
 pauBank.push(...pauBankV10Full);
 
+// v18.2: incorporació PAU 2026 (convocatòria ordinària, Tecnologia i Enginyeria, sèrie 1).
+const pau2026Entries = [
+  {
+    "id": "tec2026-s1-e1",
+    "any": 2026,
+    "materia": "Tecnologia i enginyeria",
+    "serie": "Sèrie 1",
+    "exercici": "Exercici 1",
+    "bloc": "Test PAU",
+    "tipus": "test",
+    "nivell": "N1-N2",
+    "titol": "Qüestions curtes 2026 · Tecnologia i enginyeria",
+    "resum": "Vuit qüestions tipus test; cal respondre’n cinc. Tracta resistivitat, màquina refrigeradora, estàtica, tracció, lògica digital, contactes, motor CC i circuit LC.",
+    "enunciat": "Exercici 1 de la PAU 2026 de Tecnologia i enginyeria. S’han de respondre cinc de les vuit qüestions. Cada resposta correcta suma 0,5 punts, cada resposta incorrecta resta 0,16 punts i les no contestades no resten. Les qüestions treballen: resistència d’un fil de constantà, COP d’una màquina refrigeradora ideal, equilibri estàtic d’una placa articulada, allargament en assaig de tracció, funció de portes lògiques, esquema de contactes, rendiment d’un motor CC i circuit de corrent altern amb L i C.",
+    "apartats": [
+      "Q1 Resistència d’un fil de constantà.",
+      "Q2 COP d’una refrigeradora ideal.",
+      "Q3 Força del cable en una placa en equilibri.",
+      "Q4 Allargament d’una proveta d’alumini.",
+      "Q5 Funció lògica d’un esquema de portes.",
+      "Q6 Esquema de contactes equivalent a una taula de veritat.",
+      "Q7 Rendiment d’un motor de corrent continu.",
+      "Q8 Lectures en un circuit de corrent altern amb inductància i capacitat."
+    ],
+    "dades": [
+      "Q1: L = 7 m, d = 0,2 mm, ρ = 0,49 μΩ·m.",
+      "Q2: focus fred 7 °C i focus calent 35 °C.",
+      "Q3: placa homogènia de massa 5 kg, geometria indicada a la figura.",
+      "Q4: d = 10 mm, σe = 275 MPa, σr = 310 MPa, E = 69 GPa, L0 = 200 mm, F = 20 kN.",
+      "Q7: Ri = 3 Ω, VN = 300 V, IN = 16 A, nN = 1250 min⁻¹.",
+      "Q8: U1 = 230 V, f = 60 Hz, L = 50 mH, C = 66 μF."
+    ],
+    "formules": [
+      "R = ρ·L/A",
+      "A = π·d²/4",
+      "COPideal = Tf/(Tc−Tf) amb temperatures en K",
+      "σ = F/A",
+      "ε = σ/E",
+      "ΔL = ε·L0",
+      "η = Pu/Pa",
+      "Pu = (V − Ri·I)·I",
+      "XL = 2πfL",
+      "XC = 1/(2πfC)"
+    ],
+    "pistes": [
+      "Tria només cinc qüestions; si en marques més, només compten les cinc primeres.",
+      "En Q2 cal passar les temperatures a kelvin.",
+      "En Q4 comprova abans si la tensió supera el límit elàstic.",
+      "En Q5 i Q6 cal mirar la figura original."
+    ],
+    "errors": [
+      "Fer servir °C directament en el COP de Carnot o refrigeradora ideal.",
+      "No convertir mm a m en la secció del fil o de la proveta.",
+      "Respondre més de cinc qüestions sense estratègia.",
+      "Confondre potència útil i potència absorbida en el motor CC."
+    ],
+    "figures": [
+      "./assets/pau_pages/pau2026_s1-02.png",
+      "./assets/pau_pages/pau2026_s1-03.png"
+    ],
+    "resolucioPassos": [
+      {
+        "title": "1. Qüestions de càlcul directe",
+        "prompt": "Resol les qüestions on hi ha càlcul numèric directe.",
+        "hint": "Q1, Q2, Q4, Q7 i Q8 tenen fórmules clares; vigila unitats.",
+        "solution": "Correcció oficial: Q1 d, Q2 c, Q3 b, Q4 b, Q5 a, Q6 c, Q7 c i Q8 a.\nQ1: R = ρ·L/A, amb A = π·(0,0002)²/4; surt aproximadament 109,2 Ω → d.\nQ2: COP = Tf/(Tc−Tf), amb Tf = 280 K i Tc = 308 K; COP ≈ 10,01 → c.\nQ4: σ = F/A i ΔL = (σ/E)·L0. La longitud final és aproximadament 200,74 mm → b.\nQ7: Pa = V·I = 4800 W. Pèrdues Joule = I²R = 768 W. Pu ≈ 4032 W. η ≈ 84 % → c.\nQ8: cal resoldre el circuit LC de la figura; la correcció dona A2 = 10,78 A i U3 = 433,1 V → a.",
+        "keywords": [
+          "109,2",
+          "10,01",
+          "200,74",
+          "84",
+          "10,78",
+          "433,1"
+        ]
+      },
+      {
+        "title": "2. Qüestions amb figura",
+        "prompt": "Identifica les qüestions que depenen clarament d’un esquema.",
+        "hint": "Q3, Q5, Q6 i Q8 s’han de llegir mirant la figura original.",
+        "solution": "Q3: amb equilibri de moments de la placa articulada, la força del cable és 49,04 N → b.\nQ5: la funció de l’esquema de portes correspon a l’opció a.\nQ6: l’esquema de contactes equivalent a la taula de veritat correspon a l’opció c.\nQ8: cal interpretar el circuit de la pàgina original; resposta a.",
+        "keywords": [
+          "49,04",
+          "opció a",
+          "opció c",
+          "figura"
+        ]
+      }
+    ],
+    "resolucio": "Correcció oficial: Q1 d, Q2 c, Q3 b, Q4 b, Q5 a, Q6 c, Q7 c i Q8 a.",
+    "estatResolucio": "v18.2 resolt amb correcció oficial"
+  },
+  {
+    "id": "tec2026-s1-e2",
+    "any": 2026,
+    "materia": "Tecnologia i enginyeria",
+    "serie": "Sèrie 1",
+    "exercici": "Exercici 2",
+    "bloc": "Energia tèrmica i combustible",
+    "tipus": "fitxa per parts",
+    "nivell": "N2-N3",
+    "titol": "Fogonet de propà per escalfar aigua",
+    "resum": "Càlcul d’energia per escalfar aigua, potència del cremador, temps ideal, rendiment, massa de propà consumida i cost.",
+    "enunciat": "En un laboratori docent s’utilitza un fogonet portàtil de propà per escalfar 0,5 kg d’aigua de 18 °C a 95 °C en 14 min. El consum del cremador és q = 58,44 g/h, el poder calorífic del propà és pc = 46 MJ/kg i la calor específica de l’aigua és ce = 4,18 kJ/(kg·°C). Els cartutxos contenen 0,45 kg de propà i costen 9,50 €. Determineu l’energia de l’aigua, la potència del cremador, el temps ideal, el rendiment, la massa de propà consumida i el cost.",
+    "apartats": [
+      "2.1 Energia necessària per escalfar l’aigua.",
+      "2.2 Potència que proporciona el cremador.",
+      "2.3 Temps ideal si tot el combustible s’aprofités i rendiment real.",
+      "2.4 Massa de propà consumida i cost econòmic."
+    ],
+    "dades": [
+      "ma = 0,5 kg",
+      "Ti = 18 °C",
+      "Tf = 95 °C",
+      "tcons = 14 min",
+      "q = 58,44 g/h",
+      "pc = 46 MJ/kg",
+      "ce = 4,18 kJ/(kg·°C)",
+      "mcartutx = 0,45 kg",
+      "punitat = 9,50 €"
+    ],
+    "formules": [
+      "E = m·ce·ΔT",
+      "Pcrem = q·pc",
+      "tideal = Eaigua/Pcrem",
+      "η = tideal/tcons = Eaigua/(Pcrem·tcons)",
+      "mpropà = q·t",
+      "cost = mpropà/mcartutx · punitat"
+    ],
+    "pistes": [
+      "Converteix q de g/h a kg/s per calcular potència en W.",
+      "El rendiment real és menor que 1 perquè no tota l’energia del combustible escalfa l’aigua.",
+      "Per al cost, calcula quina fracció del cartutx s’ha gastat."
+    ],
+    "errors": [
+      "Fer ΔT = 95 + 18 en lloc de 95 − 18.",
+      "Oblidar que 58,44 g/h s’ha de convertir a kg/s.",
+      "Fer servir minuts directament en una fórmula amb W sense convertir a segons."
+    ],
+    "figures": [
+      "./assets/pau_pages/pau2026_s1-04.png",
+      "./assets/pau_pages/pau2026_s1-05.png"
+    ],
+    "enllac": "calor",
+    "resolucioPassos": [
+      {
+        "title": "2.1 Energia necessària",
+        "prompt": "Calcula l’energia per escalfar l’aigua.",
+        "hint": "És calor sensible: E = m·ce·ΔT.",
+        "solution": "ΔT = 95 − 18 = 77 °C.\nEaigua = m·ce·ΔT = 0,5·4,18·77 = 160,9 kJ.\nResultat: Eaigua ≈ 160,9 kJ.",
+        "keywords": [
+          "160,9",
+          "kJ",
+          "77"
+        ]
+      },
+      {
+        "title": "2.2 Potència del cremador",
+        "prompt": "Calcula la potència tèrmica del combustible consumit.",
+        "hint": "Converteix 58,44 g/h a kg/s i multiplica pel poder calorífic.",
+        "solution": "q = 58,44 g/h = 0,05844 kg/h.\nPcrem = q·pc = 0,05844·46·10⁶ / 3600 = 746,7 W.\nResultat: Pcrem ≈ 746,7 W.",
+        "keywords": [
+          "746,7",
+          "W"
+        ]
+      },
+      {
+        "title": "2.3 Temps ideal i rendiment",
+        "prompt": "Calcula el temps si tota l’energia servís per escalfar l’aigua i el rendiment real.",
+        "hint": "tideal = Eaigua/Pcrem. Després compara amb els 14 min reals.",
+        "solution": "tideal = 160,9·10³ / 746,7 = 215,5 s = 3,592 min.\nη = tideal/tcons = 3,592/14 = 0,2566 = 25,66 %.\nResultat: el procés aprofita aproximadament una quarta part de l’energia del propà.",
+        "keywords": [
+          "215,5",
+          "3,592",
+          "0,2566",
+          "25,66"
+        ]
+      },
+      {
+        "title": "2.4 Massa i cost",
+        "prompt": "Calcula la massa de propà gastada i el cost proporcional.",
+        "hint": "14 min és 14/60 h.",
+        "solution": "mpropà = 58,44·14/60 = 13,64 g.\nCost = (13,64 g / 450 g)·9,50 € = 0,2879 €.\nResultat: es gasten uns 13,64 g de propà, amb un cost aproximat de 0,29 €.",
+        "keywords": [
+          "13,64",
+          "0,2879",
+          "0,29"
+        ]
+      }
+    ],
+    "resolucio": "Eaigua = 160,9 kJ; Pcrem = 746,7 W; tideal = 215,5 s = 3,592 min; η = 0,2566; mpropà = 13,64 g; cost = 0,2879 €.",
+    "estatResolucio": "v18.2 resolt amb correcció oficial"
+  },
+  {
+    "id": "tec2026-s1-e3",
+    "any": 2026,
+    "materia": "Tecnologia i enginyeria",
+    "serie": "Sèrie 1",
+    "exercici": "Exercici 3",
+    "bloc": "Mecanismes i transmissió",
+    "tipus": "fitxa per parts",
+    "nivell": "N2-N3",
+    "titol": "Reductor per a una rotativa d’impremta",
+    "resum": "Selecció d’un reductor comercial, càlcul de velocitat real, velocitat lineal del paper i error percentual.",
+    "enunciat": "Una rotativa industrial ha de fer girar un eix tractor a neix = 600 min⁻¹. El corró tractor té d = 330 mm i ha de donar una velocitat lineal recomanada vrecom = 10 m/s, amb tolerància ±5 %. El motor asíncron gira a nmot = 1420 min⁻¹. El proveïdor ofereix reductors amb i = 1,5, 2,5 i 3. Determineu la relació necessària, el reductor a escollir, la velocitat real i l’error percentual.",
+    "apartats": [
+      "3.1 Relació de reducció necessària i reductor escollit.",
+      "3.2 Velocitat final de l’eix i velocitat d’avanç del paper.",
+      "3.3 Error percentual i justificació de compliment."
+    ],
+    "dades": [
+      "neix recomanat = 600 min⁻¹",
+      "d = 330 mm = 0,330 m",
+      "vrecom = 10 m/s",
+      "tolerància = ±5 %",
+      "nmot = 1420 min⁻¹",
+      "reductors: i = 1,5; 2,5; 3"
+    ],
+    "formules": [
+      "i = nentrada/nsortida",
+      "nreal = nmot/i",
+      "ω = 2πn/60",
+      "v = ω·d/2",
+      "Δ% = |vrecom − vreal|/vrecom · 100"
+    ],
+    "pistes": [
+      "Compara la relació necessària amb els reductors comercials disponibles.",
+      "El radi del corró és d/2.",
+      "Per calcular v, converteix min⁻¹ a rad/s."
+    ],
+    "errors": [
+      "Fer servir el diàmetre com si fos el radi.",
+      "Invertir la relació de reducció.",
+      "No comparar l’error amb el límit del 5 %."
+    ],
+    "figures": [
+      "./assets/pau_pages/pau2026_s1-06.png",
+      "./assets/pau_pages/pau2026_s1-07.png"
+    ],
+    "resolucioPassos": [
+      {
+        "title": "3.1 Relació necessària i selecció",
+        "prompt": "Calcula la relació de reducció que caldria idealment.",
+        "hint": "i = nmot/neix.",
+        "solution": "inec = nmot/neix = 1420/600 = 2,367.\nEl reductor comercial més proper és i = 2,5.\nS’escull el reductor B perquè minimitza la diferència amb inec.",
+        "keywords": [
+          "2,367",
+          "2,5",
+          "B"
+        ]
+      },
+      {
+        "title": "3.2 Velocitat real i avanç del paper",
+        "prompt": "Calcula la velocitat real de l’eix i la velocitat lineal del paper.",
+        "hint": "nreal = nmot/i i v = ω·r.",
+        "solution": "nreal = 1420/2,5 = 568 min⁻¹.\nω = 2π·568/60 = 59,48 rad/s.\nr = 0,330/2 = 0,165 m.\nvreal = ω·r = 59,48·0,165 = 9,814 m/s.\nResultat: nreal = 568 min⁻¹ i vreal = 9,814 m/s.",
+        "keywords": [
+          "568",
+          "9,814",
+          "59,48"
+        ]
+      },
+      {
+        "title": "3.3 Error percentual",
+        "prompt": "Calcula si l’error és acceptable.",
+        "hint": "Compara amb el 5 % de tolerància.",
+        "solution": "Δ = |10 − 9,814|/10·100 = 1,857 %.\nCom que 1,857 % < 5 %, el reductor compleix la recomanació del fabricant.",
+        "keywords": [
+          "1,857",
+          "5",
+          "compleix"
+        ]
+      }
+    ],
+    "resolucio": "inec = 2,367; reductor B i = 2,5; nreal = 568 min⁻¹; vreal = 9,814 m/s; error = 1,857 %, compleix.",
+    "estatResolucio": "v18.2 resolt amb correcció oficial"
+  },
+  {
+    "id": "tec2026-s1-e4",
+    "any": 2026,
+    "materia": "Tecnologia i enginyeria",
+    "serie": "Sèrie 1",
+    "exercici": "Exercici 4",
+    "bloc": "Màquines tèrmiques i elèctriques",
+    "tipus": "fitxa per parts",
+    "nivell": "N2-N3",
+    "titol": "Grup electrogen dièsel amb alternador monofàsic",
+    "resum": "Càlcul de potència mecànica, parell, consum de combustible, autonomia i energia elèctrica total.",
+    "enunciat": "Un grup electrogen té un motor dièsel acoblat a un alternador monofàsic. Subministra U = 230 V i potència elèctrica Pelèctr = 4,96 kW. El dipòsit té V = 15 L, el motor gira a n = 3000 min⁻¹, l’alternador té ηalt = 0,9, el consum específic és ce = 290 g/(kW·h), el poder calorífic del gasoil és pc = 43 MJ/kg i la densitat és ρ = 0,84 kg/L. Determineu Pmec, parell, consum, autonomia i energia total subministrable.",
+    "apartats": [
+      "4.1 Potència mecànica a l’eix.",
+      "4.2 Parell a l’eix.",
+      "4.3 Consum de combustible i autonomia.",
+      "4.4 Energia elèctrica total amb el dipòsit ple."
+    ],
+    "dades": [
+      "Pelèctr = 4,96 kW",
+      "ηalt = 0,9",
+      "n = 3000 min⁻¹",
+      "ce = 290 g/(kW·h)",
+      "Vdipòsit = 15 L",
+      "ρ = 0,84 kg/L",
+      "pc = 43 MJ/kg"
+    ],
+    "formules": [
+      "Pmec = Pelèctr/ηalt",
+      "ω = 2πn/60",
+      "Γ = P/ω",
+      "q = ce·Pmec",
+      "massa dipòsit = ρ·V",
+      "t = m/q",
+      "Eelèc = Pelèctr·t"
+    ],
+    "pistes": [
+      "La potència mecànica és la d’entrada de l’alternador.",
+      "Per al parell, passa kW a W i min⁻¹ a rad/s.",
+      "El consum específic dóna kg/h si la potència està en kW."
+    ],
+    "errors": [
+      "No dividir per ηalt en calcular Pmec.",
+      "Fer servir n en min⁻¹ directament dins Γ = P/ω.",
+      "Confondre litres de gasoil amb kg sense multiplicar per la densitat."
+    ],
+    "figures": [
+      "./assets/pau_pages/pau2026_s1-08.png",
+      "./assets/pau_pages/pau2026_s1-09.png"
+    ],
+    "enllac": "motor",
+    "resolucioPassos": [
+      {
+        "title": "4.1 Potència mecànica a l’eix",
+        "prompt": "Calcula la potència que ha de rebre l’alternador.",
+        "hint": "Pelèctr = ηalt·Pmec.",
+        "solution": "Pmec = Pelèctr/ηalt = 4,96/0,9 = 5,511 kW.\nResultat: Pmec ≈ 5,511 kW.",
+        "keywords": [
+          "5,511",
+          "kW"
+        ]
+      },
+      {
+        "title": "4.2 Parell a l’eix",
+        "prompt": "Calcula el parell amb P = Γ·ω.",
+        "hint": "Primer passa n a rad/s.",
+        "solution": "ω = 2π·3000/60 = 314,16 rad/s.\nΓ = P/ω = 5,511·10³ / 314,16 = 17,54 N·m.\nResultat: Γ ≈ 17,54 N·m.",
+        "keywords": [
+          "314,16",
+          "17,54"
+        ]
+      },
+      {
+        "title": "4.3 Consum i autonomia",
+        "prompt": "Calcula el consum horari i el temps amb el dipòsit ple.",
+        "hint": "q = ce·Pmec; massa del dipòsit = ρ·V.",
+        "solution": "q = 0,29·5,511 = 1,598 kg/h.\nMassa de gasoil al dipòsit = 0,84·15 = 12,6 kg.\nt = 12,6/1,598 = 7,884 h.\nResultat: consum ≈ 1,598 kg/h i autonomia ≈ 7,884 h.",
+        "keywords": [
+          "1,598",
+          "12,6",
+          "7,884"
+        ]
+      },
+      {
+        "title": "4.4 Energia elèctrica total",
+        "prompt": "Calcula l’energia elèctrica amb l’autonomia anterior.",
+        "hint": "E = P·t. Si P és en kW i t en h, surt kWh.",
+        "solution": "Eelèc = 4,96·7,884 = 39,10 kWh.\nEn kJ: 39,10 kWh·3600 = 140,8·10³ kJ = 140,8 MJ.\nResultat: Eelèc ≈ 140800 kJ.",
+        "keywords": [
+          "39,10",
+          "140,8",
+          "140800"
+        ]
+      }
+    ],
+    "resolucio": "Pmec = 5,511 kW; Γ = 17,54 N·m; q = 1,598 kg/h; t = 7,884 h; Eelèc = 39,10 kWh = 140,8 MJ = 140800 kJ.",
+    "estatResolucio": "v18.2 resolt amb correcció oficial"
+  }
+];
+pauBank.push(...pau2026Entries);
+
 // v11: mapa de pàgines originals renderitzades com a imatge per a cada fitxa PAU.
 // S'usen per integrar figures, esquemes, taules i gràfics que no queden ben capturats en el text.
 const pauFiguresMap = {"full-tec2025-s1-e1": ["./assets/pau_pages/full-tec2025-s1-e1_p02.png", "./assets/pau_pages/full-tec2025-s1-e1_p03.png"], "tec2025-s1-e1": ["./assets/pau_pages/full-tec2025-s1-e1_p02.png", "./assets/pau_pages/full-tec2025-s1-e1_p03.png"], "full-tec2025-s1-e2": ["./assets/pau_pages/full-tec2025-s1-e2_p04.png", "./assets/pau_pages/full-tec2025-s1-e2_p05.png"], "tec2025-s1-e2": ["./assets/pau_pages/full-tec2025-s1-e2_p04.png", "./assets/pau_pages/full-tec2025-s1-e2_p05.png"], "full-tec2025-s1-e3": ["./assets/pau_pages/full-tec2025-s1-e3_p06.png", "./assets/pau_pages/full-tec2025-s1-e3_p07.png"], "tec2025-s1-e3": ["./assets/pau_pages/full-tec2025-s1-e3_p06.png", "./assets/pau_pages/full-tec2025-s1-e3_p07.png"], "full-tec2025-s1-e4": ["./assets/pau_pages/full-tec2025-s1-e4_p08.png", "./assets/pau_pages/full-tec2025-s1-e4_p09.png"], "tec2025-s1-e4": ["./assets/pau_pages/full-tec2025-s1-e4_p08.png", "./assets/pau_pages/full-tec2025-s1-e4_p09.png"], "full-elec2023-s1-e1": ["./assets/pau_pages/full-elec2023-s1-e1_p02.png", "./assets/pau_pages/full-elec2023-s1-e1_p03.png"], "elec2023-s1-e1": ["./assets/pau_pages/full-elec2023-s1-e1_p02.png", "./assets/pau_pages/full-elec2023-s1-e1_p03.png"], "full-elec2023-s1-e2": ["./assets/pau_pages/full-elec2023-s1-e2_p04.png", "./assets/pau_pages/full-elec2023-s1-e2_p05.png"], "elec2023-s1-e2": ["./assets/pau_pages/full-elec2023-s1-e2_p04.png", "./assets/pau_pages/full-elec2023-s1-e2_p05.png"], "full-elec2023-s1-e3": ["./assets/pau_pages/full-elec2023-s1-e3_p06.png", "./assets/pau_pages/full-elec2023-s1-e3_p07.png"], "elec2023-s1-e3": ["./assets/pau_pages/full-elec2023-s1-e3_p06.png", "./assets/pau_pages/full-elec2023-s1-e3_p07.png"], "full-elec2023-s1-e4": ["./assets/pau_pages/full-elec2023-s1-e4_p08.png", "./assets/pau_pages/full-elec2023-s1-e4_p09.png"], "elec2023-s1-e4": ["./assets/pau_pages/full-elec2023-s1-e4_p08.png", "./assets/pau_pages/full-elec2023-s1-e4_p09.png"], "full-elec2023-s1-e5": ["./assets/pau_pages/full-elec2023-s1-e5_p10.png", "./assets/pau_pages/full-elec2023-s1-e5_p11.png"], "elec2023-s1-e5": ["./assets/pau_pages/full-elec2023-s1-e5_p10.png", "./assets/pau_pages/full-elec2023-s1-e5_p11.png"], "full-elec2023-s1-e6": ["./assets/pau_pages/full-elec2023-s1-e6_p12.png", "./assets/pau_pages/full-elec2023-s1-e6_p13.png"], "elec2023-s1-e6": ["./assets/pau_pages/full-elec2023-s1-e6_p12.png", "./assets/pau_pages/full-elec2023-s1-e6_p13.png"], "full-elec2023-s5-e1": ["./assets/pau_pages/full-elec2023-s5-e1_p18.png", "./assets/pau_pages/full-elec2023-s5-e1_p19.png"], "elec2023-s5-e1": ["./assets/pau_pages/full-elec2023-s5-e1_p18.png", "./assets/pau_pages/full-elec2023-s5-e1_p19.png"], "full-elec2023-s5-e2": ["./assets/pau_pages/full-elec2023-s5-e2_p20.png", "./assets/pau_pages/full-elec2023-s5-e2_p21.png"], "elec2023-s5-e2": ["./assets/pau_pages/full-elec2023-s5-e2_p20.png", "./assets/pau_pages/full-elec2023-s5-e2_p21.png"], "full-elec2023-s5-e3": ["./assets/pau_pages/full-elec2023-s5-e3_p22.png", "./assets/pau_pages/full-elec2023-s5-e3_p23.png"], "elec2023-s5-e3": ["./assets/pau_pages/full-elec2023-s5-e3_p22.png", "./assets/pau_pages/full-elec2023-s5-e3_p23.png"], "full-elec2023-s5-e4": ["./assets/pau_pages/full-elec2023-s5-e4_p24.png", "./assets/pau_pages/full-elec2023-s5-e4_p25.png"], "elec2023-s5-e4": ["./assets/pau_pages/full-elec2023-s5-e4_p24.png", "./assets/pau_pages/full-elec2023-s5-e4_p25.png"], "full-elec2023-s5-e5": ["./assets/pau_pages/full-elec2023-s5-e5_p26.png", "./assets/pau_pages/full-elec2023-s5-e5_p27.png"], "elec2023-s5-e5": ["./assets/pau_pages/full-elec2023-s5-e5_p26.png", "./assets/pau_pages/full-elec2023-s5-e5_p27.png"], "full-elec2023-s5-e6": ["./assets/pau_pages/full-elec2023-s5-e6_p28.png", "./assets/pau_pages/full-elec2023-s5-e6_p29.png"], "elec2023-s5-e6": ["./assets/pau_pages/full-elec2023-s5-e6_p28.png", "./assets/pau_pages/full-elec2023-s5-e6_p29.png"], "full-tec2024-s1-e1": ["./assets/pau_pages/full-tec2024-s1-e1_p02.png", "./assets/pau_pages/full-tec2024-s1-e1_p03.png"], "tec2024-s1-e1": ["./assets/pau_pages/full-tec2024-s1-e1_p02.png", "./assets/pau_pages/full-tec2024-s1-e1_p03.png"], "full-tec2024-s1-e2": ["./assets/pau_pages/full-tec2024-s1-e2_p04.png", "./assets/pau_pages/full-tec2024-s1-e2_p05.png"], "tec2024-s1-e2": ["./assets/pau_pages/full-tec2024-s1-e2_p04.png", "./assets/pau_pages/full-tec2024-s1-e2_p05.png"], "full-tec2024-s1-e3": ["./assets/pau_pages/full-tec2024-s1-e3_p06.png", "./assets/pau_pages/full-tec2024-s1-e3_p07.png"], "tec2024-s1-e3": ["./assets/pau_pages/full-tec2024-s1-e3_p06.png", "./assets/pau_pages/full-tec2024-s1-e3_p07.png"], "full-tec2024-s1-e4": ["./assets/pau_pages/full-tec2024-s1-e4_p08.png", "./assets/pau_pages/full-tec2024-s1-e4_p09.png"], "tec2024-s1-e4": ["./assets/pau_pages/full-tec2024-s1-e4_p08.png", "./assets/pau_pages/full-tec2024-s1-e4_p09.png"], "full-tec2024-s1-e5": ["./assets/pau_pages/full-tec2024-s1-e5_p10.png", "./assets/pau_pages/full-tec2024-s1-e5_p11.png"], "tec2024-s1-e5": ["./assets/pau_pages/full-tec2024-s1-e5_p10.png", "./assets/pau_pages/full-tec2024-s1-e5_p11.png"], "full-tec2024-s1-e6": ["./assets/pau_pages/full-tec2024-s1-e6_p12.png", "./assets/pau_pages/full-tec2024-s1-e6_p13.png"], "tec2024-s1-e6": ["./assets/pau_pages/full-tec2024-s1-e6_p12.png", "./assets/pau_pages/full-tec2024-s1-e6_p13.png"], "full-tec2024-s5-e1": ["./assets/pau_pages/full-tec2024-s5-e1_p18.png", "./assets/pau_pages/full-tec2024-s5-e1_p19.png"], "tec2024-s5-e1": ["./assets/pau_pages/full-tec2024-s5-e1_p18.png", "./assets/pau_pages/full-tec2024-s5-e1_p19.png"], "full-tec2024-s5-e2": ["./assets/pau_pages/full-tec2024-s5-e2_p20.png", "./assets/pau_pages/full-tec2024-s5-e2_p21.png"], "tec2024-s5-e2": ["./assets/pau_pages/full-tec2024-s5-e2_p20.png", "./assets/pau_pages/full-tec2024-s5-e2_p21.png"], "full-tec2024-s5-e3": ["./assets/pau_pages/full-tec2024-s5-e3_p22.png", "./assets/pau_pages/full-tec2024-s5-e3_p23.png"], "tec2024-s5-e3": ["./assets/pau_pages/full-tec2024-s5-e3_p22.png", "./assets/pau_pages/full-tec2024-s5-e3_p23.png"], "full-tec2024-s5-e4": ["./assets/pau_pages/full-tec2024-s5-e4_p24.png", "./assets/pau_pages/full-tec2024-s5-e4_p25.png"], "tec2024-s5-e4": ["./assets/pau_pages/full-tec2024-s5-e4_p24.png", "./assets/pau_pages/full-tec2024-s5-e4_p25.png"], "full-tec2024-s5-e5": ["./assets/pau_pages/full-tec2024-s5-e5_p26.png", "./assets/pau_pages/full-tec2024-s5-e5_p27.png"], "tec2024-s5-e5": ["./assets/pau_pages/full-tec2024-s5-e5_p26.png", "./assets/pau_pages/full-tec2024-s5-e5_p27.png"], "full-tec2024-s5-e6": ["./assets/pau_pages/full-tec2024-s5-e6_p28.png", "./assets/pau_pages/full-tec2024-s5-e6_p29.png"], "tec2024-s5-e6": ["./assets/pau_pages/full-tec2024-s5-e6_p28.png", "./assets/pau_pages/full-tec2024-s5-e6_p29.png"], "full-tec2022-s2-e1": ["./assets/pau_pages/full-tec2022-s2-e1_p02.png", "./assets/pau_pages/full-tec2022-s2-e1_p03.png"], "tec2022-s2-e1": ["./assets/pau_pages/full-tec2022-s2-e1_p02.png", "./assets/pau_pages/full-tec2022-s2-e1_p03.png"], "full-tec2022-s2-e2": ["./assets/pau_pages/full-tec2022-s2-e2_p04.png", "./assets/pau_pages/full-tec2022-s2-e2_p05.png"], "tec2022-s2-e2": ["./assets/pau_pages/full-tec2022-s2-e2_p04.png", "./assets/pau_pages/full-tec2022-s2-e2_p05.png"], "full-tec2022-s2-e3": ["./assets/pau_pages/full-tec2022-s2-e3_p06.png", "./assets/pau_pages/full-tec2022-s2-e3_p07.png"], "tec2022-s2-e3": ["./assets/pau_pages/full-tec2022-s2-e3_p06.png", "./assets/pau_pages/full-tec2022-s2-e3_p07.png"], "full-tec2022-s2-e4": ["./assets/pau_pages/full-tec2022-s2-e4_p08.png", "./assets/pau_pages/full-tec2022-s2-e4_p09.png"], "tec2022-s2-e4": ["./assets/pau_pages/full-tec2022-s2-e4_p08.png", "./assets/pau_pages/full-tec2022-s2-e4_p09.png"], "full-tec2022-s2-e5": ["./assets/pau_pages/full-tec2022-s2-e5_p10.png", "./assets/pau_pages/full-tec2022-s2-e5_p11.png"], "tec2022-s2-e5": ["./assets/pau_pages/full-tec2022-s2-e5_p10.png", "./assets/pau_pages/full-tec2022-s2-e5_p11.png"], "full-tec2022-s2-e6": ["./assets/pau_pages/full-tec2022-s2-e6_p12.png", "./assets/pau_pages/full-tec2022-s2-e6_p13.png"], "tec2022-s2-e6": ["./assets/pau_pages/full-tec2022-s2-e6_p12.png", "./assets/pau_pages/full-tec2022-s2-e6_p13.png"], "full-tec2022-s5-e1": ["./assets/pau_pages/full-tec2022-s5-e1_p18.png", "./assets/pau_pages/full-tec2022-s5-e1_p19.png"], "tec2022-s5-e1": ["./assets/pau_pages/full-tec2022-s5-e1_p18.png", "./assets/pau_pages/full-tec2022-s5-e1_p19.png"], "full-tec2022-s5-e2": ["./assets/pau_pages/full-tec2022-s5-e2_p20.png", "./assets/pau_pages/full-tec2022-s5-e2_p21.png"], "tec2022-s5-e2": ["./assets/pau_pages/full-tec2022-s5-e2_p20.png", "./assets/pau_pages/full-tec2022-s5-e2_p21.png"], "full-tec2022-s5-e3": ["./assets/pau_pages/full-tec2022-s5-e3_p22.png", "./assets/pau_pages/full-tec2022-s5-e3_p23.png"], "tec2022-s5-e3": ["./assets/pau_pages/full-tec2022-s5-e3_p22.png", "./assets/pau_pages/full-tec2022-s5-e3_p23.png"], "full-tec2022-s5-e4": ["./assets/pau_pages/full-tec2022-s5-e4_p24.png", "./assets/pau_pages/full-tec2022-s5-e4_p25.png"], "tec2022-s5-e4": ["./assets/pau_pages/full-tec2022-s5-e4_p24.png", "./assets/pau_pages/full-tec2022-s5-e4_p25.png"], "full-tec2022-s5-e5": ["./assets/pau_pages/full-tec2022-s5-e5_p26.png", "./assets/pau_pages/full-tec2022-s5-e5_p27.png"], "tec2022-s5-e5": ["./assets/pau_pages/full-tec2022-s5-e5_p26.png", "./assets/pau_pages/full-tec2022-s5-e5_p27.png"], "full-tec2022-s5-e6": ["./assets/pau_pages/full-tec2022-s5-e6_p28.png", "./assets/pau_pages/full-tec2022-s5-e6_p29.png"], "tec2022-s5-e6": ["./assets/pau_pages/full-tec2022-s5-e6_p28.png", "./assets/pau_pages/full-tec2022-s5-e6_p29.png"], "full-tec2021-s2-e1": ["./assets/pau_pages/full-tec2021-s2-e1_p02.png", "./assets/pau_pages/full-tec2021-s2-e1_p03.png"], "tec2021-s2-e1": ["./assets/pau_pages/full-tec2021-s2-e1_p02.png", "./assets/pau_pages/full-tec2021-s2-e1_p03.png"], "full-tec2021-s2-e2": ["./assets/pau_pages/full-tec2021-s2-e2_p04.png", "./assets/pau_pages/full-tec2021-s2-e2_p05.png"], "tec2021-s2-e2": ["./assets/pau_pages/full-tec2021-s2-e2_p04.png", "./assets/pau_pages/full-tec2021-s2-e2_p05.png"], "full-tec2021-s2-e3": ["./assets/pau_pages/full-tec2021-s2-e3_p06.png", "./assets/pau_pages/full-tec2021-s2-e3_p07.png"], "tec2021-s2-e3": ["./assets/pau_pages/full-tec2021-s2-e3_p06.png", "./assets/pau_pages/full-tec2021-s2-e3_p07.png"], "full-tec2021-s2-e4": ["./assets/pau_pages/full-tec2021-s2-e4_p08.png", "./assets/pau_pages/full-tec2021-s2-e4_p09.png"], "tec2021-s2-e4": ["./assets/pau_pages/full-tec2021-s2-e4_p08.png", "./assets/pau_pages/full-tec2021-s2-e4_p09.png"], "full-tec2021-s2-e5": ["./assets/pau_pages/full-tec2021-s2-e5_p10.png", "./assets/pau_pages/full-tec2021-s2-e5_p11.png"], "tec2021-s2-e5": ["./assets/pau_pages/full-tec2021-s2-e5_p10.png", "./assets/pau_pages/full-tec2021-s2-e5_p11.png"], "full-tec2021-s2-e6": ["./assets/pau_pages/full-tec2021-s2-e6_p12.png", "./assets/pau_pages/full-tec2021-s2-e6_p13.png"], "tec2021-s2-e6": ["./assets/pau_pages/full-tec2021-s2-e6_p12.png", "./assets/pau_pages/full-tec2021-s2-e6_p13.png"], "full-tec2021-s5-e1": ["./assets/pau_pages/full-tec2021-s5-e1_p18.png", "./assets/pau_pages/full-tec2021-s5-e1_p19.png"], "tec2021-s5-e1": ["./assets/pau_pages/full-tec2021-s5-e1_p18.png", "./assets/pau_pages/full-tec2021-s5-e1_p19.png"], "full-tec2021-s5-e2": ["./assets/pau_pages/full-tec2021-s5-e2_p20.png", "./assets/pau_pages/full-tec2021-s5-e2_p21.png"], "tec2021-s5-e2": ["./assets/pau_pages/full-tec2021-s5-e2_p20.png", "./assets/pau_pages/full-tec2021-s5-e2_p21.png"], "full-tec2021-s5-e3": ["./assets/pau_pages/full-tec2021-s5-e3_p22.png", "./assets/pau_pages/full-tec2021-s5-e3_p23.png"], "tec2021-s5-e3": ["./assets/pau_pages/full-tec2021-s5-e3_p22.png", "./assets/pau_pages/full-tec2021-s5-e3_p23.png"], "full-tec2021-s5-e4": ["./assets/pau_pages/full-tec2021-s5-e4_p24.png", "./assets/pau_pages/full-tec2021-s5-e4_p25.png"], "tec2021-s5-e4": ["./assets/pau_pages/full-tec2021-s5-e4_p24.png", "./assets/pau_pages/full-tec2021-s5-e4_p25.png"], "full-tec2021-s5-e5": ["./assets/pau_pages/full-tec2021-s5-e5_p26.png", "./assets/pau_pages/full-tec2021-s5-e5_p27.png"], "tec2021-s5-e5": ["./assets/pau_pages/full-tec2021-s5-e5_p26.png", "./assets/pau_pages/full-tec2021-s5-e5_p27.png"], "full-tec2021-s5-e6": ["./assets/pau_pages/full-tec2021-s5-e6_p28.png", "./assets/pau_pages/full-tec2021-s5-e6_p29.png"], "tec2021-s5-e6": ["./assets/pau_pages/full-tec2021-s5-e6_p28.png", "./assets/pau_pages/full-tec2021-s5-e6_p29.png"]};
@@ -4730,7 +5107,7 @@ function inici(){
 }
 
 function pau(){
-  app.innerHTML = `<section class="card"><h2>Banc PAU complet · v12.1 amb resolucions pas a pas</h2><p>La v12.1 amplia les resolucions pas a pas a 2023, 2022 i 2021. Les fitxes amb figures complexes queden resoltes com a procediment docent guiat i indiquen quan cal llegir una dada a la figura original integrada. Pots usar <b>Mode alumne</b> amb pistes i comprovació per passos, o <b>Mode docent</b> amb solucions, criteris i fitxa imprimible.</p><div class="btnrow no-print"><button id="roleAlumne" class="${pauRole==='alumne'?'primary':'secondary'}" onclick="setPauRole('alumne')">Mode alumne</button><button id="roleDocent" class="${pauRole==='docent'?'primary':'secondary'}" onclick="setPauRole('docent')">Mode docent</button></div><div class="grid"><div class="field"><label>Matèria</label><select id="bankMateria" onchange="renderPauBank()"><option value="">Totes</option><option>Tecnologia i enginyeria</option><option>Tecnologia industrial</option><option>Electrotècnia</option></select></div><div class="field"><label>Any</label><select id="bankYear" onchange="renderPauBank()"><option value="">Tots</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option></select></div><div class="field"><label>Sèrie</label><select id="bankSerie" onchange="renderPauBank()"><option value="">Totes</option><option>Sèrie 1</option><option>Sèrie 2</option><option>Sèrie 5</option></select></div><div class="field"><label>Bloc o paraula clau</label><input id="bankSearch" placeholder="Ex.: motor, energia, lògica, estàtica..." oninput="renderPauBank()"></div><div class="field"><label>Mode</label><select id="bankMode" onchange="renderPauBank()"><option value="">Tots</option><option value="test">Test</option><option value="calculadora">Amb calculadora</option><option value="fitxa">Fitxa per parts</option></select></div></div><div class="btnrow no-print"><button class="secondary" onclick="renderTest()">Obrir test autocorregible</button><button class="secondary" onclick="setView('exercicis')">Exercicis resolubles</button><button class="secondary" onclick="setView('calculadores')">Calculadores</button></div><div id="pauArea"></div></section><section class="card"><h2>Fitxes del banc</h2><div id="pauBankStats" class="small"></div><div id="pauBankCards" class="grid"></div></section>`;
+  app.innerHTML = `<section class="card"><h2>Banc PAU complet · v12.1 amb resolucions pas a pas</h2><p>La v12.1 amplia les resolucions pas a pas a 2023, 2022 i 2021. Les fitxes amb figures complexes queden resoltes com a procediment docent guiat i indiquen quan cal llegir una dada a la figura original integrada. Pots usar <b>Mode alumne</b> amb pistes i comprovació per passos, o <b>Mode docent</b> amb solucions, criteris i fitxa imprimible.</p><div class="btnrow no-print"><button id="roleAlumne" class="${pauRole==='alumne'?'primary':'secondary'}" onclick="setPauRole('alumne')">Mode alumne</button><button id="roleDocent" class="${pauRole==='docent'?'primary':'secondary'}" onclick="setPauRole('docent')">Mode docent</button></div><div class="grid"><div class="field"><label>Matèria</label><select id="bankMateria" onchange="renderPauBank()"><option value="">Totes</option><option>Tecnologia i enginyeria</option><option>Tecnologia industrial</option><option>Electrotècnia</option></select></div><div class="field"><label>Any</label><select id="bankYear" onchange="renderPauBank()"><option value="">Tots</option><option>2026</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option></select></div><div class="field"><label>Sèrie</label><select id="bankSerie" onchange="renderPauBank()"><option value="">Totes</option><option>Sèrie 1</option><option>Sèrie 2</option><option>Sèrie 5</option></select></div><div class="field"><label>Bloc o paraula clau</label><input id="bankSearch" placeholder="Ex.: motor, energia, lògica, estàtica..." oninput="renderPauBank()"></div><div class="field"><label>Mode</label><select id="bankMode" onchange="renderPauBank()"><option value="">Tots</option><option value="test">Test</option><option value="calculadora">Amb calculadora</option><option value="fitxa">Fitxa per parts</option></select></div></div><div class="btnrow no-print"><button class="secondary" onclick="renderTest()">Obrir test autocorregible</button><button class="secondary" onclick="setView('exercicis')">Exercicis resolubles</button><button class="secondary" onclick="setView('calculadores')">Calculadores</button></div><div id="pauArea"></div></section><section class="card"><h2>Fitxes del banc</h2><div id="pauBankStats" class="small"></div><div id="pauBankCards" class="grid"></div></section>`;
   renderPauBank();
 }
 
@@ -5212,7 +5589,7 @@ function renderNumericCorrectionV13(answer, solution){
 
 const oldPau = pau;
 pau = function(){
-  app.innerHTML = `${qualityPanelV13()}<section class="card"><h2>Banc PAU complet · v14 qualitat docent i mode examen</h2><p>La v14 manté el banc multiany amb figures, resolucions, estat de verificació i afegeix mode examen i dossiers imprimibles.</p><div class="btnrow no-print"><button id="roleAlumne" class="${pauRole==='alumne'?'primary':'secondary'}" onclick="setPauRole('alumne')">Mode alumne</button><button id="roleDocent" class="${pauRole==='docent'?'primary':'secondary'}" onclick="setPauRole('docent')">Mode docent</button></div><div class="grid"><div class="field"><label>Matèria</label><select id="bankMateria" onchange="renderPauBank()"><option value="">Totes</option><option>Tecnologia i enginyeria</option><option>Tecnologia industrial</option><option>Electrotècnia</option></select></div><div class="field"><label>Any</label><select id="bankYear" onchange="renderPauBank()"><option value="">Tots</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option></select></div><div class="field"><label>Sèrie</label><select id="bankSerie" onchange="renderPauBank()"><option value="">Totes</option><option>Sèrie 1</option><option>Sèrie 2</option><option>Sèrie 5</option></select></div><div class="field"><label>Bloc o paraula clau</label><input id="bankSearch" placeholder="Ex.: motor, energia, lògica, estàtica..." oninput="renderPauBank()"></div><div class="field"><label>Mode</label><select id="bankMode" onchange="renderPauBank()"><option value="">Tots</option><option value="test">Test</option><option value="calculadora">Amb calculadora</option><option value="fitxa">Fitxa per parts</option></select></div><div class="field"><label>Verificació</label><select id="bankVerify" onchange="renderPauBank()"><option value="">Totes</option><option value="calculator">Automatitzable amb calculadora</option><option value="guidedFigure">Guiat amb figura</option><option value="textOnly">Resolt textualment</option><option value="review">Revisió docent pendent</option></select></div></div><div class="btnrow no-print"><button class="secondary" onclick="renderTest()">Obrir test autocorregible</button><button class="secondary" onclick="setView('exercicis')">Exercicis resolubles</button><button class="secondary" onclick="setView('calculadores')">Calculadores</button></div><div id="pauArea"></div></section><section class="card"><h2>Fitxes del banc</h2><div id="pauBankStats" class="small"></div><div id="pauBankCards" class="grid"></div></section>`;
+  app.innerHTML = `${qualityPanelV13()}<section class="card"><h2>Banc PAU complet · v14 qualitat docent i mode examen</h2><p>La v14 manté el banc multiany amb figures, resolucions, estat de verificació i afegeix mode examen i dossiers imprimibles.</p><div class="btnrow no-print"><button id="roleAlumne" class="${pauRole==='alumne'?'primary':'secondary'}" onclick="setPauRole('alumne')">Mode alumne</button><button id="roleDocent" class="${pauRole==='docent'?'primary':'secondary'}" onclick="setPauRole('docent')">Mode docent</button></div><div class="grid"><div class="field"><label>Matèria</label><select id="bankMateria" onchange="renderPauBank()"><option value="">Totes</option><option>Tecnologia i enginyeria</option><option>Tecnologia industrial</option><option>Electrotècnia</option></select></div><div class="field"><label>Any</label><select id="bankYear" onchange="renderPauBank()"><option value="">Tots</option><option>2026</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option></select></div><div class="field"><label>Sèrie</label><select id="bankSerie" onchange="renderPauBank()"><option value="">Totes</option><option>Sèrie 1</option><option>Sèrie 2</option><option>Sèrie 5</option></select></div><div class="field"><label>Bloc o paraula clau</label><input id="bankSearch" placeholder="Ex.: motor, energia, lògica, estàtica..." oninput="renderPauBank()"></div><div class="field"><label>Mode</label><select id="bankMode" onchange="renderPauBank()"><option value="">Tots</option><option value="test">Test</option><option value="calculadora">Amb calculadora</option><option value="fitxa">Fitxa per parts</option></select></div><div class="field"><label>Verificació</label><select id="bankVerify" onchange="renderPauBank()"><option value="">Totes</option><option value="calculator">Automatitzable amb calculadora</option><option value="guidedFigure">Guiat amb figura</option><option value="textOnly">Resolt textualment</option><option value="review">Revisió docent pendent</option></select></div></div><div class="btnrow no-print"><button class="secondary" onclick="renderTest()">Obrir test autocorregible</button><button class="secondary" onclick="setView('exercicis')">Exercicis resolubles</button><button class="secondary" onclick="setView('calculadores')">Calculadores</button></div><div id="pauArea"></div></section><section class="card"><h2>Fitxes del banc</h2><div id="pauBankStats" class="small"></div><div id="pauBankCards" class="grid"></div></section>`;
   renderPauBank();
 };
 
@@ -6043,7 +6420,7 @@ const oldPauV18 = pau;
 pau = function(){
   applyThemesV18();
   const topics = topicOptionsV18();
-  app.innerHTML = `${thematicPanelV18()}${qualityPanelV13()}<section class="card"><h2>Banc PAU · v18 amb classificació temàtica</h2><p>Filtra per matèria d'origen o per tema real. El tema real és transversal i serveix per preparar classes per contingut: motors, energia, materials, corrent altern, lògica, etc.</p><div class="btnrow no-print"><button id="roleAlumne" class="${pauRole==='alumne'?'primary':'secondary'}" onclick="setPauRole('alumne')">Mode alumne</button><button id="roleDocent" class="${pauRole==='docent'?'primary':'secondary'}" onclick="setPauRole('docent')">Mode docent</button><button class="secondary" onclick="setView('temes')">Mapa de temes</button></div><div class="grid"><div class="field"><label>Matèria d'origen</label><select id="bankMateria" onchange="renderPauBank()"><option value="">Totes</option><option>Tecnologia i enginyeria</option><option>Tecnologia industrial</option><option>Electrotècnia</option></select></div><div class="field"><label>Any</label><select id="bankYear" onchange="renderPauBank()"><option value="">Tots</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option></select></div><div class="field"><label>Sèrie</label><select id="bankSerie" onchange="renderPauBank()"><option value="">Totes</option><option>Sèrie 1</option><option>Sèrie 2</option><option>Sèrie 5</option></select></div><div class="field"><label>Bloc temàtic real</label><select id="bankTopicV18" onchange="document.getElementById('bankSubtopicV18').innerHTML='<option value=&quot;&quot;>Tots</option>'+subtopicOptionsV18(this.value); renderPauBank();"><option value="">Tots</option>${topics}</select></div><div class="field"><label>Subbloc</label><select id="bankSubtopicV18" onchange="renderPauBank()"><option value="">Tots</option>${subtopicOptionsV18()}</select></div><div class="field"><label>Cerca</label><input id="bankSearch" placeholder="Ex.: motor, Charpy, energia, lògica..." oninput="renderPauBank()"></div><div class="field"><label>Mode</label><select id="bankMode" onchange="renderPauBank()"><option value="">Tots</option><option value="test">Test</option><option value="calculadora">Amb calculadora</option><option value="fitxa">Fitxa per parts</option></select></div><div class="field"><label>Verificació</label><select id="bankVerify" onchange="renderPauBank()"><option value="">Totes</option><option value="calculator">Automatitzable amb calculadora</option><option value="guidedFigure">Guiat amb figura</option><option value="textOnly">Resolt textualment</option><option value="review">Revisió docent pendent</option></select></div></div><div id="pauArea"></div></section><section class="card"><h2>Fitxes del banc</h2><div id="pauBankStats" class="small"></div><div id="pauBankCards" class="grid"></div></section>`;
+  app.innerHTML = `${thematicPanelV18()}${qualityPanelV13()}<section class="card"><h2>Banc PAU · v18.2 amb PAU 2026</h2><p>Filtra per matèria d'origen o per tema real. El tema real és transversal i serveix per preparar classes per contingut: motors, energia, materials, corrent altern, lògica, etc.</p><div class="btnrow no-print"><button id="roleAlumne" class="${pauRole==='alumne'?'primary':'secondary'}" onclick="setPauRole('alumne')">Mode alumne</button><button id="roleDocent" class="${pauRole==='docent'?'primary':'secondary'}" onclick="setPauRole('docent')">Mode docent</button><button class="secondary" onclick="setView('temes')">Mapa de temes</button></div><div class="grid"><div class="field"><label>Matèria d'origen</label><select id="bankMateria" onchange="renderPauBank()"><option value="">Totes</option><option>Tecnologia i enginyeria</option><option>Tecnologia industrial</option><option>Electrotècnia</option></select></div><div class="field"><label>Any</label><select id="bankYear" onchange="renderPauBank()"><option value="">Tots</option><option>2026</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option></select></div><div class="field"><label>Sèrie</label><select id="bankSerie" onchange="renderPauBank()"><option value="">Totes</option><option>Sèrie 1</option><option>Sèrie 2</option><option>Sèrie 5</option></select></div><div class="field"><label>Bloc temàtic real</label><select id="bankTopicV18" onchange="document.getElementById('bankSubtopicV18').innerHTML='<option value=&quot;&quot;>Tots</option>'+subtopicOptionsV18(this.value); renderPauBank();"><option value="">Tots</option>${topics}</select></div><div class="field"><label>Subbloc</label><select id="bankSubtopicV18" onchange="renderPauBank()"><option value="">Tots</option>${subtopicOptionsV18()}</select></div><div class="field"><label>Cerca</label><input id="bankSearch" placeholder="Ex.: motor, Charpy, energia, lògica..." oninput="renderPauBank()"></div><div class="field"><label>Mode</label><select id="bankMode" onchange="renderPauBank()"><option value="">Tots</option><option value="test">Test</option><option value="calculadora">Amb calculadora</option><option value="fitxa">Fitxa per parts</option></select></div><div class="field"><label>Verificació</label><select id="bankVerify" onchange="renderPauBank()"><option value="">Totes</option><option value="calculator">Automatitzable amb calculadora</option><option value="guidedFigure">Guiat amb figura</option><option value="textOnly">Resolt textualment</option><option value="review">Revisió docent pendent</option></select></div></div><div id="pauArea"></div></section><section class="card"><h2>Fitxes del banc</h2><div id="pauBankStats" class="small"></div><div id="pauBankCards" class="grid"></div></section>`;
   renderPauBank();
 };
 renderPauBank = function(){
@@ -6120,7 +6497,7 @@ getFilteredItemsV14 = function(prefix='exam'){
 };
 examenV14 = function(){
   const opts = examFilterOptionsV14();
-  app.innerHTML = `<section class="card"><h2>Mode examen PAU · v18 per temes</h2><p>Genera proves a partir del banc PAU, filtrant també per bloc temàtic real i subbloc.</p><div class="grid"><div class="field"><label>Matèria d'origen</label><select id="examMateria"><option value="">Totes</option>${opts.mats}</select></div><div class="field"><label>Any</label><select id="examYear"><option value="">Tots</option>${opts.years}</select></div><div class="field"><label>Sèrie</label><select id="examSerie"><option value="">Totes</option>${opts.series}</select></div><div class="field"><label>Bloc temàtic real</label><select id="examTopicV18" onchange="document.getElementById('examSubtopicV18').innerHTML='<option value=&quot;&quot;>Tots</option>'+subtopicOptionsV18(this.value)"><option value="">Tots</option>${opts.topics}</select></div><div class="field"><label>Subbloc</label><select id="examSubtopicV18"><option value="">Tots</option>${opts.subtopics}</select></div><div class="field"><label>Tema o paraula clau</label><input id="examSearch" placeholder="Ex.: motor, energia, lògica, trifàsica..."></div><div class="field"><label>Estat de verificació</label><select id="examVerify"><option value="">Tots</option><option value="calculator">Automatitzable</option><option value="guidedFigure">Guiat amb figura</option><option value="textOnly">Resolt textualment</option><option value="review">Revisió pendent</option></select></div><div class="field"><label>Nombre d’exercicis</label><input id="examCount" type="number" min="1" max="8" value="4"></div><div class="field"><label>Temps recomanat</label><input id="examMinutes" type="number" min="5" value="90"></div><div class="field"><label>Selecció</label><select id="examRandom"><option value="yes">Aleatòria</option><option value="no">Primers resultats del filtre</option></select></div></div><div class="btnrow no-print"><button class="primary" onclick="generateExamV14()">Generar examen</button><button class="secondary" onclick="startTimerV14()">Iniciar temporitzador</button><button class="secondary" onclick="stopTimerV14()">Aturar</button><span id="examTimer" class="pill">--:--</span></div><div id="examArea"></div></section><section class="card"><h2>Dossiers imprimibles · v18 per temes</h2><p>Crea un dossier per bloc temàtic real, any, sèrie o estat de verificació.</p><div class="grid"><div class="field"><label>Matèria d'origen</label><select id="dossierMateria"><option value="">Totes</option>${opts.mats}</select></div><div class="field"><label>Any</label><select id="dossierYear"><option value="">Tots</option>${opts.years}</select></div><div class="field"><label>Sèrie</label><select id="dossierSerie"><option value="">Totes</option>${opts.series}</select></div><div class="field"><label>Bloc temàtic real</label><select id="dossierTopicV18" onchange="document.getElementById('dossierSubtopicV18').innerHTML='<option value=&quot;&quot;>Tots</option>'+subtopicOptionsV18(this.value)"><option value="">Tots</option>${opts.topics}</select></div><div class="field"><label>Subbloc</label><select id="dossierSubtopicV18"><option value="">Tots</option>${opts.subtopics}</select></div><div class="field"><label>Tema o paraula clau</label><input id="dossierSearch" placeholder="Ex.: energia, mecanismes, circuits..."></div><div class="field"><label>Estat de verificació</label><select id="dossierVerify"><option value="">Tots</option><option value="calculator">Automatitzable</option><option value="guidedFigure">Guiat amb figura</option><option value="textOnly">Resolt textualment</option><option value="review">Revisió pendent</option></select></div><div class="field"><label>Màxim de fitxes</label><input id="dossierCount" type="number" min="1" max="80" value="12"></div></div><div class="btnrow no-print"><button class="primary" onclick="generateDossierV14(false)">Crear dossier alumne</button><button class="secondary" onclick="generateDossierV14(true)">Crear dossier docent</button></div><div id="dossierArea"></div></section>`;
+  app.innerHTML = `<section class="card"><h2>Mode examen PAU · v18.2 per temes</h2><p>Genera proves a partir del banc PAU, filtrant també per bloc temàtic real i subbloc.</p><div class="grid"><div class="field"><label>Matèria d'origen</label><select id="examMateria"><option value="">Totes</option>${opts.mats}</select></div><div class="field"><label>Any</label><select id="examYear"><option value="">Tots</option>${opts.years}</select></div><div class="field"><label>Sèrie</label><select id="examSerie"><option value="">Totes</option>${opts.series}</select></div><div class="field"><label>Bloc temàtic real</label><select id="examTopicV18" onchange="document.getElementById('examSubtopicV18').innerHTML='<option value=&quot;&quot;>Tots</option>'+subtopicOptionsV18(this.value)"><option value="">Tots</option>${opts.topics}</select></div><div class="field"><label>Subbloc</label><select id="examSubtopicV18"><option value="">Tots</option>${opts.subtopics}</select></div><div class="field"><label>Tema o paraula clau</label><input id="examSearch" placeholder="Ex.: motor, energia, lògica, trifàsica..."></div><div class="field"><label>Estat de verificació</label><select id="examVerify"><option value="">Tots</option><option value="calculator">Automatitzable</option><option value="guidedFigure">Guiat amb figura</option><option value="textOnly">Resolt textualment</option><option value="review">Revisió pendent</option></select></div><div class="field"><label>Nombre d’exercicis</label><input id="examCount" type="number" min="1" max="8" value="4"></div><div class="field"><label>Temps recomanat</label><input id="examMinutes" type="number" min="5" value="90"></div><div class="field"><label>Selecció</label><select id="examRandom"><option value="yes">Aleatòria</option><option value="no">Primers resultats del filtre</option></select></div></div><div class="btnrow no-print"><button class="primary" onclick="generateExamV14()">Generar examen</button><button class="secondary" onclick="startTimerV14()">Iniciar temporitzador</button><button class="secondary" onclick="stopTimerV14()">Aturar</button><span id="examTimer" class="pill">--:--</span></div><div id="examArea"></div></section><section class="card"><h2>Dossiers imprimibles · v18.2 per temes</h2><p>Crea un dossier per bloc temàtic real, any, sèrie o estat de verificació.</p><div class="grid"><div class="field"><label>Matèria d'origen</label><select id="dossierMateria"><option value="">Totes</option>${opts.mats}</select></div><div class="field"><label>Any</label><select id="dossierYear"><option value="">Tots</option>${opts.years}</select></div><div class="field"><label>Sèrie</label><select id="dossierSerie"><option value="">Totes</option>${opts.series}</select></div><div class="field"><label>Bloc temàtic real</label><select id="dossierTopicV18" onchange="document.getElementById('dossierSubtopicV18').innerHTML='<option value=&quot;&quot;>Tots</option>'+subtopicOptionsV18(this.value)"><option value="">Tots</option>${opts.topics}</select></div><div class="field"><label>Subbloc</label><select id="dossierSubtopicV18"><option value="">Tots</option>${opts.subtopics}</select></div><div class="field"><label>Tema o paraula clau</label><input id="dossierSearch" placeholder="Ex.: energia, mecanismes, circuits..."></div><div class="field"><label>Estat de verificació</label><select id="dossierVerify"><option value="">Tots</option><option value="calculator">Automatitzable</option><option value="guidedFigure">Guiat amb figura</option><option value="textOnly">Resolt textualment</option><option value="review">Revisió pendent</option></select></div><div class="field"><label>Màxim de fitxes</label><input id="dossierCount" type="number" min="1" max="80" value="12"></div></div><div class="btnrow no-print"><button class="primary" onclick="generateDossierV14(false)">Crear dossier alumne</button><button class="secondary" onclick="generateDossierV14(true)">Crear dossier docent</button></div><div id="dossierArea"></div></section>`;
 };
 const oldDocentV18 = docentV16;
 docentV16 = function(){
@@ -6143,3 +6520,72 @@ setView = function(view){
 };
 Object.assign(window, {temesV18, renderTemaListV18, printTopicMapV18, classifyPauTopicV18, applyThemesV18, subtopicOptionsV18, renderPauBank, pau, examenV14, getFilteredItemsV14, docentV16, inici, setView});
 try { applyThemesV18(); setView('inici'); } catch(e) { console.warn('Inici v18 no carregat', e); }
+
+/* === v18.1 · Calculadores PAU ampliades ===
+   Millora específica: l'apartat Calculadores deixa de ser un únic selector curt
+   i passa a ser una caixa d'eines amb diversos càlculs per tema. */
+const CALC_V181 = [
+  {id:'ohm_i', bloc:'Electricitat bàsica', nom:'Intensitat per llei d’Ohm', desc:'I = U/R', f:[['u','Tensió','V',230],['r','Resistència','Ω',17]], solve:d=>{const I=d.u/d.r; return calcHtml('Intensitat per llei d’Ohm','I = U / R',[`I = ${fmt(d.u)} / ${fmt(d.r)} = ${fmt(I)} A`],`${fmt(I)} A`,'La intensitat augmenta si augmenta la tensió o baixa la resistència.',['No posar R en Ω.','Confondre U i I.']);}},
+  {id:'ohm_p', bloc:'Electricitat bàsica', nom:'Potència en resistència', desc:'P = U·I = U²/R = I²R', f:[['u','Tensió','V',230],['r','Resistència','Ω',17]], solve:d=>{const I=d.u/d.r,P=d.u*I; return calcHtml('Potència en resistència','P = U · I = U² / R',[`I = ${fmt(d.u)} / ${fmt(d.r)} = ${fmt(I)} A`,`P = ${fmt(d.u)} · ${fmt(I)} = ${fmt(P)} W`],`${fmt(P)} W`,'La potència indica l’energia transformada per segon, normalment en calor en una resistència.',['Fer P = U/R.','No distingir W i Wh.']);}},
+  {id:'res_series', bloc:'Electricitat bàsica', nom:'Resistències en sèrie', desc:'Req = R1 + R2 + R3', f:[['r1','R1','Ω',10],['r2','R2','Ω',20],['r3','R3','Ω',30]], solve:d=>{const R=d.r1+d.r2+d.r3; return calcHtml('Resistències en sèrie','Req = R1 + R2 + R3',[`Req = ${fmt(d.r1)} + ${fmt(d.r2)} + ${fmt(d.r3)} = ${fmt(R)} Ω`],`${fmt(R)} Ω`,'En sèrie, la resistència equivalent sempre és més gran que qualsevol resistència individual.',['Fer servir la fórmula de paral·lel.']);}},
+  {id:'res_parallel', bloc:'Electricitat bàsica', nom:'Resistències en paral·lel', desc:'1/Req = 1/R1 + 1/R2 + 1/R3', f:[['r1','R1','Ω',10],['r2','R2','Ω',20],['r3','R3','Ω',30]], solve:d=>{const R=1/(1/d.r1+1/d.r2+1/d.r3); return calcHtml('Resistències en paral·lel','1/Req = 1/R1 + 1/R2 + 1/R3',[`1/Req = 1/${fmt(d.r1)} + 1/${fmt(d.r2)} + 1/${fmt(d.r3)}`,`Req = ${fmt(R)} Ω`],`${fmt(R)} Ω`,'En paral·lel, la resistència equivalent és menor que la més petita.',['Sumar resistències com si fossin sèrie.']);}},
+  {id:'energia_pt', bloc:'Energia i rendiment', nom:'Energia, potència i temps', desc:'E = P·t', f:[['p','Potència','kW',2],['t','Temps','h',3]], solve:d=>{const E=d.p*d.t; return calcHtml('Energia, potència i temps','E = P · t',[`E = ${fmt(d.p)} · ${fmt(d.t)} = ${fmt(E)} kWh`],`${fmt(E)} kWh`,'El kWh és una unitat d’energia, no de potència.',['Confondre kW i kWh.']);}},
+  {id:'rendiment', bloc:'Energia i rendiment', nom:'Rendiment', desc:'η = Eu/Es', f:[['eu','Energia útil','kJ',750],['es','Energia subministrada','kJ',1000]], solve:d=>{const eta=d.eu/d.es*100; return calcHtml('Rendiment','η = Eu / Es',[`η = ${fmt(d.eu)} / ${fmt(d.es)} · 100 = ${fmt(eta)} %`],`${fmt(eta)} %`,'El rendiment real ha de ser inferior al 100 %.',['Posar Eu i Es invertides.']);}},
+  {id:'ep_mgh', bloc:'Energia i rendiment', nom:'Energia potencial', desc:'Ep = m·g·h', f:[['m','Massa','kg',1900],['h','Alçada','m',1.8]], solve:d=>{const E=d.m*9.81*d.h; return calcHtml('Energia potencial','Ep = m · g · h',[`Ep = ${fmt(d.m)} · 9,81 · ${fmt(d.h)} = ${fmt(E)} J`],`${fmt(E)} J`,'Depèn de la massa i del desnivell, no del recorregut seguit.',['No posar h en metres.']);}},
+  {id:'calor_sensible', bloc:'Energia tèrmica', nom:'Calor sensible', desc:'Q = m·ce·ΔT', f:[['m','Massa','kg',2],['ce','Calor específica','kJ/(kg·°C)',4.186],['dt','Increment temperatura','°C',85]], solve:d=>{const Q=d.m*d.ce*d.dt; return calcHtml('Calor sensible','Q = m · ce · ΔT',[`Q = ${fmt(d.m)} · ${fmt(d.ce)} · ${fmt(d.dt)} = ${fmt(Q)} kJ`],`${fmt(Q)} kJ`,'Serveix per escalfar o refredar sense canvi d’estat.',['No convertir L d’aigua a kg aproximadament.']);}},
+  {id:'combustible', bloc:'Energia tèrmica', nom:'Consum de combustible', desc:'m = E/pc', f:[['e','Energia necessària','MJ',3.558],['pc','Poder calorífic','MJ/kg',45.8],['eta','Rendiment','tant per u',0.2]], solve:d=>{const m=d.e/(d.pc*d.eta); return calcHtml('Consum de combustible','m = Eútil / (pc · η)',[`m = ${fmt(d.e)} / (${fmt(d.pc)} · ${fmt(d.eta)}) = ${fmt(m)} kg`],`${fmt(m*1000)} g`,'El rendiment fa que calgui més energia del combustible que energia útil.',['Oblidar el rendiment.','Barrejar kJ i MJ.']);}},
+  {id:'carnot', bloc:'Màquines tèrmiques', nom:'Rendiment de Carnot', desc:'η = 1 - Tc/Th', f:[['tc','Temperatura freda','°C',20],['th','Temperatura calenta','°C',100]], solve:d=>{const eta=(1-(d.tc+273.15)/(d.th+273.15))*100; return calcHtml('Rendiment de Carnot','η = 1 - Tc/Th, amb temperatures en kelvin',[`Tc = ${fmt(d.tc)} + 273,15 = ${fmt(d.tc+273.15)} K`,`Th = ${fmt(d.th)} + 273,15 = ${fmt(d.th+273.15)} K`,`η = ${fmt(eta)} %`],`${fmt(eta)} %`,'És el límit teòric màxim, no el rendiment real.',['Fer servir °C directament.']);}},
+  {id:'gas_ideal', bloc:'Màquines tèrmiques', nom:'Gas ideal', desc:'pV = nRT', f:[['n','Quantitat de substància','mol',1],['t','Temperatura','°C',20],['v','Volum','L',10]], solve:d=>{const p=d.n*8.314*(d.t+273.15)/(d.v/1000); return calcHtml('Gas ideal','p · V = n · R · T',[`T = ${fmt(d.t+273.15)} K`,`V = ${fmt(d.v/1000)} m³`,`p = nRT/V = ${fmt(p)} Pa`],`${fmt(p/100000)} bar`,'Cal treballar en SI: m³, kelvin i pascals.',['Usar litres com si fossin m³.','No passar °C a K.']);}},
+  {id:'boyle', bloc:'Màquines tèrmiques', nom:'Boyle-Mariotte', desc:'p1V1 = p2V2', f:[['p1','p1','bar',1],['v1','V1','L',25],['v2','V2','L',5]], solve:d=>{const p2=d.p1*d.v1/d.v2; return calcHtml('Transformació isotèrmica simple','p1 · V1 = p2 · V2',[`p2 = ${fmt(d.p1)} · ${fmt(d.v1)} / ${fmt(d.v2)} = ${fmt(p2)} bar`],`${fmt(p2)} bar`,'Si el volum baixa a temperatura constant, la pressió puja.',['Canviar de litres a m³ no cal si tots dos volums estan en la mateixa unitat.']);}},
+  {id:'isobaric', bloc:'Màquines tèrmiques', nom:'Treball isobàric', desc:'W = p·ΔV', f:[['p','Pressió','bar',6],['v1','V inicial','L',1],['v2','V final','L',4]], solve:d=>{const W=d.p*1e5*((d.v2-d.v1)/1000); return calcHtml('Treball isobàric','W = p · (V2 - V1)',[`W = ${fmt(d.p*1e5)} · (${fmt(d.v2/1000)} - ${fmt(d.v1/1000)}) = ${fmt(W)} J`],`${fmt(W)} J`,'És positiu si el gas s’expandeix i negatiu si es comprimeix.',['No convertir bar a Pa i L a m³.']);}},
+  {id:'m_potencia', bloc:'Mecanismes i motors', nom:'Parell i potència', desc:'P = M·ω', f:[['p','Potència','W',350],['n','Velocitat','min⁻¹',550]], solve:d=>{const w=2*Math.PI*d.n/60,M=d.p/w; return calcHtml('Parell i potència','ω = 2πn/60; M = P/ω',[`ω = 2π·${fmt(d.n)}/60 = ${fmt(w)} rad/s`,`M = ${fmt(d.p)} / ${fmt(w)} = ${fmt(M)} N·m`],`${fmt(M)} N·m`,'Per una mateixa potència, si baixa la velocitat, puja el parell.',['Fer servir n en min⁻¹ directament.']);}},
+  {id:'trans_engranatges', bloc:'Mecanismes i motors', nom:'Relació d’engranatges', desc:'τ = z motriu / z conduïda', f:[['z1','Dents motriu 1','',23],['z2','Dents conduïda 1','',57],['z3','Dents motriu 2','',16],['z4','Dents conduïda 2','',33]], solve:d=>{const tau=(d.z1/d.z2)*(d.z3/d.z4); return calcHtml('Relació de transmissió','τ = (z1/z2) · (z3/z4)',[`τ = (${fmt(d.z1)}/${fmt(d.z2)}) · (${fmt(d.z3)}/${fmt(d.z4)}) = ${fmt(tau)}`],`${fmt(tau)}`,'Si τ < 1, la sortida gira més lenta que l’entrada.',['Invertir motriu i conduïda.']);}},
+  {id:'cargol', bloc:'Mecanismes i motors', nom:'Cargol-femella', desc:'voltes = h/pas', f:[['h','Desplaçament','m',1.8],['pas','Pas','mm/volta',7],['t','Temps','s',45]], solve:d=>{const pas=d.pas/1000,vol=d.h/pas,n=vol/(d.t/60); return calcHtml('Cargol-femella','voltes = h/pas; n = voltes/t',[`pas = ${fmt(d.pas)} mm = ${fmt(pas)} m/volta`,`voltes = ${fmt(d.h)} / ${fmt(pas)} = ${fmt(vol)}`,`n = ${fmt(vol)} / ${fmt(d.t/60)} = ${fmt(n)} min⁻¹`],`${fmt(vol)} voltes; ${fmt(n)} min⁻¹`,'Permet transformar gir en desplaçament lineal.',['No passar mm a m.']);}},
+  {id:'volant', bloc:'Mecanismes i motors', nom:'Energia d’un volant d’inèrcia', desc:'Ec = 1/2·I·ω²', f:[['i','Moment d’inèrcia','kg·m²',7.8125],['n','Velocitat','min⁻¹',100]], solve:d=>{const w=2*Math.PI*d.n/60,E=.5*d.i*w*w; return calcHtml('Volant d’inèrcia','Ec = 1/2 · I · ω²',[`ω = ${fmt(w)} rad/s`,`Ec = 0,5 · ${fmt(d.i)} · ${fmt(w)}² = ${fmt(E)} J`],`${fmt(E)} J`,'L’energia creix amb el quadrat de la velocitat angular.',['No convertir min⁻¹ a rad/s.']);}},
+  {id:'xl', bloc:'Corrent altern', nom:'Reactància inductiva', desc:'XL = 2πfL', f:[['f','Freqüència','Hz',50],['l','Inductància','mH',100]], solve:d=>{const XL=2*Math.PI*d.f*d.l/1000; return calcHtml('Reactància inductiva','XL = 2πfL',[`L = ${fmt(d.l/1000)} H`,`XL = 2π·${fmt(d.f)}·${fmt(d.l/1000)} = ${fmt(XL)} Ω`],`${fmt(XL)} Ω`,'La reactància inductiva augmenta amb la freqüència.',['No convertir mH a H.']);}},
+  {id:'xc', bloc:'Corrent altern', nom:'Reactància capacitiva', desc:'XC = 1/(2πfC)', f:[['f','Freqüència','Hz',50],['c','Capacitat','µF',100]], solve:d=>{const XC=1/(2*Math.PI*d.f*d.c*1e-6); return calcHtml('Reactància capacitiva','XC = 1/(2πfC)',[`C = ${fmt(d.c*1e-6,8)} F`,`XC = ${fmt(XC)} Ω`],`${fmt(XC)} Ω`,'La reactància capacitiva disminueix quan augmenta la freqüència.',['No convertir µF a F.']);}},
+  {id:'rl_calc', bloc:'Corrent altern', nom:'Impedància RL sèrie', desc:'Z = √(R²+XL²)', f:[['r','Resistència','Ω',84],['f','Freqüència','Hz',50],['l','Inductància','mH',100],['u','Tensió','V',230]], solve:d=>{const XL=2*Math.PI*d.f*d.l/1000,Z=Math.sqrt(d.r*d.r+XL*XL),I=d.u/Z,cos=d.r/Z; return calcHtml('Circuit RL sèrie','XL = 2πfL; Z = √(R²+XL²); I = U/Z',[`XL = ${fmt(XL)} Ω`,`Z = ${fmt(Z)} Ω`,`I = ${fmt(I)} A`,`cosφ = ${fmt(cos)}`],`${fmt(I)} A`,'El corrent queda endarrerit respecte la tensió.',['Sumar R i XL directament.']);}},
+  {id:'rc_calc', bloc:'Corrent altern', nom:'Impedància RC sèrie', desc:'Z = √(R²+XC²)', f:[['r','Resistència','Ω',100],['f','Freqüència','Hz',50],['c','Capacitat','µF',47],['u','Tensió','V',230]], solve:d=>{const XC=1/(2*Math.PI*d.f*d.c*1e-6),Z=Math.sqrt(d.r*d.r+XC*XC),I=d.u/Z; return calcHtml('Circuit RC sèrie','XC = 1/(2πfC); Z = √(R²+XC²); I = U/Z',[`XC = ${fmt(XC)} Ω`,`Z = ${fmt(Z)} Ω`,`I = ${fmt(I)} A`],`${fmt(I)} A`,'En RC el corrent s’avança respecte la tensió.',['No convertir µF a F.']);}},
+  {id:'rlc_res', bloc:'Corrent altern', nom:'Ressonància RLC', desc:'f0 = 1/(2π√LC)', f:[['l','Inductància','mH',100],['c','Capacitat','µF',47]], solve:d=>{const f0=1/(2*Math.PI*Math.sqrt((d.l/1000)*(d.c*1e-6))); return calcHtml('Ressonància RLC','f0 = 1/(2π√(LC))',[`f0 = ${fmt(f0)} Hz`],`${fmt(f0)} Hz`,'A ressonància, les reactàncies inductiva i capacitiva es compensen.',['No passar mH i µF a H i F.']);}},
+  {id:'trif_p', bloc:'Sistemes trifàsics', nom:'Potències trifàsiques', desc:'S, P i Q', f:[['u','Tensió composta','V',400],['i','Intensitat de línia','A',9],['cos','cos φ','',0.85]], solve:d=>{const S=Math.sqrt(3)*d.u*d.i,P=S*d.cos,Q=S*Math.sqrt(1-d.cos*d.cos); return calcHtml('Potències trifàsiques','S = √3UI; P = S·cosφ; Q = S·sinφ',[`S = ${fmt(S)} VA`,`P = ${fmt(P)} W`,`Q = ${fmt(Q)} var`],`${fmt(P)} W; ${fmt(Q)} var`,'Permet separar potència útil activa i reactiva.',['Oblidar √3.']);}},
+  {id:'fp_corr', bloc:'Sistemes trifàsics', nom:'Correcció factor de potència', desc:'Qc = P(tanφ1 - tanφ2)', f:[['p','Potència activa','kW',10],['cos1','cos φ inicial','',0.75],['cos2','cos φ final','',0.95]], solve:d=>{const q=d.p*(Math.tan(Math.acos(d.cos1))-Math.tan(Math.acos(d.cos2))); return calcHtml('Correcció del factor de potència','Qc = P · (tanφ1 - tanφ2)',[`Qc = ${fmt(d.p)} · (tan arccos ${fmt(d.cos1)} - tan arccos ${fmt(d.cos2)}) = ${fmt(q)} kvar`],`${fmt(q)} kvar`,'Cal instal·lar capacitat que compensi aquesta reactiva inductiva.',['Fer servir cos directament en comptes de tanφ.']);}},
+  {id:'trafo', bloc:'Màquines elèctriques', nom:'Transformador ideal', desc:'U1/U2 = N1/N2 = I2/I1', f:[['u1','Tensió primari','V',230],['n1','Espires primari','',1000],['n2','Espires secundari','',200]], solve:d=>{const u2=d.u1*d.n2/d.n1; return calcHtml('Transformador ideal','U2 = U1 · N2/N1',[`U2 = ${fmt(d.u1)} · ${fmt(d.n2)}/${fmt(d.n1)} = ${fmt(u2)} V`],`${fmt(u2)} V`,'Si el secundari té menys espires, el transformador rebaixa tensió.',['Invertir la relació d’espires.']);}},
+  {id:'motor_cc', bloc:'Màquines elèctriques', nom:'Motor CC: fem i resistència', desc:'E = U - R·I', f:[['u','Tensió','V',180],['i','Intensitat','A',2.3],['r','Resistència induït','Ω',5]], solve:d=>{const E=d.u-d.r*d.i; return calcHtml('Motor CC','E = U - R·I',[`E = ${fmt(d.u)} - ${fmt(d.r)}·${fmt(d.i)} = ${fmt(E)} V`],`${fmt(E)} V`,'La força contraelectromotriu creix amb la velocitat del motor.',['Oblidar la caiguda interna R·I.']);}},
+  {id:'motor_tri', bloc:'Màquines elèctriques', nom:'Motor trifàsic: potència absorbida', desc:'Pabs = √3·U·I·cosφ', f:[['u','Tensió línia','V',400],['i','Intensitat','A',90],['cos','cos φ','',0.85],['pu','Potència útil','kW',50]], solve:d=>{const Pa=Math.sqrt(3)*d.u*d.i*d.cos/1000,eta=d.pu/Pa*100; return calcHtml('Motor trifàsic','Pabs = √3·U·I·cosφ; η = Pu/Pabs',[`Pabs = ${fmt(Pa)} kW`,`η = ${fmt(d.pu)} / ${fmt(Pa)} ·100 = ${fmt(eta)} %`],`${fmt(eta)} %`,'Serveix per comprovar rendiment d’un motor a partir de placa.',['Usar potència útil com si fos absorbida.']);}},
+  {id:'slip', bloc:'Màquines elèctriques', nom:'Lliscament motor inducció', desc:'s = (ns - n)/ns', f:[['f','Freqüència','Hz',50],['p','Parells de pols','',1],['n','Velocitat rotor','min⁻¹',2860]], solve:d=>{const ns=60*d.f/d.p,s=(ns-d.n)/ns*100; return calcHtml('Lliscament','ns = 60f/p; s = (ns - n)/ns',[`ns = 60·${fmt(d.f)}/${fmt(d.p)} = ${fmt(ns)} min⁻¹`,`s = (${fmt(ns)} - ${fmt(d.n)})/${fmt(ns)} ·100 = ${fmt(s)} %`],`${fmt(s)} %`,'Un motor d’inducció gira una mica per sota de la velocitat síncrona.',['Confondre p amb nombre total de pols.']);}},
+  {id:'cil_forca', bloc:'Pneumàtica i oleohidràulica', nom:'Força de cilindre', desc:'F = p·A', f:[['p','Pressió','bar',6],['d','Diàmetre','mm',40]], solve:d=>{const A=Math.PI*(d.d/1000)**2/4,F=d.p*1e5*A; return calcHtml('Força de cilindre','A = πd²/4; F = pA',[`A = ${fmt(A,6)} m²`,`F = ${fmt(d.p*1e5)} · ${fmt(A,6)} = ${fmt(F)} N`],`${fmt(F)} N`,'Augmentar diàmetre fa créixer molt la força perquè l’àrea depèn de d².',['Fer servir d com si fos àrea.']);}},
+  {id:'cil_temps', bloc:'Pneumàtica i oleohidràulica', nom:'Temps de cursa', desc:'t = cursa / (Q/A)', f:[['d','Diàmetre','mm',40],['q','Cabal','L/min',60],['cursa','Cursa','mm',200]], solve:d=>{const A=Math.PI*(d.d/1000)**2/4,Q=d.q/1000/60,v=Q/A,t=(d.cursa/1000)/v; return calcHtml('Temps de cursa','v = Q/A; t = cursa/v',[`v = ${fmt(Q,6)} / ${fmt(A,6)} = ${fmt(v)} m/s`,`t = ${fmt(d.cursa/1000)} / ${fmt(v)} = ${fmt(t)} s`],`${fmt(t)} s`,'El cabal determina la velocitat de l’actuador.',['No convertir L/min a m³/s.']);}},
+  {id:'hid_pot', bloc:'Pneumàtica i oleohidràulica', nom:'Potència hidràulica', desc:'P = p·Q', f:[['p','Pressió','bar',50],['q','Cabal','L/min',20]], solve:d=>{const P=d.p*1e5*d.q/1000/60; return calcHtml('Potència hidràulica','P = p · Q',[`P = ${fmt(d.p*1e5)} · ${fmt(d.q/1000/60,6)} = ${fmt(P)} W`],`${fmt(P/1000)} kW`,'En hidràulica, pressió alta i cabal determinen la potència disponible.',['No convertir bar i L/min.']);}},
+  {id:'logic_truth', bloc:'Lògica digital i control', nom:'Taula de veritat 2 entrades', desc:'AND, OR, XOR, NAND', f:[], solve:d=>calcHtml('Taules de veritat','Portes lògiques bàsiques',['AND: 1 només si A=1 i B=1','OR: 1 si A=1 o B=1','XOR: 1 si A i B són diferents','NAND: negació d’AND'],`Consulta la taula mostrada`,'És útil per exercicis de sistemes automàtics i control digital.',['Confondre OR inclusiva amb XOR.'])},
+  {id:'bin_dec', bloc:'Lògica digital i control', nom:'Binari a decimal', desc:'Conversió de 4 bits', f:[['b','Nombre binari','',1011]], solve:d=>{const s=String(Math.trunc(d.b)); const dec=parseInt(s,2); return calcHtml('Conversió binari-decimal','Decimal = suma de bits · potències de 2',[`${s}₂ = ${Number.isFinite(dec)?dec:'—'}₁₀`],`${Number.isFinite(dec)?dec:'—'}`,'Els bits de dreta a esquerra valen 1, 2, 4, 8...', ['No llegir el nombre com a decimal normal.']);}},
+  {id:'tolerancia', bloc:'Materials, metrologia i fabricació', nom:'Tolerància dimensional', desc:'Dmàx, Dmín i tolerància', f:[['nom','Dimensió nominal','mm',10],['sup','Desviació superior','mm',0.05],['inf','Desviació inferior','mm',-0.02]], solve:d=>{const max=d.nom+d.sup,min=d.nom+d.inf,tol=max-min; return calcHtml('Tolerància dimensional','Dmàx = Dnom + Es; Dmín = Dnom + Ei',[`Dmàx = ${fmt(max)} mm`,`Dmín = ${fmt(min)} mm`,`Tolerància = ${fmt(tol)} mm`],`${fmt(min)} a ${fmt(max)} mm`,'Defineix l’interval de dimensions admissibles.',['Confondre desviació inferior negativa.']);}},
+  {id:'error_mesura', bloc:'Materials, metrologia i fabricació', nom:'Error absolut i relatiu', desc:'Ea i Er', f:[['mes','Valor mesurat','mm',10.04],['real','Valor real','mm',10]], solve:d=>{const ea=d.mes-d.real,er=Math.abs(ea)/Math.abs(d.real)*100; return calcHtml('Error de mesura','Ea = mesurat - real; Er = |Ea|/real',[`Ea = ${fmt(ea)} mm`,`Er = ${fmt(er)} %`],`${fmt(ea)} mm; ${fmt(er)} %`,'L’error relatiu ajuda a comparar errors en magnituds diferents.',['No posar signe a l’error absolut si cal indicar desviació.']);}},
+  {id:'vel_tall', bloc:'Materials, metrologia i fabricació', nom:'Velocitat de tall', desc:'Vc = πdn/1000', f:[['d','Diàmetre','mm',40],['n','Velocitat gir','min⁻¹',800]], solve:d=>{const V=Math.PI*d.d*d.n/1000; return calcHtml('Velocitat de tall','Vc = π · d · n / 1000',[`Vc = π·${fmt(d.d)}·${fmt(d.n)}/1000 = ${fmt(V)} m/min`],`${fmt(V)} m/min`,'S’utilitza en processos de mecanitzat.',['No dividir per 1000 si d està en mm.']);}}
+];
+
+function calcHtml(title, formula, steps, result, interp, errors){
+  return `<section class="result calc-rich"><h2>${esc(title)}</h2><div class="formula"><b>Fórmula:</b><br>${esc(formula)}</div><h3>Substitució i càlcul</h3><ol>${steps.map(s=>`<li>${esc(s)}</li>`).join('')}</ol><p class="big-result"><b>Resultat:</b> ${esc(result)}</p><h3>Interpretació</h3><p>${esc(interp)}</p><h3>Errors habituals</h3><ul>${errors.map(e=>`<li>${esc(e)}</li>`).join('')}</ul></section>`;
+}
+function calcValV181(id){ const el=document.getElementById(id); if(!el) return 0; return parseFloat(String(el.value).replace(',','.')) || 0; }
+function calculadores(){
+  app.innerHTML = `<section class="card"><h2>Calculadores PAU ampliades · v18.1</h2><p>Caixa d’eines per resoldre exercicis PAU per temes. Cada tema té diversos càlculs, no només una opció simple.</p><div class="grid"><div class="field"><label>Bloc</label><select id="calcBloc" onchange="renderCalculatorCardsV181()"><option value="">Tots</option>${[...new Set(CALC_V181.map(c=>c.bloc))].map(b=>`<option>${esc(b)}</option>`).join('')}</select></div><div class="field"><label>Cerca</label><input id="calcSearch" placeholder="Ex.: trifàsica, motor, rendiment, tolerància..." oninput="renderCalculatorCardsV181()"></div></div><div id="calculatorCards" class="grid"></div><div id="calculatorPanel"></div></section>`;
+  renderCalculatorCardsV181();
+}
+function renderCalculatorCardsV181(){
+  const bloc=document.getElementById('calcBloc')?.value||''; const q=(document.getElementById('calcSearch')?.value||'').toLowerCase(); const el=document.getElementById('calculatorCards'); if(!el) return;
+  const items=CALC_V181.filter(c=>(!bloc||c.bloc===bloc)&&(!q||`${c.nom} ${c.bloc} ${c.desc}`.toLowerCase().includes(q)));
+  el.innerHTML=items.map(c=>`<article class="card exercise-card"><p class="pill">${esc(c.bloc)}</p><h3>${esc(c.nom)}</h3><p>${esc(c.desc)}</p><button class="primary" onclick="renderCalculator('${c.id}')">Obrir</button></article>`).join('') || '<div class="notice">No hi ha calculadores amb aquest filtre.</div>';
+}
+function renderCalculatorCards(filter=''){ renderCalculatorCardsV181(filter); }
+function renderCalculator(id){
+  const c=CALC_V181.find(x=>x.id===id); const panel=document.getElementById('calculatorPanel'); if(!c||!panel) return;
+  panel.innerHTML=`<section class="card" id="calculatorForm"><h2>${esc(c.nom)}</h2><p class="pill">${esc(c.bloc)}</p><p>${esc(c.desc)}</p>${c.f.length?c.f.map(f=>`<div class="field"><label>${esc(f[1])} <span class="muted">${esc(f[2])}</span></label><input id="calc_${esc(f[0])}" value="${esc(f[3])}" inputmode="decimal"></div>`).join(''):'<div class="notice">Aquesta eina no necessita dades numèriques.</div>'}<div class="btnrow no-print"><button class="primary" onclick="solveCalculator('${c.id}')">Calcular amb explicació</button><button class="secondary" onclick="document.getElementById('calcResult').innerHTML=''">Netejar resultat</button><button class="secondary" onclick="window.print()">Imprimir</button></div><div id="calcResult"></div></section>`;
+  panel.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function solveCalculator(id){
+  const c=CALC_V181.find(x=>x.id===id); if(!c) return;
+  const d={}; c.f.forEach(f=>d[f[0]]=calcValV181('calc_'+f[0]));
+  const html=c.solve(d); const r=document.getElementById('calcResult');
+  if(r) r.innerHTML=html+`<div class="btnrow no-print"><button class="secondary" onclick="navigator.clipboard.writeText(document.getElementById('calcResult').innerText)">Copiar càlcul</button><button class="secondary" onclick="saveCurrent('${esc(c.nom)}', document.getElementById('calcResult').innerText)">Guardar a l’historial</button></div>`;
+}
+Object.assign(window,{calculadores,renderCalculatorCards,renderCalculatorCardsV181,renderCalculator,solveCalculator});
