@@ -1,30 +1,22 @@
-# Tecnologia Industrial Exercicis Plus · v18.2
+# Tecnologia Industrial Exercicis Plus v18.3
 
-PWA educativa en català per preparar exercicis PAU de Tecnologia Industrial, Tecnologia i Enginyeria i Electrotècnia.
+PWA d'entrenament PAU de Tecnologia Industrial / Tecnologia i Enginyeria.
 
-## Novetats de la v18.2
+## v18.3
 
-- Incorporada la PAU 2026 de Tecnologia i Enginyeria, Sèrie 1.
-- Afegides 4 fitxes noves: test, fogonet de propà, reductor d'impremta i grup electrogen.
-- Afegides les pàgines originals de l'enunciat 2026 en PNG dins `assets/pau_pages/`.
-- Afegides resolucions pas a pas basades en el criteri específic d'avaluació 2026.
-- Actualitzat `sw.js` a memòria cau v18.2.
-- Mantingudes les calculadores PAU ampliades de la v18.1.
+Correcció important:
 
-## Fitxers principals
+- Les fitxes de **Tecnologia i Enginyeria 2026 · Sèrie 1** ara apareixen correctament quan es filtra per any 2026.
+- La v18.2 contenia els enunciats 2026, però el banc PAU prioritzava només les fitxes `full-*` del buidatge anterior i amagava les noves entrades.
+- Es mantenen els enunciats, les pàgines originals PNG i les solucions pas a pas oficials dels exercicis 1, 2, 3 i 4 de 2026.
 
-- `index.html`
-- `styles.css`
-- `app.js`
-- `manifest.json`
-- `sw.js`
-- `assets/`
-- `assets/pau_pages/`
+## Contingut 2026 incorporat
+
+- Exercici 1: test de 8 qüestions.
+- Exercici 2: fogonet de propà i escalfament d'aigua.
+- Exercici 3: reductor d'una rotativa d'impremta.
+- Exercici 4: grup electrogen dièsel amb alternador.
 
 ## Desplegament
 
-Puja tots els fitxers del ZIP a GitHub Pages. Si el navegador mostra una versió anterior, esborra les dades del lloc o força actualització, perquè el Service Worker pot mantenir la memòria cau antiga.
-
-## Nota docent
-
-Les fitxes de 2026 combinen enunciat, figures originals i solució orientativa. Les qüestions amb figures o esquemes continuen requerint lectura visual de la pàgina original integrada.
+Puja tots els fitxers a GitHub Pages. Després de substituir una versió anterior, es recomana esborrar la memòria cau del lloc o recarregar fort perquè el Service Worker no mantingui fitxers antics.

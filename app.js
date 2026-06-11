@@ -6589,3 +6589,18 @@ function solveCalculator(id){
   if(r) r.innerHTML=html+`<div class="btnrow no-print"><button class="secondary" onclick="navigator.clipboard.writeText(document.getElementById('calcResult').innerText)">Copiar càlcul</button><button class="secondary" onclick="saveCurrent('${esc(c.nom)}', document.getElementById('calcResult').innerText)">Guardar a l’historial</button></div>`;
 }
 Object.assign(window,{calculadores,renderCalculatorCards,renderCalculatorCardsV181,renderCalculator,solveCalculator});
+
+
+/* === v18.3 · correcció PAU 2026 visible ===
+   La v18.2 havia afegit les fitxes 2026, però la funció pauData() prioritzava només fitxes amb id full-*.
+   Això amagava els enunciats 2026 en filtrar per any. Aquesta correcció mostra el buidatge complet + 2026. */
+const V18_3_VERSION = 'v18.3 · PAU 2026 visible i enunciats corregits';
+function pauData(){
+  const full = (pauBank || []).filter(x => String(x.id||'').startsWith('full-'));
+  const y2026 = (pauBank || []).filter(x => String(x.any) === '2026' || String(x.id||'').includes('2026'));
+  const base = full.length ? full.concat(y2026) : (pauBank || []);
+  const seen = new Set();
+  return base.filter(x => { const id = String(x.id || `${x.any}-${x.serie}-${x.exercici}-${x.titol}`); if(seen.has(id)) return false; seen.add(id); return true; });
+}
+try { if (typeof applyThemesV18 === 'function') applyThemesV18(); } catch(e) {}
+Object.assign(window, {pauData});
